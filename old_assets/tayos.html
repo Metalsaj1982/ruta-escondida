@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="assets/img/logo.png" />
+  <link rel="apple-touch-icon" href="assets/img/logo.png" />
+  <title>El Encañonado de los Tayos — Expedición Secreta · Ruta Escondida</title>
+  <meta name="description" content="Una expedición secreta entre paredes de roca, cascadas y río. El Encañonado de los Tayos en Alchipichí: aventura cinematográfica, historia ancestral y naturaleza extrema a pocas horas de Quito." />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/ruta-page.css" />
+  <!-- Schema.org: Diego Ruiz H. — Guía Turístico Ruta Escondida -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TouristTrip",
+    "name": "El Encañonado de los Tayos",
+    "description": "Expedición de aventura por cañones y cascadas en Alchipichí, Ecuador. Guiada por Diego Ruiz H., guía turístico de naturaleza y aventura en los Andes ecuatorianos.",
+    "url": "https://rutaescondida.com/tayos.html",
+    "touristType": ["Aventura", "Fotografía", "Familia"],
+    "provider": {
+      "@type": "LocalBusiness",
+      "name": "Ruta Escondida",
+      "address": { "@type": "PostalAddress", "addressLocality": "Alchipichí", "addressCountry": "EC" }
+    },
+    "guide": {
+      "@type": "Person",
+      "name": "Diego Ruiz H.",
+      "jobTitle": "Guía de Turismo de Naturaleza y Aventura",
+      "worksFor": { "@type": "Organization", "name": "Ruta Escondida" },
+      "knowsAbout": ["Cañonismo", "Ecoturismo", "Turismo de Aventura Andina", "Alchipichí Ecuador"]
+    }
+  }
+  </script>
+  <style>
+    /* ── PLANES DE PRECIOS ─────────────────── */
+    .planes-section {
+      background: var(--negro);
+      padding: 100px 48px;
+    }
+    .planes-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      max-width: 1200px;
+      margin: 64px auto 0;
+    }
+    .plan-card {
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(200,169,106,.15);
+      padding: 48px 36px;
+      position: relative;
+      transition: background .3s, border-color .3s, transform .3s;
+    }
+    .plan-card:hover {
+      background: rgba(200,169,106,.06);
+      border-color: rgba(200,169,106,.4);
+      transform: translateY(-6px);
+    }
+    .plan-card.destacado {
+      background: var(--verde-andes);
+      border-color: var(--oro);
+      z-index: 2;
+    }
+    .plan-card.destacado:hover { background: var(--verde-medio); }
+    .plan-badge {
+      position: absolute;
+      top: -14px; left: 50%;
+      transform: translateX(-50%);
+      background: var(--oro);
+      color: var(--negro);
+      font-size: 9px; font-weight: 700;
+      letter-spacing: .3em; text-transform: uppercase;
+      padding: 5px 16px;
+      white-space: nowrap;
+    }
+    .plan-icon { font-size: 2.2rem; margin-bottom: 16px; display: block; }
+    .plan-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem; font-weight: 300;
+      color: var(--blanco); margin-bottom: 8px;
+    }
+    .plan-precio {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.8rem; font-weight: 600;
+      color: var(--oro); line-height: 1; margin-bottom: 4px;
+    }
+    .plan-precio-sub {
+      font-size: 11px; letter-spacing: .2em;
+      color: rgba(255,255,255,.5); margin-bottom: 32px;
+      display: block;
+    }
+    .plan-lista {
+      list-style: none; margin-bottom: 36px;
+    }
+    .plan-lista li {
+      font-size: 13px; color: rgba(255,255,255,.75);
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      display: flex; align-items: center; gap: 10px;
+      line-height: 1.5;
+    }
+    .plan-lista li::before { content: '✦'; color: var(--oro); font-size: 8px; flex-shrink: 0; }
+
+    /* ── ITINERARIO TIMELINE ───────────────── */
+    .itinerario-timeline {
+      background: #060c08;
+      padding: 100px 48px;
+    }
+    .timeline-grid {
+      max-width: 900px; margin: 64px auto 0;
+    }
+    .tl-item {
+      display: grid;
+      grid-template-columns: 100px 1fr;
+      gap: 0 32px;
+      position: relative;
+    }
+    .tl-item:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      left: 84px; top: 40px;
+      width: 1px; height: calc(100% + 0px);
+      background: linear-gradient(to bottom, rgba(200,169,106,.4), rgba(200,169,106,.05));
+    }
+    .tl-hora {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem; color: var(--oro);
+      text-align: right; padding-top: 12px;
+      font-weight: 400;
+    }
+    .tl-content {
+      padding: 12px 0 36px;
+      border-left: 1px solid rgba(200,169,106,.2);
+      padding-left: 32px;
+      position: relative;
+    }
+    .tl-content::before {
+      content: '';
+      position: absolute;
+      left: -5px; top: 20px;
+      width: 9px; height: 9px;
+      background: var(--oro); border-radius: 50%;
+      border: 2px solid var(--negro);
+    }
+    .tl-title {
+      font-size: 13px; font-weight: 600;
+      letter-spacing: .08em;
+      color: var(--blanco); margin-bottom: 4px;
+    }
+    .tl-desc {
+      font-size: 13px; color: rgba(255,255,255,.55);
+      line-height: 1.6;
+    }
+
+    /* ── PÚBLICO OBJETIVO ──────────────────── */
+    .publico-section {
+      background: var(--crema);
+      padding: 100px 48px;
+    }
+    .publico-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      max-width: 1100px; margin: 64px auto 0;
+    }
+    .publico-card {
+      background: var(--blanco);
+      border: 1px solid rgba(0,0,0,.06);
+      padding: 32px 28px;
+      transition: transform .3s, box-shadow .3s;
+    }
+    .publico-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(0,0,0,.1);
+    }
+    .publico-icon { font-size: 2rem; margin-bottom: 12px; display: block; }
+    .publico-tipo {
+      font-size: 13px; font-weight: 700;
+      letter-spacing: .05em; color: var(--verde-andes);
+      margin-bottom: 8px;
+    }
+    .publico-desc { font-size: 13px; color: var(--gris); line-height: 1.6; }
+
+    /* ── QUÉ LLEVAR ────────────────────────── */
+    .llevar-section {
+      background: var(--negro);
+      padding: 100px 48px;
+    }
+    .llevar-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      max-width: 1100px; margin: 64px auto 0;
+    }
+    .llevar-item {
+      border: 1px solid rgba(200,169,106,.2);
+      padding: 24px 20px;
+      text-align: center;
+      transition: border-color .3s, background .3s;
+    }
+    .llevar-item:hover { border-color: var(--oro); background: rgba(200,169,106,.05); }
+    .llevar-emoji { font-size: 1.8rem; margin-bottom: 10px; display: block; }
+    .llevar-nombre {
+      font-size: 13px; font-weight: 600;
+      color: var(--blanco); margin-bottom: 6px;
+    }
+    .llevar-imp {
+      font-size: 10px; letter-spacing: .2em; text-transform: uppercase;
+    }
+    .llevar-imp.obligatorio { color: #E8A87C; }
+    .llevar-imp.recomendado { color: rgba(255,255,255,.4); }
+    .llevar-imp.ideal { color: var(--oro); }
+
+    /* ── COMPLEMENTARIOS ───────────────────── */
+    .extras-section {
+      background: var(--verde-andes);
+      padding: 100px 48px;
+    }
+    .extras-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      max-width: 1100px; margin: 64px auto 0;
+    }
+    .extra-item {
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(200,169,106,.2);
+      padding: 28px 24px;
+      display: flex; justify-content: space-between;
+      align-items: center; gap: 16px;
+      transition: background .3s;
+    }
+    .extra-item:hover { background: rgba(255,255,255,.12); }
+    .extra-nombre {
+      font-size: 14px; color: var(--blanco);
+      font-weight: 400;
+    }
+    .extra-precio {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem; color: var(--oro);
+      white-space: nowrap;
+    }
+
+    /* ── EMOCIONES STRIP ────────────────────── */
+    .emociones-section {
+      background: #0a0a0a;
+      padding: 80px 48px;
+      overflow: hidden;
+    }
+    .emociones-marquee {
+      display: flex; gap: 48px;
+      animation: marquee 20s linear infinite;
+      width: max-content;
+    }
+    .emocion-pill {
+      background: rgba(200,169,106,.1);
+      border: 1px solid rgba(200,169,106,.3);
+      padding: 14px 28px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      color: var(--oro-light);
+      white-space: nowrap;
+      font-style: italic;
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* ── DIFERENCIADORES ─────────────────────── */
+    .diferenciadores {
+      background: var(--crema);
+      padding: 100px 48px;
+    }
+    .dif-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
+      max-width: 1100px; margin: 64px auto 0;
+    }
+    .dif-item {
+      background: var(--blanco);
+      padding: 40px 28px;
+      text-align: center;
+      border-right: 1px solid rgba(0,0,0,.06);
+    }
+    .dif-item:last-child { border-right: none; }
+    .dif-emoji { font-size: 2rem; margin-bottom: 12px; display: block; }
+    .dif-titulo {
+      font-size: 12px; font-weight: 700;
+      letter-spacing: .08em; text-transform: uppercase;
+      color: var(--verde-andes); margin-bottom: 6px;
+    }
+    .dif-desc { font-size: 13px; color: var(--gris); line-height: 1.6; }
+
+    /* ── COPY VIRAL ──────────────────────────── */
+    .viral-section {
+      background: var(--negro);
+      padding: 100px 48px;
+    }
+    .viral-box {
+      max-width: 700px; margin: 0 auto;
+      border: 1px solid rgba(200,169,106,.3);
+      padding: 64px;
+      text-align: center;
+      position: relative;
+    }
+    .viral-box::before {
+      content: '"';
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 10rem; line-height: 0.5;
+      color: rgba(200,169,106,.1);
+      position: absolute;
+      top: 48px; left: 32px;
+    }
+    .viral-copy {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem; color: rgba(255,255,255,.85);
+      line-height: 1.9; font-weight: 300;
+      position: relative; z-index: 1;
+    }
+    .viral-tags {
+      display: flex; flex-wrap: wrap;
+      gap: 12px; justify-content: center;
+      margin-top: 32px;
+    }
+    .viral-tag {
+      background: rgba(200,169,106,.1);
+      border: 1px solid rgba(200,169,106,.25);
+      padding: 8px 18px;
+      font-size: 12px; color: var(--oro);
+      letter-spacing: .1em;
+    }
+
+    /* ── RESPONSIVE TAYOS ────────────────────── */
+    @media (max-width: 1024px) {
+      .planes-grid { grid-template-columns: 1fr; gap: 24px; }
+      .publico-grid { grid-template-columns: repeat(2, 1fr); }
+      .llevar-grid { grid-template-columns: repeat(2, 1fr); }
+      .extras-grid { grid-template-columns: repeat(2, 1fr); }
+      .dif-grid { grid-template-columns: repeat(2, 1fr); }
+      .dif-item { border-bottom: 1px solid rgba(0,0,0,.06); }
+    }
+    @media (max-width: 768px) {
+      .planes-section, .itinerario-timeline, .publico-section,
+      .llevar-section, .extras-section, .diferenciadores,
+      .viral-section, .emociones-section { padding: 64px 24px; }
+      .publico-grid { grid-template-columns: 1fr; }
+      .llevar-grid { grid-template-columns: repeat(2, 1fr); }
+      .extras-grid { grid-template-columns: 1fr; }
+      .dif-grid { grid-template-columns: 1fr; }
+      .viral-box { padding: 40px 24px; }
+      .tl-item { grid-template-columns: 70px 1fr; }
+      .tl-item:not(:last-child)::after { left: 58px; }
+    }
+  </style>
+</head>
+<body class="ruta-body">
+
+<!-- NAV -->
+<nav id="main-nav" class="scrolled">
+  <a href="index.html" class="nav-logo">
+    <img src="assets/img/logo.png" alt="Ruta Escondida" class="logo-img" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/>
+    <svg viewBox="0 0 320 90" fill="none" xmlns="http://www.w3.org/2000/svg" class="logo-svg" style="display:none">
+      <g><polygon points="140,70 168,28 196,70" fill="#5A5860"/><polygon points="160,70 192,18 224,70" fill="#4A4850"/><polygon points="168,28 174,36 162,36" fill="#E0DBD5"/><polygon points="192,18 199,28 185,28" fill="#E0DBD5"/><circle cx="210" cy="32" r="14" fill="#C8A96A"/></g>
+      <text x="0" y="52" font-family="Georgia,serif" font-size="32" font-weight="bold" fill="#C8A96A">Ruta</text>
+      <text x="0" y="76" font-family="Arial,sans-serif" font-size="22" font-weight="bold" fill="#5A5860">ESCONDIDA.COM</text>
+    </svg>
+  </a>
+  <ul class="nav-links">
+    <li class="nav-dropdown">
+      <a href="index.html#turismo">Turismo de Inmersión</a>
+      <div class="dropdown-menu">
+        <a href="gigante-dormido.html">El Gigante Dormido</a>
+        <a href="sendero-agua.html">El Sendero del Agua</a>
+        <a href="tayos.html" style="color:var(--oro)">Encañonado de los Tayos</a>
+      </div>
+    </li>
+    <li><a href="index.html#tienda">Tienda</a></li>
+    <li><a href="salidas-pedagogicas.html">Salidas Pedagógicas</a></li>
+    <li><a href="galeria.html">Galería</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li class="nav-dropdown">
+      <a href="negocios.html">Las Parroquias</a>
+      <div class="dropdown-menu">
+        <a href="negocios.html">Ver Todo</a>
+        <a href="negocios.html?parish=Puéllaro">Puéllaro</a>
+        <a href="negocios.html?parish=Perucho">Perucho</a>
+        <a href="negocios.html?parish=Atahualpa">Atahualpa</a>
+        <a href="negocios.html?parish=Chavezpamba">Chavezpamba</a>
+        <a href="negocios.html?parish=Minas">Minas</a>
+      </div>
+    </li>
+    <li><a href="index.html#impacto">Impacto</a></li>
+  </ul>
+  <a href="#planes" class="btn-cta" id="btn-nav-reservar-tayos">Reservar Expedición</a>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section class="ruta-hero" style="background-image:url('assets/img/tayos_cave.png')">
+  <div class="ruta-hero-overlay" style="background:linear-gradient(160deg,rgba(0,0,0,.2) 0%,rgba(0,0,0,.8) 100%)"></div>
+  <div class="ruta-hero-content">
+    <a href="index.html#turismo" class="back-link">← Volver a Turismo</a>
+    <span class="ruta-hero-tag">✦ Aventura Extrema · Full Day · Alchipichí · Desde Quito</span>
+    <h1>El Encañonado<br><em>de los Tayos</em></h1>
+    <p class="ruta-hero-sub">Una expedición secreta entre paredes de roca, agua y misterio. El lugar que Ecuador ocultó demasiado tiempo.</p>
+    <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:32px;">
+      <a href="#planes" class="btn-primary" id="cta-planes-hero">Ver Planes y Precios</a>
+      <a href="#itinerario" class="btn-secondary" id="cta-itinerario-hero">Ver Itinerario →</a>
+    </div>
+  </div>
+  <div class="ruta-hero-scroll">
+    <span>Explorar</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ═══ QUICK INFO BAR ═══ -->
+<section class="ruta-quickinfo" style="background:var(--negro); border-bottom:1px solid rgba(200,169,106,.2);">
+  <div class="qi-item">
+    <span class="qi-icon">⚡</span>
+    <span class="qi-label">Dificultad</span>
+    <span class="qi-value">Moderada</span>
+  </div>
+  <div class="qi-item">
+    <span class="qi-icon">📅</span>
+    <span class="qi-label">Duración</span>
+    <span class="qi-value">Full Day</span>
+  </div>
+  <div class="qi-item">
+    <span class="qi-icon">🎯</span>
+    <span class="qi-label">Enfoque</span>
+    <span class="qi-value">Aventura &amp; Ancestral</span>
+  </div>
+  <div class="qi-item">
+    <span class="qi-icon">👥</span>
+    <span class="qi-label">Edad mínima</span>
+    <span class="qi-value">Desde 8 años</span>
+  </div>
+  <div class="qi-item">
+    <span class="qi-icon">🕒</span>
+    <span class="qi-label">Caminata</span>
+    <span class="qi-value">4–5 horas</span>
+  </div>
+  <div class="qi-item">
+    <span class="qi-icon">📍</span>
+    <span class="qi-label">Salida</span>
+    <span class="qi-value">Quito 06:30</span>
+  </div>
+</section>
+
+<!-- ═══ DESCRIPCIÓN SPLIT ═══ -->
+<section class="ruta-split" style="background:var(--crema)">
+  <div class="rs-text">
+    <span class="section-eyebrow" style="color:var(--verde-andes)">La Expedición</span>
+    <h2>Una aventura escondida<br><em>entre montañas, agua y misterio</em></h2>
+    <p>El Encañonado de los Tayos es mucho más que una caminata. Es una expedición cinematográfica por paredes gigantes de roca, pasajes de río ocultos, cascadas que caen entre piedras milenarias y un ecosistema vibrante que parece sacado de otra dimensión.</p>
+    <p>La zona es reconocida por su biodiversidad excepcional, su historia ancestral y la sensación de exploración extrema que ofrece a personas de todas las edades y niveles físicos.</p>
+    <div class="ruta-highlights">
+      <div class="rh-item">
+        <span class="rh-num">01</span>
+        <div>
+          <strong>Ingreso al encañonado y río</strong>
+          <p>Descenso entre paredes de roca de decenas de metros. Exploración del río natural con pasos de agua y pequeñas cascadas ocultas.</p>
+        </div>
+      </div>
+      <div class="rh-item">
+        <span class="rh-num">02</span>
+        <div>
+          <strong>Paisajes cinematográficos</strong>
+          <p>Zonas diseñadas para fotografía y video de alto impacto visual. Parece Jurassic Park — la gente no puede creer que sea Ecuador.</p>
+        </div>
+      </div>
+      <div class="rh-item">
+        <span class="rh-num">03</span>
+        <div>
+          <strong>Historia ancestral de Alchipichí</strong>
+          <p>Storytelling emocional sobre la historia cultural e histórica que conecta esta ruta con las comunidades originarias de los Andes del norte.</p>
+        </div>
+      </div>
+      <div class="rh-item">
+        <span class="rh-num">04</span>
+        <div>
+          <strong>Gastronomía rural auténtica</strong>
+          <p>Desayuno típico rural, almuerzo campestre y helado artesanal de chirimoya. Comida de verdad hecha con manos campesinas.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="rs-img">
+    <img src="assets/img/tayos_cave.png" alt="Interior del Encañonado de los Tayos — Ruta Escondida, Alchipichí" />
+  </div>
+</section>
+
+<!-- ═══ EMOCIONES STRIP (MARQUEE) ═══ -->
+<div class="emociones-section">
+  <p style="text-align:center;font-size:10px;letter-spacing:.4em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:36px;">Lo que la gente siente</p>
+  <div class="emociones-marquee">
+    <span class="emocion-pill">"Descubrí un lugar secreto"</span>
+    <span class="emocion-pill">"Nunca pensé que Ecuador tenía esto"</span>
+    <span class="emocion-pill">"Parece Jurassic Park"</span>
+    <span class="emocion-pill">"Necesito volver con más amigos"</span>
+    <span class="emocion-pill">"Desconecté completamente"</span>
+    <span class="emocion-pill">"Una experiencia de película"</span>
+    <!-- duplicate for seamless loop -->
+    <span class="emocion-pill">"Descubrí un lugar secreto"</span>
+    <span class="emocion-pill">"Nunca pensé que Ecuador tenía esto"</span>
+    <span class="emocion-pill">"Parece Jurassic Park"</span>
+    <span class="emocion-pill">"Necesito volver con más amigos"</span>
+    <span class="emocion-pill">"Desconecté completamente"</span>
+    <span class="emocion-pill">"Una experiencia de película"</span>
+  </div>
+</div>
+
+<!-- ═══ ITINERARIO PREMIUM ═══ -->
+<section class="itinerario-timeline" id="itinerario">
+  <div style="text-align:center">
+    <span class="section-eyebrow">Full Day Premium</span>
+    <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3.2rem);font-weight:300;color:var(--blanco);margin-top:12px;">Itinerario <em style="font-style:italic;color:var(--oro-light)">del Día</em></h2>
+    <p style="font-size:14px;color:rgba(255,255,255,.5);margin-top:12px;">Salida desde Quito · Regreso al atardecer</p>
+  </div>
+  <div class="timeline-grid">
+    <div class="tl-item">
+      <div class="tl-hora">06:30</div>
+      <div class="tl-content">
+        <div class="tl-title">🚐 Salida desde Quito</div>
+        <div class="tl-desc">Punto de encuentro en Quito. Traslado en vehículo hacia Alchipichí.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-hora">08:00</div>
+      <div class="tl-content">
+        <div class="tl-title">🌄 Llegada a Alchipichí · Bienvenida</div>
+        <div class="tl-desc">Bienvenida cálida campesina con música ambiental. Introducción a la Ruta Escondida.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-hora">08:15</div>
+      <div class="tl-content">
+        <div class="tl-title">🍳 Desayuno típico rural</div>
+        <div class="tl-desc">Desayuno auténtico con productos de la finca. Cargamos energía para la expedición.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-hora">09:00</div>
+      <div class="tl-content">
+        <div class="tl-title">🎒 Briefing de seguridad</div>
+        <div class="tl-desc">Instrucciones profesionales de seguridad. Distribución de equipo. Preparación física y mental.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-hora">09:30</div>
+      <div class="tl-content">
+        <div class="tl-title">🌿 Inicio de caminata ecológica</div>
+        <div class="tl-desc">Sendero a través de vegetación nativa. Guianza interpretativa del ecosistema andino.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-hora">10:30</div>
+      <div class="tl-content">
+        <div class="tl-title">🪨 Descenso hacia el encañonado</div>
+        <div class="tl-desc">El momento más espectacular. Entrada entre paredes de roca gigantes. Primera impresión cinematográfica.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-hora">11:00</div>
+      <div class="tl-content">
+        <div class="tl-title">💦 Exploración del río y cascadas</div>
+        <div class="tl-desc">Recorrido por el río, pasos entre roca y agua. Cascadas ocultas. El Encañonado en su máximo esplendor.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-hora">12:00</div>
+      <div class="tl-content">
+        <div class="tl-title">📸 Zona de fotografías y videos</div>
+        <div class="tl-desc">Tiempo dedicado para capturar el paisaje. Tomas cinematográficas, reels y contenido de redes.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-hora">13:00</div>
+      <div class="tl-content">
+        <div class="tl-title">🍽️ Almuerzo campestre</div>
+        <div class="tl-desc">Comida tradicional andina en plena naturaleza. Pausa para descansar y conectar con el grupo.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-hora">14:00</div>
+      <div class="tl-content">
+        <div class="tl-title">🌱 Tiempo libre y naturaleza</div>
+        <div class="tl-desc">Exploración libre, baño en poza, meditación o simplemente desconexión total de la ciudad.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-hora">15:00</div>
+      <div class="tl-content">
+        <div class="tl-title">🥾 Regreso por sendero</div>
+        <div class="tl-desc">Ascenso por ruta alterna con vistas panorámicas. Últimas fotos del paisaje andino.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-hora">16:00</div>
+      <div class="tl-content">
+        <div class="tl-title">🍦 Helado artesanal de chirimoya</div>
+        <div class="tl-desc">El premio de la expedición. Helado artesanal elaborado con chirimoya fresca de la zona.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-hora">16:30</div>
+      <div class="tl-content">
+        <div class="tl-title">🏛️ Historia ancestral de Alchipichí</div>
+        <div class="tl-desc">Storytelling emocional sobre la historia y cultura ancestral de la zona. Cierre espiritual de la experiencia.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-hora">17:00</div>
+      <div class="tl-content">
+        <div class="tl-title">🏠 Retorno a Quito</div>
+        <div class="tl-desc">Regreso desde Alchipichí. Llegada estimada a Quito al atardecer. Con las mejores memorias del año.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PLANES Y PRECIOS ═══ -->
+<section class="planes-section" id="planes">
+  <div style="text-align:center">
+    <span class="section-eyebrow">Escoge tu aventura</span>
+    <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3.2rem);font-weight:300;color:var(--blanco);margin-top:12px;">Planes y <em style="font-style:italic;color:var(--oro-light)">Precios</em></h2>
+  </div>
+  <div class="planes-grid">
+
+    <!-- PLAN BÁSICO -->
+    <div class="plan-card">
+      <span class="plan-icon">🥾</span>
+      <div class="plan-name">Plan Básico</div>
+      <div class="plan-precio">$19</div>
+      <span class="plan-precio-sub">por persona</span>
+      <ul class="plan-lista">
+        <li>Guianza local especializada</li>
+        <li>Caminata guiada al encañonado</li>
+        <li>Ingreso al encañonado y río</li>
+        <li>Seguro básico de aventura</li>
+        <li>Fotografías grupales</li>
+        <li>Helado artesanal de chirimoya</li>
+      </ul>
+      <a href="#reservar" class="btn-cta" id="btn-basico-wa" style="display:block;text-align:center;margin-top:auto;">Reservar Plan →</a>
+    </div>
+
+    <!-- PLAN PREMIUM (DESTACADO) -->
+    <div class="plan-card destacado">
+      <span class="plan-badge">⭐ Más popular</span>
+      <span class="plan-icon">🎬</span>
+      <div class="plan-name">Plan Experiencia Premium</div>
+      <div class="plan-precio">$35</div>
+      <span class="plan-precio-sub">por persona</span>
+      <ul class="plan-lista">
+        <li>Todo lo del Plan Básico</li>
+        <li>Desayuno típico rural</li>
+        <li>Almuerzo campestre andino</li>
+        <li>Bebida natural de la finca</li>
+        <li>Video cinematic para redes sociales</li>
+        <li>Storytelling ancestral de Alchipichí</li>
+        <li>Degustación de productos locales</li>
+        <li>Kit de bienvenida Ruta Escondida</li>
+      </ul>
+      <a href="#reservar" class="btn-comprar" id="btn-premium-wa" style="display:block;text-align:center;padding:14px;">Reservar Plan →</a>
+    </div>
+
+    <!-- PLAN EXTREMO -->
+    <div class="plan-card">
+      <span class="plan-icon">🦅</span>
+      <div class="plan-name">Plan Aventura Extrema</div>
+      <div class="plan-precio">$59</div>
+      <span class="plan-precio-sub">por persona</span>
+      <ul class="plan-lista">
+        <li>Todo lo del Plan Premium</li>
+        <li>Rapel básico en el encañonado</li>
+        <li>Equipo técnico especializado</li>
+        <li>Guías especializados de aventura</li>
+        <li>Tomas con dron profesional</li>
+        <li>Video estilo documental completo</li>
+      </ul>
+      <a href="#reservar" class="btn-cta" id="btn-extremo-wa" style="display:block;text-align:center;margin-top:auto;">Reservar Plan →</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ PÚBLICO OBJETIVO ═══ -->
+<section class="publico-section">
+  <div style="text-align:center">
+    <span class="section-eyebrow" style="color:var(--verde-andes)">Para quién es</span>
+    <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3.2rem);font-weight:300;color:var(--negro);margin-top:12px;">Una experiencia para <em style="font-style:italic;color:var(--verde-andes)">todos</em></h2>
+  </div>
+  <div class="publico-grid">
+    <div class="publico-card">
+      <span class="publico-icon">🎒</span>
+      <div class="publico-tipo">Jóvenes aventureros</div>
+      <div class="publico-desc">Contenido viral para redes, adrenalina y una experiencia que no se olvida. Perfecto para reels y TikTok.</div>
+    </div>
+    <div class="publico-card">
+      <span class="publico-icon">👨‍👩‍👧‍👦</span>
+      <div class="publico-tipo">Familias activas</div>
+      <div class="publico-desc">Una experiencia diferente y segura desde los 8 años. Los niños quedarán con una historia para siempre.</div>
+    </div>
+    <div class="publico-card">
+      <span class="publico-icon">🎓</span>
+      <div class="publico-tipo">Colegios</div>
+      <div class="publico-desc">Salida pedagógica de aventura. Biodiversidad, historia ancestral y reto físico en un solo día.</div>
+    </div>
+    <div class="publico-card">
+      <span class="publico-icon">🌍</span>
+      <div class="publico-tipo">Extranjeros</div>
+      <div class="publico-desc">Turismo auténtico ecuatoriano que no está en los guías convencionales. La experiencia "escondida" que buscan.</div>
+    </div>
+    <div class="publico-card">
+      <span class="publico-icon">🏢</span>
+      <div class="publico-tipo">Empresas · Team Building</div>
+      <div class="publico-desc">Desconexión total y trabajo en equipo en un entorno que retará a tu equipo de formas inesperadas.</div>
+    </div>
+    <div class="publico-card">
+      <span class="publico-icon">📸</span>
+      <div class="publico-tipo">Creadores de contenido</div>
+      <div class="publico-desc">Videos cinematográficos garantizados. Cada rincón del encañonado es un set de producción natural.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ QUÉ LLEVAR ═══ -->
+<section class="llevar-section">
+  <div style="text-align:center">
+    <span class="section-eyebrow">Prepárate bien</span>
+    <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3.2rem);font-weight:300;color:var(--blanco);margin-top:12px;">Qué <em style="font-style:italic;color:var(--oro-light)">llevar</em></h2>
+  </div>
+  <div class="llevar-grid">
+    <div class="llevar-item">
+      <span class="llevar-emoji">👟</span>
+      <div class="llevar-nombre">Zapatos de trekking</div>
+      <span class="llevar-imp obligatorio">● Obligatorio</span>
+    </div>
+    <div class="llevar-item">
+      <span class="llevar-emoji">👖</span>
+      <div class="llevar-nombre">Ropa cómoda</div>
+      <span class="llevar-imp obligatorio">● Obligatorio</span>
+    </div>
+    <div class="llevar-item">
+      <span class="llevar-emoji">💧</span>
+      <div class="llevar-nombre">Agua personal</div>
+      <span class="llevar-imp obligatorio">● Obligatorio</span>
+    </div>
+    <div class="llevar-item">
+      <span class="llevar-emoji">👔</span>
+      <div class="llevar-nombre">Ropa extra</div>
+      <span class="llevar-imp recomendado">◎ Muy recomendado</span>
+    </div>
+    <div class="llevar-item">
+      <span class="llevar-emoji">🧴</span>
+      <div class="llevar-nombre">Protector solar</div>
+      <span class="llevar-imp recomendado">◎ Recomendado</span>
+    </div>
+    <div class="llevar-item">
+      <span class="llevar-emoji">🌧️</span>
+      <div class="llevar-nombre">Impermeable ligero</div>
+      <span class="llevar-imp recomendado">◎ Recomendado</span>
+    </div>
+    <div class="llevar-item">
+      <span class="llevar-emoji">🤳</span>
+      <div class="llevar-nombre">Celular waterproof</div>
+      <span class="llevar-imp ideal">✦ Ideal</span>
+    </div>
+    <div class="llevar-item">
+      <span class="llevar-emoji">🏖️</span>
+      <div class="llevar-nombre">Toalla pequeña</div>
+      <span class="llevar-imp recomendado">◎ Recomendado</span>
+    </div>
+  </div>
+  <!-- Nivel de dificultad -->
+  <div style="max-width:700px;margin:64px auto 0;border:1px solid rgba(200,169,106,.2);padding:40px;display:grid;grid-template-columns:repeat(3,1fr);gap:24px;text-align:center;">
+    <div>
+      <div style="font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:8px">Dificultad física</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--oro)">Moderada</div>
+    </div>
+    <div style="border-left:1px solid rgba(255,255,255,.08);border-right:1px solid rgba(255,255,255,.08)">
+      <div style="font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:8px">Dificultad técnica</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--oro)">Baja–Media</div>
+    </div>
+    <div>
+      <div style="font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:8px">Riesgo</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--oro)">Controlado</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ DIFERENCIADORES ═══ -->
+<section class="diferenciadores">
+  <div style="text-align:center">
+    <span class="section-eyebrow" style="color:var(--verde-andes)">¿Por qué esta experiencia?</span>
+    <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3.2rem);font-weight:300;color:var(--negro);margin-top:12px;">Lo que nos hace <em style="font-style:italic;color:var(--verde-andes)">únicos</em></h2>
+  </div>
+  <div class="dif-grid">
+    <div class="dif-item">
+      <span class="dif-emoji">🏞️</span>
+      <div class="dif-titulo">Naturaleza Extrema</div>
+      <div class="dif-desc">Un paisaje que parece de película en el corazón de los Andes ecuatorianos.</div>
+    </div>
+    <div class="dif-item">
+      <span class="dif-emoji">🏛️</span>
+      <div class="dif-titulo">Historia Ancestral</div>
+      <div class="dif-desc">Conexión real con la historia cultural e histórica de las comunidades andinas del norte.</div>
+    </div>
+    <div class="dif-item">
+      <span class="dif-emoji">🥑</span>
+      <div class="dif-titulo">Gastronomía Real</div>
+      <div class="dif-desc">Productos de la finca, desayuno típico y almuerzo campestre auténtico sin intermediarios.</div>
+    </div>
+    <div class="dif-item">
+      <span class="dif-emoji">🏙️</span>
+      <div class="dif-titulo">Cerca de Quito</div>
+      <div class="dif-desc">A pocas horas de la ciudad. El escape perfecto para un día sin necesitar vacaciones largas.</div>
+    </div>
+    <div class="dif-item">
+      <span class="dif-emoji">🎬</span>
+      <div class="dif-titulo">Experiencia Cinematográfica</div>
+      <div class="dif-desc">Tomas con dron, video reel y fotografías de alto impacto visual garantizados.</div>
+    </div>
+    <div class="dif-item">
+      <span class="dif-emoji">🌱</span>
+      <div class="dif-titulo">Turismo Rural Auténtico</div>
+      <div class="dif-desc">Comunidad real, guías locales y una economía que protege el ecosistema andino.</div>
+    </div>
+    <div class="dif-item">
+      <span class="dif-emoji">🔒</span>
+      <div class="dif-titulo">Experiencia "Escondida"</div>
+      <div class="dif-desc">Un lugar que no está en los guías convencionales. Solo los que buscan lo encuentran.</div>
+    </div>
+    <div class="dif-item">
+      <span class="dif-emoji">⚡</span>
+      <div class="dif-titulo">Adrenalina Controlada</div>
+      <div class="dif-desc">Reto físico real con seguridad profesional. La emoción sin el riesgo innecesario.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ACTIVIDADES COMPLEMENTARIAS ═══ -->
+<section class="extras-section">
+  <div style="text-align:center">
+    <span class="section-eyebrow">Aumenta tu experiencia</span>
+    <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3.2rem);font-weight:300;color:var(--blanco);margin-top:12px;">Actividades <em style="font-style:italic;color:var(--oro-light)">Complementarias</em></h2>
+    <p style="font-size:14px;color:rgba(255,255,255,.5);margin-top:12px;max-width:500px;margin-inline:auto">Añade extras a tu plan para una experiencia aún más completa e irrepetible.</p>
+  </div>
+  <div class="extras-grid">
+    <div class="extra-item">
+      <span class="extra-nombre">🎬 Video Reel Cinematic</span>
+      <span class="extra-precio">$5–$10</span>
+    </div>
+    <div class="extra-item">
+      <span class="extra-nombre">📸 Fotos profesionales</span>
+      <span class="extra-precio">$5</span>
+    </div>
+    <div class="extra-item">
+      <span class="extra-nombre">🥑 Degustación productos aguacate</span>
+      <span class="extra-precio">$3</span>
+    </div>
+    <div class="extra-item">
+      <span class="extra-nombre">🏛️ Tour ancestral Alchipichí</span>
+      <span class="extra-precio">$5</span>
+    </div>
+    <div class="extra-item">
+      <span class="extra-nombre">⛺ Camping nocturno</span>
+      <span class="extra-precio">$20–$40</span>
+    </div>
+    <div class="extra-item">
+      <span class="extra-nombre">🔥 Fogata y storytelling</span>
+      <span class="extra-precio">$10</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ COPY VIRAL ═══ -->
+<section class="viral-section">
+  <div style="text-align:center;margin-bottom:48px">
+    <span class="section-eyebrow">El poder de esta experiencia</span>
+    <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3rem);font-weight:300;color:var(--blanco);margin-top:12px;">Hecho para <em style="font-style:italic;color:var(--oro-light)">viralizarse</em></h2>
+  </div>
+  <div class="viral-box">
+    <div class="viral-copy">
+      POV: te desconectas de la ciudad y descubres un paraíso escondido entre montañas, cascadas y cañones 😳🌿<br><br>
+      Bienvenido al <strong style="color:var(--oro-light)">Encañonado de los Tayos</strong>, una experiencia única en la Ruta Escondida de Alchipichí.<br><br>
+      A solo pocas horas de Quito. ¿Te atreverías a entrar? 🇪🇨
+    </div>
+    <div class="viral-tags">
+      <span class="viral-tag">🥾 Caminata de aventura</span>
+      <span class="viral-tag">💦 Cascadas y río</span>
+      <span class="viral-tag">🌄 Paisajes cinematográficos</span>
+      <span class="viral-tag">🍦 Helado artesanal</span>
+      <span class="viral-tag">🔥 Historia ancestral</span>
+      <span class="viral-tag">📸 Fotos increíbles</span>
+    </div>
+  </div>
+  <div style="text-align:center;margin-top:48px">
+    <p style="font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:16px">Potencial viral en</p>
+    <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+      <span style="font-size:13px;color:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.1);padding:8px 20px;">TikTok</span>
+      <span style="font-size:13px;color:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.1);padding:8px 20px;">Instagram Reels</span>
+      <span style="font-size:13px;color:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.1);padding:8px 20px;">YouTube</span>
+      <span style="font-size:13px;color:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.1);padding:8px 20px;">Facebook</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TESTIMONIO DESTACADO (Módulo 2) ═══ -->
+<section class="test-highlight-section" style="background:var(--blanco); padding:80px 48px 0; text-align:center;">
+  <div style="max-width:800px; margin:0 auto; padding:36px; background:rgba(27,67,50,0.02); border:1px solid rgba(27,67,50,0.06); border-radius:12px; box-shadow: 0 8px 30px rgba(0,0,0,0.01);">
+    <div style="font-size:20px; color:#C8A96A; margin-bottom:12px;">⭐⭐⭐⭐⭐</div>
+    <blockquote style="font-family:'Cormorant Garamond',serif; font-size:1.5rem; font-style:italic; line-height:1.6; color:var(--verde-andes); margin-bottom:20px; margin-top:0;">
+      "Una expedición de aventura cinematográfica. Caminar entre esas paredes gigantes de piedra y cruzar el río es mágico. Se siente como estar explorando un mundo secreto a pocas horas de la ciudad. El almuerzo campestre con aguacates locales fue la gloria."
+    </blockquote>
+    <cite style="font-family:'Inter',sans-serif; font-size:13px; font-weight:700; color:var(--negro); font-style:normal; display:block;">— Estefanía Paz, Quito</cite>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ RESERVAR AHORA (Módulo 1) -->
+<section class="reservar-section" id="reservar">
+  <div class="reservar-inner">
+    <div class="reservar-header">
+      <span class="section-eyebrow">Aventura sin Fricciones</span>
+      <h2>Reserva tu <em>Expedición</em></h2>
+      <p>Selecciona tu fecha y cantidad de exploradores. Recibirás una confirmación inmediata por WhatsApp y un correo detallado de preparación.</p>
+    </div>
+
+    <form class="reservar-form" id="booking-form" action="https://formspree.io/f/xoqgbpde" method="POST">
+      <!-- Ruta Pre-seleccionada -->
+      <input type="hidden" name="Ruta" id="booking-ruta-input" value="El Encañonado de los Tayos" />
+      
+      <div class="form-row-2">
+        <div class="booking-form-group">
+          <label for="booking-name">Nombre Completo</label>
+          <input type="text" id="booking-name" name="Nombre" placeholder="Ej: Francisco Cevallos" required />
+        </div>
+        <div class="booking-form-group">
+          <label for="booking-email">Correo Electrónico</label>
+          <input type="email" id="booking-email" name="Email" placeholder="Ej: francisco@example.com" required />
+        </div>
+      </div>
+
+      <div class="form-row-2">
+        <div class="booking-form-group">
+          <label for="booking-wa">WhatsApp de Contacto</label>
+          <input type="tel" id="booking-wa" name="WhatsApp" placeholder="Ej: 0993356073" required />
+        </div>
+        <div class="booking-form-group">
+          <label for="booking-triptype">Tipo de Viaje</label>
+          <select id="booking-triptype" name="TipoViaje" required style="width: 100%; padding: 12px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); color: var(--blanco); border-radius: 4px; outline: none; font-family: 'Inter', sans-serif;">
+            <option value="familia">Con mi Familia</option>
+            <option value="pareja">En Pareja</option>
+            <option value="solo">Viajo Solo</option>
+            <option value="grupo">Grupo de amigos</option>
+            <option value="escolar">Grupo Escolar / Educativo</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row-2">
+        <div class="booking-form-group">
+          <label for="booking-city">Ciudad de Origen</label>
+          <input type="text" id="booking-city" name="Ciudad" placeholder="Ej: Quito" required />
+        </div>
+        <div class="booking-form-group">
+          <label for="booking-country">País</label>
+          <input type="text" id="booking-country" name="Pais" placeholder="Ej: Ecuador" required />
+        </div>
+      </div>
+
+      <div class="form-row-2">
+        <div class="booking-form-group">
+          <label for="booking-date">Fecha Deseada</label>
+          <input type="date" id="booking-date" name="Fecha" required />
+        </div>
+        <div class="booking-form-group">
+          <label>Cantidad de Personas</label>
+          <div class="quantity-controls booking-qty-controls">
+            <button type="button" class="qty-btn" id="booking-qty-minus" aria-label="Disminuir exploradores">—</button>
+            <span class="qty-val" id="booking-qty-val">2</span>
+            <button type="button" class="qty-btn" id="booking-qty-plus" aria-label="Aumentar exploradores">+</button>
+            <input type="hidden" name="Personas" id="booking-qty-input" value="2" />
+          </div>
+        </div>
+      </div>
+
+      <div class="booking-form-group">
+        <label for="booking-msg">Mensaje / Requerimientos Especiales (Opcional)</label>
+        <textarea id="booking-msg" name="Mensaje" placeholder="Ej: Viajo con amigos. ¿Se necesita calzado especial para el encañonado?"></textarea>
+      </div>
+
+      <div class="booking-cta-group">
+        <button type="submit" class="btn-reserva-submit" id="btn-booking-email">
+          <span>✉️</span> Solicitar Reserva Nativa
+        </button>
+        <button type="button" class="btn-reserva-wa" id="btn-booking-wa">
+          <svg viewBox="0 0 24 24">
+            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.73-1.455L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.625 1.451 5.437.002 9.861-4.416 9.863-9.854.001-2.63-1.02-5.101-2.877-6.958C16.4 1.938 13.93 .917 11.299.917c-5.441 0-9.865 4.419-9.867 9.856-.001 1.958.51 3.868 1.482 5.56l-.993 3.628 3.725-.977zm11.587-6.85c-.265-.124-1.566-.77-1.81-.857-.243-.088-.419-.132-.596.133-.177.265-.685.857-.84 1.034-.154.177-.31.198-.575.075-.265-.124-1.12-.413-2.133-1.313-.788-.702-1.32-1.57-1.474-1.835-.155-.265-.017-.409.116-.54.12-.12.265-.31.398-.464.133-.155.177-.265.265-.442.088-.177.044-.332-.022-.464-.066-.132-.596-1.436-.817-1.966-.215-.518-.432-.447-.596-.456-.153-.008-.33-.009-.508-.009-.177 0-.464.066-.707.332-.243.265-.928.906-.928 2.21 0 1.303.95 2.564 1.083 2.74.133.177 1.87 2.854 4.529 4.001.633.273 1.125.435 1.51.557.636.202 1.215.174 1.673.106.51-.077 1.566-.64 1.787-1.258.222-.619.222-1.15.155-1.258-.066-.109-.243-.177-.508-.31z"/>
+          </svg>
+          Confirmar por WhatsApp Express
+        </button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- ═══ CTA FINAL ═══ -->
+<section class="ruta-cta-section" style="background:var(--negro);border-top:1px solid rgba(200,169,106,.2)">
+  <div style="max-width:700px;margin:0 auto;text-align:center">
+    <span class="section-eyebrow">No esperes más</span>
+    <h2>¿Te atreves a entrar<br><em>al encañonado?</em></h2>
+    <p>Cupos limitados por fecha. Reserva con anticipación para asegurar tu lugar en la expedición.</p>
+  </div>
+  <div class="ruta-cta-btns">
+    <a href="https://wa.me/593984480203?text=Hola,%20quiero%20reservar%20el%20Encañonado%20de%20los%20Tayos" class="btn-comprar" id="btn-reservar-tayos-final" target="_blank" rel="noopener">📲 Reservar por WhatsApp</a>
+    <a href="mailto:reservas@rutaescondida.com?subject=Reserva%20Encañonado%20de%20los%20Tayos" class="btn-cta" id="btn-email-tayos">Escribir por Email →</a>
+  </div>
+  <div class="otras-rutas">
+    <span>También te puede interesar:</span>
+    <a href="gigante-dormido.html">El Gigante Dormido</a>
+    <a href="sendero-agua.html">El Sendero del Agua</a>
+    <a href="salidas-pedagogicas.html">Salidas Pedagógicas</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-bottom" style="border-top:1px solid rgba(255,255,255,.08);padding:24px 48px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;">
+    <a href="index.html" class="nav-logo" style="text-decoration:none;">
+      <img src="assets/img/logo.png" alt="Ruta Escondida" style="height:40px;width:auto;object-fit:contain;filter:drop-shadow(0 1px 3px rgba(0,0,0,0.4));" onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
+      <span style="display:none;font-size:11px;letter-spacing:.2em;color:var(--oro);">RUTA ESCONDIDA</span>
+    </a>
+    <p style="font-size:12px;color:rgba(255,255,255,.35)">© 2026 Ruta Escondida · Corredor Turístico (Puéllaro, Perucho, Atahualpa, Chavezpamba y Minas) · Todos los derechos reservados</p>
+    <a href="index.html" style="font-size:11px;letter-spacing:.2em;color:var(--oro);text-decoration:none;">← Volver al inicio</a>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="assets/js/ruta-page.js"></script>
+<script>
+  // Smooth scroll for anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const href = a.getAttribute('href');
+      if (href === '#') return;
+      const target = document.querySelector(href);
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  // Animate plan cards on scroll
+  gsap.registerPlugin(ScrollTrigger);
+  gsap.fromTo('.plan-card',
+    { opacity: 0, y: 40 },
+    { opacity: 1, y: 0, duration: .9, stagger: 0.2, ease: 'power3.out',
+      scrollTrigger: { trigger: '.planes-grid', start: 'top 80%' } }
+  );
+  gsap.fromTo('.publico-card',
+    { opacity: 0, y: 30 },
+    { opacity: 1, y: 0, duration: .7, stagger: 0.1, ease: 'power3.out',
+      scrollTrigger: { trigger: '.publico-grid', start: 'top 80%' } }
+  );
+  gsap.fromTo('.tl-item',
+    { opacity: 0, x: -20 },
+    { opacity: 1, x: 0, duration: .6, stagger: 0.08, ease: 'power2.out',
+      scrollTrigger: { trigger: '.timeline-grid', start: 'top 80%' } }
+  );
+  gsap.fromTo('.extra-item',
+    { opacity: 0, y: 20 },
+    { opacity: 1, y: 0, duration: .6, stagger: 0.1, ease: 'power3.out',
+      scrollTrigger: { trigger: '.extras-grid', start: 'top 80%' } }
+  );
+  gsap.fromTo('.dif-item',
+    { opacity: 0, y: 24 },
+    { opacity: 1, y: 0, duration: .7, stagger: 0.08, ease: 'power3.out',
+      scrollTrigger: { trigger: '.dif-grid', start: 'top 80%' } }
+  );
+</script>
+<a href="https://wa.me/593984480203?text=Hola%20Diego,%20quiero%20información%20sobre%20Ruta%20Escondida" class="wa-float" id="wa-float-btn" target="_blank" rel="noopener" aria-label="Contactar por WhatsApp">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" fill="currentColor"/></svg>
+</a>
+</body>
+</html>

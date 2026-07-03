@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="assets/img/logo.png" />
+  <link rel="apple-touch-icon" href="assets/img/logo.png" />
+  <title>Panel Administrativo · Ruta Escondida</title>
+  <meta name="robots" content="noindex, nofollow" />
+  
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/ruta-page.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  
+  <style>
+    /* Estilos del Panel Admin de Comisiones (Diseño Dark Glassmorphic) */
+    .admin-dashboard-page {
+      background: linear-gradient(160deg, #07140e 0%, #0a0a0a 100%);
+      padding: 120px 48px 80px 48px;
+      min-height: 85vh;
+      color: var(--blanco);
+    }
+    .admin-dashboard-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .admin-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      padding-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .admin-header h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.6rem;
+      font-weight: 300;
+      margin: 0;
+      color: var(--oro);
+    }
+    .admin-header h2 em {
+      font-style: italic;
+      color: var(--oro-light);
+    }
+    
+    /* TABS */
+    .admin-tabs {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 32px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding-bottom: 12px;
+      flex-wrap: wrap;
+    }
+    .admin-tab-btn {
+      background: transparent;
+      color: rgba(255, 255, 255, 0.6);
+      border: none;
+      padding: 10px 20px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 13.5px;
+      border-radius: 6px;
+      transition: all 0.3s;
+    }
+    .admin-tab-btn:hover {
+      color: #fff;
+      background: rgba(255,255,255,0.02);
+    }
+    .admin-tab-btn.active {
+      background: rgba(200, 169, 106, 0.12) !important;
+      color: var(--oro) !important;
+      box-shadow: 0 0 10px rgba(200, 169, 106, 0.1);
+    }
+    
+    .tab-pane {
+      display: none;
+    }
+    .tab-pane.active {
+      display: block;
+    }
+    
+    .admin-metrics {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+    .metric-card {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.05);
+      padding: 32px 24px;
+      border-radius: 12px;
+      text-align: center;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+      transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+    .metric-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(200, 169, 106, 0.2);
+    }
+    .metric-card h4 {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--gris);
+      margin-bottom: 12px;
+    }
+    .metric-card .metric-val {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.4rem;
+      color: var(--oro-light);
+      font-weight: 300;
+    }
+    .admin-table-wrapper {
+      overflow-x: auto;
+      background: rgba(0,0,0,0.3);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 12px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+    }
+    .admin-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 13.5px;
+    }
+    .admin-table th, .admin-table td {
+      padding: 18px 24px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .admin-table th {
+      background: rgba(255,255,255,0.02);
+      font-weight: 600;
+      color: var(--oro);
+      text-transform: uppercase;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+    }
+    .admin-table tr:hover {
+      background: rgba(255,255,255,0.015);
+    }
+    .status-badge {
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      display: inline-block;
+    }
+    .status-pending {
+      background: rgba(200, 169, 106, 0.12);
+      color: var(--oro);
+      border: 1px solid rgba(200, 169, 106, 0.3);
+    }
+    .status-paid {
+      background: rgba(46, 204, 113, 0.12);
+      color: #2ecc71;
+      border: 1px solid rgba(46, 204, 113, 0.3);
+    }
+    .status-suspended {
+      background: rgba(231, 76, 60, 0.12);
+      color: #e74c3c;
+      border: 1px solid rgba(231, 76, 60, 0.3);
+    }
+    .admin-btn {
+      padding: 6px 12px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .btn-admin-action {
+      background: rgba(200,169,106,0.15);
+      color: var(--oro-light);
+      border: 1px solid rgba(200,169,106,0.3);
+    }
+    .btn-admin-action:hover {
+      background: var(--oro);
+      color: var(--negro);
+    }
+    .btn-admin-delete {
+      background: rgba(231, 76, 60, 0.12);
+      color: #e74c3c;
+      border: 1px solid rgba(231, 76, 60, 0.3);
+      margin-left: 6px;
+    }
+    .btn-admin-delete:hover {
+      background: #e74c3c;
+      color: var(--blanco);
+    }
+    @media(max-width: 1024px) {
+      .admin-dashboard-page {
+        padding: 100px 24px 60px 24px;
+      }
+      .admin-table th, .admin-table td {
+        padding: 14px 16px;
+      }
+    }
+  </style>
+</head>
+<body class="ruta-body">
+
+<!-- NAV -->
+<nav id="main-nav" class="scrolled">
+  <a href="index.html" class="nav-logo">
+    <img src="assets/img/logo.png" alt="Ruta Escondida" class="logo-img" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/>
+    <svg viewBox="0 0 320 90" fill="none" xmlns="http://www.w3.org/2000/svg" class="logo-svg" style="display:none">
+      <g><polygon points="140,70 168,28 196,70" fill="#5A5860"/><polygon points="160,70 192,18 224,70" fill="#4A4850"/><polygon points="168,28 174,36 162,36" fill="#E0DBD5"/><polygon points="192,18 199,28 185,28" fill="#E0DBD5"/><circle cx="210" cy="32" r="14" fill="#C8A96A"/></g>
+      <text x="0" y="52" font-family="Georgia,serif" font-size="32" font-weight="bold" fill="#C8A96A">Ruta</text>
+      <text x="0" y="76" font-family="Arial,sans-serif" font-size="22" font-weight="bold" fill="#5A5860">ESCONDIDA.COM</text>
+    </svg>
+  </a>
+  <ul class="nav-links">
+    <li class="nav-dropdown">
+      <a href="index.html#turismo">Turismo de Inmersión</a>
+      <div class="dropdown-menu">
+        <a href="gigante-dormido.html">El Gigante Dormido</a>
+        <a href="sendero-agua.html">El Sendero del Agua</a>
+        <a href="tayos.html">Encañonado de los Tayos</a>
+      </div>
+    </li>
+    <li><a href="index.html#tienda">Tienda</a></li>
+    <li><a href="salidas-pedagogicas.html">Salidas Pedagógicas</a></li>
+    <li><a href="galeria.html">Galería</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li class="nav-dropdown">
+      <a href="negocios.html">Las Parroquias</a>
+      <div class="dropdown-menu">
+        <a href="negocios.html">Ver Todo</a>
+        <a href="negocios.html?parish=Puéllaro">Puéllaro</a>
+        <a href="negocios.html?parish=Perucho">Perucho</a>
+        <a href="negocios.html?parish=Atahualpa">Atahualpa</a>
+        <a href="negocios.html?parish=Chavezpamba">Chavezpamba</a>
+        <a href="negocios.html?parish=Minas">Minas</a>
+      </div>
+    </li>
+    <li><a href="index.html#impacto">Impacto</a></li>
+  </ul>
+  <a href="https://wa.me/593984480203?text=Hola,%20quiero%20reservar%20una%20experiencia%20en%20Ruta%20Escondida" class="btn-cta" id="btn-nav-reservar-dir" target="_blank" rel="noopener">Reservar Experiencia</a>
+</nav>
+
+<!-- MAIN CONTENT ADMIN -->
+<section class="admin-dashboard-page">
+  <div class="admin-dashboard-container">
+    <div class="admin-header">
+      <h2>Dashboard Global · <em>Administración de Plataforma</em></h2>
+      <span style="font-size: 11px; text-transform: uppercase; color: var(--oro); background: rgba(200,169,106,0.12); padding: 6px 12px; border-radius: 4px; font-weight: 700; letter-spacing: 0.05em;">Acceso Restringido · Administrador Principal</span>
+    </div>
+    
+    <!-- Tab Controls -->
+    <div class="admin-tabs">
+      <button class="admin-tab-btn active" data-tab="tab-reservas"><i class="fa-solid fa-chart-pie" style="margin-right:8px;"></i> Reservas y Comisiones</button>
+      <button class="admin-tab-btn" data-tab="tab-negocios"><i class="fa-solid fa-store" style="margin-right:8px;"></i> Aprobación de Negocios</button>
+      <button class="admin-tab-btn" data-tab="tab-crm"><i class="fa-solid fa-users-viewfinder" style="margin-right:8px;"></i> Prospectos (CRM)</button>
+    </div>
+
+    <!-- ── TAB: RESERVAS & COMISIONES ────────── -->
+    <div class="tab-pane active" id="tab-reservas">
+      <div class="admin-metrics">
+        <div class="metric-card">
+          <h4>Total Reservas Registradas</h4>
+          <div class="metric-val" id="admin-metric-total">0</div>
+        </div>
+        <div class="metric-card">
+          <h4>Valor Estimado Movilizado</h4>
+          <div class="metric-val" id="admin-metric-value">$0.00</div>
+        </div>
+        <div class="metric-card">
+          <h4>Comisión Acumulada Cobrada</h4>
+          <div class="metric-val" id="admin-metric-commission" style="color: #2ecc71;">$0.00</div>
+        </div>
+      </div>
+
+      <div class="admin-table-wrapper">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Fecha Solicitud</th>
+              <th>Negocio</th>
+              <th>Parroquia</th>
+              <th>Cliente</th>
+              <th>WhatsApp</th>
+              <th>Fecha Reserva</th>
+              <th>Personas</th>
+              <th>Monto Est.</th>
+              <th>Comisión (10%)</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="admin-booking-list">
+            <tr>
+              <td colspan="11" style="text-align: center; color: rgba(255,255,255,0.4); padding: 32px 0;">No se han registrado reservas aún en el portal.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ── TAB: APROBACIÓN DE NEGOCIOS ───────── -->
+    <div class="tab-pane" id="tab-negocios">
+      <div class="admin-table-wrapper">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Negocio</th>
+              <th>Categoría</th>
+              <th>Parroquia</th>
+              <th>Responsable</th>
+              <th>WhatsApp</th>
+              <th>Plan</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="admin-businesses-list">
+            <tr>
+              <td colspan="8" style="text-align: center; color: rgba(255,255,255,0.4); padding: 32px 0;">Cargando negocios...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ── TAB: PROSPECTOS (CRM) ─────────────── -->
+    <div class="tab-pane" id="tab-crm">
+      <div class="admin-table-wrapper">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Fecha Captura</th>
+              <th>Nombre</th>
+              <th>Email</th>
+              <th>Teléfono</th>
+              <th>Servicio Consultado</th>
+              <th>Acción</th>
+            </tr>
+          </thead>
+          <tbody id="admin-crm-list">
+            <tr>
+              <td colspan="6" style="text-align: center; color: rgba(255,255,255,0.4); padding: 32px 0;">Cargando prospectos...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <img src="assets/img/logo.png" alt="Ruta Escondida" style="height:48px; width:auto; margin-bottom:16px;" onerror="this.style.display='none'" />
+      <p>Turismo consciente, productos artesanales y conservación desde el corazón de los Andes ecuatorianos.</p>
+    </div>
+
+    <div>
+      <h4>Turismo</h4>
+      <ul>
+        <li><a href="gigante-dormido.html">El Gigante Dormido</a></li>
+        <li><a href="sendero-agua.html">El Sendero del Agua</a></li>
+        <li><a href="tayos.html">Encañonado de los Tayos</a></li>
+        <li><a href="salidas-pedagogicas.html">Salidas Pedagógicas</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h4>Tienda</h4>
+      <ul>
+        <li><a href="index.html#tienda">Aceite Extra Virgen</a></li>
+        <li><a href="index.html#tienda">Sérum Facial</a></li>
+        <li><a href="index.html#tienda">Mandarinas Frescas</a></li>
+        <li><a href="index.html#tienda">Té de Hojas de Aguacate</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h4>Contacto</h4>
+      <ul>
+        <li><a href="mailto:hola@rutaescondida.com">hola@rutaescondida.com</a></li>
+        <li><a href="index.html#impacto">Sobre nosotros</a></li>
+        <li><a href="negocios.html#unirse">Unir mi Negocio</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>© 2026 Ruta Escondida · Corredor Turístico (Puéllaro, Perucho, Atahualpa, Chavezpamba y Minas) · Todos los derechos reservados</p>
+  </div>
+</footer>
+
+<!-- Firebase SDKs Compat (Out of the box para static hosts) -->
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-storage-compat.js"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Configuración Firebase (Rellenar con credenciales reales para activar persistencia en la nube)
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_AUTH_DOMAIN",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_STORAGE_BUCKET",
+      messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+
+    let db = null;
+    let useFirebase = false;
+
+    // Inicializar Firebase si se han configurado credenciales reales
+    if (firebaseConfig.apiKey && firebaseConfig.apiKey !== "YOUR_API_KEY") {
+      try {
+        firebase.initializeApp(firebaseConfig);
+        db = firebase.firestore();
+        useFirebase = true;
+        console.log("Firebase inicializado en Dashboard Administrativo.");
+      } catch (e) {
+        console.error("Error al inicializar Firebase en Dashboard:", e);
+      }
+    }
+
+    // --- MANEJO DE TABS ---
+    const tabButtons = document.querySelectorAll('.admin-tab-btn');
+    tabButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        tabButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        
+        const targetTab = btn.getAttribute('data-tab');
+        const tabPanes = document.querySelectorAll('.tab-pane');
+        tabPanes.forEach(pane => pane.classList.remove('active'));
+        document.getElementById(targetTab).classList.add('active');
+        
+        if (targetTab === 'tab-negocios') {
+          cargarNegociosAdmin();
+        } else if (targetTab === 'tab-crm') {
+          cargarCrmLeads();
+        } else if (targetTab === 'tab-reservas') {
+          cargarReservasAdmin();
+        }
+      });
+    });
+
+    // Cargar tab inicial
+    cargarReservasAdmin();
+
+    // ── GESTIÓN DE RESERVAS ──────────────────────
+    function cargarReservasAdmin() {
+      if (useFirebase) {
+        db.collection("reservas").get()
+          .then(querySnapshot => {
+            const bookings = [];
+            querySnapshot.forEach(doc => {
+              bookings.push(doc.data());
+            });
+            bookings.sort((a,b) => new Date(b.timestamp) - new Date(a.timestamp));
+            renderizarReservasAdmin(bookings);
+          })
+          .catch(err => {
+            console.error("Error al cargar reservas de Firestore:", err);
+            cargarReservasAdminDesdeLocal();
+          });
+      } else {
+        cargarReservasAdminDesdeLocal();
+      }
+    }
+
+    function cargarReservasAdminDesdeLocal() {
+      const stored = localStorage.getItem('ruta_escondida_reservas');
+      const bookings = stored ? JSON.parse(stored) : [];
+      bookings.sort((a,b) => new Date(b.timestamp) - new Date(a.timestamp));
+      renderizarReservasAdmin(bookings);
+    }
+
+    function renderizarReservasAdmin(bookings) {
+      const listContainer = document.getElementById('admin-booking-list');
+      listContainer.innerHTML = '';
+
+      if (bookings.length === 0) {
+        listContainer.innerHTML = `
+          <tr>
+            <td colspan="11" style="text-align: center; color: rgba(255,255,255,0.4); padding: 32px 0;">No se han registrado reservas aún en el portal.</td>
+          </tr>
+        `;
+        actualizarMetricasAdmin([]);
+        return;
+      }
+
+      bookings.forEach(booking => {
+        const valorEstimado = booking.guests * 15;
+        const comisionEstimada = valorEstimado * 0.10;
+
+        const row = document.createElement('tr');
+        const fechaSolicitud = new Date(booking.timestamp).toLocaleDateString();
+        
+        row.innerHTML = `
+          <td>${fechaSolicitud}</td>
+          <td style="font-weight:600; color:var(--oro);">${booking.bizName}</td>
+          <td>${booking.parish}</td>
+          <td>${booking.clientName}</td>
+          <td><a href="https://wa.me/${booking.clientPhone}" target="_blank" style="color:#C8A96A; text-decoration:none;">📲 ${booking.clientPhone}</a></td>
+          <td>${booking.visitDate}</td>
+          <td>${booking.guests}</td>
+          <td style="font-weight:600;">$${valorEstimado.toFixed(2)}</td>
+          <td style="color:#2ecc71; font-weight:600;">$${comisionEstimada.toFixed(2)}</td>
+          <td>
+            <span class="status-badge ${booking.status === 'cobrada' ? 'status-paid' : 'status-pending'}">
+              ${booking.status === 'cobrada' ? 'Cobrada' : 'Pendiente'}
+            </span>
+          </td>
+          <td>
+            <button class="admin-btn btn-admin-action" onclick="toggleComision('${booking.id}', '${booking.status}')">
+              ${booking.status === 'cobrada' ? 'Pendiente' : 'Cobrar'}
+            </button>
+            <button class="admin-btn btn-admin-delete" onclick="eliminarReserva('${booking.id}')">
+              ✕
+            </button>
+          </td>
+        `;
+        listContainer.appendChild(row);
+      });
+
+      actualizarMetricasAdmin(bookings);
+    }
+
+    function actualizarMetricasAdmin(bookings) {
+      const totalReservas = bookings.length;
+      let totalValor = 0;
+      let totalComision = 0;
+
+      bookings.forEach(b => {
+        const val = b.guests * 15;
+        totalValor += val;
+        if (b.status === 'cobrada') {
+          totalComision += (val * 0.10);
+        }
+      });
+
+      document.getElementById('admin-metric-total').innerText = totalReservas;
+      document.getElementById('admin-metric-value').innerText = `$${totalValor.toFixed(2)}`;
+      document.getElementById('admin-metric-commission').innerText = `$${totalComision.toFixed(2)}`;
+    }
+
+    window.toggleComision = (bookingId, currentStatus) => {
+      const newStatus = currentStatus === 'cobrada' ? 'pendiente' : 'cobrada';
+
+      if (useFirebase) {
+        db.collection("reservas").doc(bookingId).update({ status: newStatus })
+          .then(() => cargarReservasAdmin())
+          .catch(err => console.error("Error al actualizar estado en Firestore:", err));
+      } else {
+        const stored = localStorage.getItem('ruta_escondida_reservas');
+        if (stored) {
+          const list = JSON.parse(stored);
+          const booking = list.find(b => b.id === bookingId);
+          if (booking) {
+            booking.status = newStatus;
+            localStorage.setItem('ruta_escondida_reservas', JSON.stringify(list));
+            cargarReservasAdmin();
+          }
+        }
+      }
+    };
+
+    window.eliminarReserva = (bookingId) => {
+      if (!confirm("¿Estás seguro de que deseas eliminar esta reserva de los registros?")) return;
+
+      if (useFirebase) {
+        db.collection("reservas").doc(bookingId).delete()
+          .then(() => cargarReservasAdmin())
+          .catch(err => console.error("Error al eliminar documento en Firestore:", err));
+      } else {
+        const stored = localStorage.getItem('ruta_escondida_reservas');
+        if (stored) {
+          let list = JSON.parse(stored);
+          list = list.filter(b => b.id !== bookingId);
+          localStorage.setItem('ruta_escondida_reservas', JSON.stringify(list));
+          cargarReservasAdmin();
+        }
+      }
+    };
+
+    // ── GESTIÓN Y APROBACIÓN DE NEGOCIOS ─────────
+    function cargarNegociosAdmin() {
+      if (useFirebase) {
+        db.collection("negocios").get()
+          .then(querySnapshot => {
+            const list = [];
+            querySnapshot.forEach(doc => {
+              list.push({ id: doc.id, ...doc.data() });
+            });
+            renderizarNegociosAdmin(list);
+          })
+          .catch(err => {
+            console.error("Error en Firebase al cargar negocios:", err);
+            cargarNegociosAdminDesdeLocal();
+          });
+      } else {
+        cargarNegociosAdminDesdeLocal();
+      }
+    }
+
+    function cargarNegociosAdminDesdeLocal() {
+      const stored = localStorage.getItem('ruta_escondida_negocios');
+      const list = stored ? JSON.parse(stored) : [];
+      renderizarNegociosAdmin(list);
+    }
+
+    function renderizarNegociosAdmin(list) {
+      const container = document.getElementById('admin-businesses-list');
+      container.innerHTML = '';
+      
+      if (list.length === 0) {
+        container.innerHTML = `<tr><td colspan="8" style="text-align:center; color:rgba(255,255,255,0.4); padding:32px 0;">No hay negocios registrados aún en la plataforma.</td></tr>`;
+        return;
+      }
+      
+      list.forEach(biz => {
+        const statusLabel = biz.status === 'active' ? 'Activo' : (biz.status === 'suspended' ? 'Suspendido' : 'Pendiente');
+        const badgeClass = biz.status === 'active' ? 'status-paid' : (biz.status === 'suspended' ? 'status-suspended' : 'status-pending');
+        
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td style="font-weight:600; color:var(--oro);">${biz.name}</td>
+          <td style="text-transform:capitalize;">${biz.category}</td>
+          <td>${biz.parish}</td>
+          <td>${biz.manager_name}</td>
+          <td><a href="https://wa.me/${biz.whatsapp}" target="_blank" style="color:#C8A96A; text-decoration:none;">📲 ${biz.whatsapp}</a></td>
+          <td>${biz.plan || 'Básico'}</td>
+          <td><span class="status-badge ${badgeClass}">${statusLabel}</span></td>
+          <td>
+            <button class="admin-btn btn-admin-action" onclick="toggleEstadoNegocio('${biz.id}', '${biz.status}')">
+              ${biz.status === 'active' ? 'Suspender' : 'Aprobar'}
+            </button>
+            <button class="admin-btn btn-admin-delete" onclick="eliminarNegocio('${biz.id}')">✕</button>
+          </td>
+        `;
+        container.appendChild(row);
+      });
+    }
+
+    window.toggleEstadoNegocio = (id, currentStatus) => {
+      const newStatus = currentStatus === 'active' ? 'suspended' : 'active';
+      
+      if (useFirebase) {
+        db.collection("negocios").doc(id).update({ status: newStatus })
+          .then(() => cargarNegociosAdmin())
+          .catch(err => console.error("Error al actualizar estado del negocio:", err));
+      } else {
+        const stored = localStorage.getItem('ruta_escondida_negocios');
+        if (stored) {
+          const list = JSON.parse(stored);
+          const biz = list.find(b => b.id === id);
+          if (biz) {
+            biz.status = newStatus;
+            localStorage.setItem('ruta_escondida_negocios', JSON.stringify(list));
+            cargarNegociosAdmin();
+          }
+        }
+      }
+    };
+
+    window.eliminarNegocio = (id) => {
+      if (!confirm("¿Estás seguro de que deseas eliminar este negocio de forma permanente de la red?")) return;
+      
+      if (useFirebase) {
+        db.collection("negocios").doc(id).delete()
+          .then(() => cargarNegociosAdmin())
+          .catch(err => console.error("Error al eliminar negocio:", err));
+      } else {
+        const stored = localStorage.getItem('ruta_escondida_negocios');
+        if (stored) {
+          let list = JSON.parse(stored);
+          list = list.filter(b => b.id !== id);
+          localStorage.setItem('ruta_escondida_negocios', JSON.stringify(list));
+          cargarNegociosAdmin();
+        }
+      }
+    };
+
+    // ── GESTIÓN DE PROSPECTOS (CRM) ──────────────
+    function cargarCrmLeads() {
+      if (useFirebase) {
+        db.collection("crm_leads").get()
+          .then(querySnapshot => {
+            const list = [];
+            querySnapshot.forEach(doc => {
+              list.push(doc.data());
+            });
+            list.sort((a,b) => new Date(b.timestamp) - new Date(a.timestamp));
+            renderizarCrmLeads(list);
+          })
+          .catch(err => {
+            console.error("Error en Firebase al cargar leads:", err);
+            cargarCrmLeadsDesdeLocal();
+          });
+      } else {
+        cargarCrmLeadsDesdeLocal();
+      }
+    }
+
+    function cargarCrmLeadsDesdeLocal() {
+      const stored = localStorage.getItem('ruta_escondida_crm_leads');
+      let list = stored ? JSON.parse(stored) : [];
+      
+      // Sembrar datos mock iniciales de CRM si está completamente vacío para demostración
+      if (list.length === 0) {
+        list = [
+          { id: "lead_1", name: "Esteban Rosales", email: "esteban.r@email.com", phone: "593988776655", interest_topic: "Reserva en Glamping Andes Escondidos (Chavezpamba)", timestamp: new Date(Date.now() - 3600000 * 2).toISOString() },
+          { id: "lead_2", name: "Sofía Montenegro", email: "sofia.mont@email.com", phone: "593987112233", interest_topic: "Reserva en El Mirador de Alchipichí (Puéllaro)", timestamp: new Date(Date.now() - 3600000 * 24).toISOString() }
+        ];
+        localStorage.setItem('ruta_escondida_crm_leads', JSON.stringify(list));
+      }
+      
+      list.sort((a,b) => new Date(b.timestamp) - new Date(a.timestamp));
+      renderizarCrmLeads(list);
+    }
+
+    function renderizarCrmLeads(list) {
+      const container = document.getElementById('admin-crm-list');
+      container.innerHTML = '';
+      
+      if (list.length === 0) {
+        container.innerHTML = `<tr><td colspan="6" style="text-align:center; color:rgba(255,255,255,0.4); padding:32px 0;">No hay prospectos en el CRM.</td></tr>`;
+        return;
+      }
+      
+      list.forEach(lead => {
+        const dateStr = new Date(lead.timestamp || Date.now()).toLocaleString();
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${dateStr}</td>
+          <td style="font-weight:600; color:var(--oro);">${lead.name}</td>
+          <td>${lead.email || 'No ingresado'}</td>
+          <td><a href="https://wa.me/${lead.phone}" target="_blank" style="color:#C8A96A; text-decoration:none;">📲 ${lead.phone}</a></td>
+          <td>${lead.interest_topic}</td>
+          <td>
+            <button class="admin-btn btn-admin-delete" onclick="eliminarLead('${lead.id}')">✕</button>
+          </td>
+        `;
+        container.appendChild(row);
+      });
+    }
+
+    window.eliminarLead = (id) => {
+      if (!confirm("¿Deseas eliminar este registro de lead de forma permanente?")) return;
+      
+      if (useFirebase) {
+        db.collection("crm_leads").doc(id).delete()
+          .then(() => cargarCrmLeads())
+          .catch(err => console.error("Error al eliminar lead en Firestore:", err));
+      } else {
+        const stored = localStorage.getItem('ruta_escondida_crm_leads');
+        if (stored) {
+          let list = JSON.parse(stored);
+          list = list.filter(l => l.id !== id);
+          localStorage.setItem('ruta_escondida_crm_leads', JSON.stringify(list));
+          cargarCrmLeads();
+        }
+      }
+    };
+  });
+
+  // HAMBURGER MENU MÓVIL
+  (function() {
+    const nav = document.getElementById('main-nav');
+    if (!nav) return;
+
+    const burger = document.createElement('button');
+    burger.className = 'nav-hamburger';
+    burger.setAttribute('aria-label', 'Menú');
+    burger.innerHTML = '<span></span><span></span><span></span>';
+    nav.appendChild(burger);
+
+    const panel = document.createElement('nav');
+    panel.className = 'nav-mobile-panel';
+    panel.innerHTML = `
+      <a href="index.html">Inicio</a>
+      <a href="gigante-dormido.html">El Gigante Dormido</a>
+      <a href="sendero-agua.html">El Sendero del Agua</a>
+      <a href="tayos.html">Encañonado de los Tayos</a>
+      <a href="salidas-pedagogicas.html">Salidas Pedagógicas</a>
+      <a href="galeria.html">Galería</a>
+      <a href="blog.html">Blog</a>
+      <a href="negocios.html">Las Parroquias (Ver Todo)</a>
+      <a href="negocios.html?parish=Puéllaro" style="padding-left:20px; font-size:12px; opacity:0.8;">📍 Puéllaro</a>
+      <a href="negocios.html?parish=Perucho" style="padding-left:20px; font-size:12px; opacity:0.8;">📍 Perucho</a>
+      <a href="negocios.html?parish=Atahualpa" style="padding-left:20px; font-size:12px; opacity:0.8;">📍 Atahualpa</a>
+      <a href="negocios.html?parish=Chavezpamba" style="padding-left:20px; font-size:12px; opacity:0.8;">📍 Chavezpamba</a>
+      <a href="negocios.html?parish=Minas" style="padding-left:20px; font-size:12px; opacity:0.8;">📍 Minas</a>
+      <a href="https://wa.me/593984480203?text=Hola%20Diego,%20quiero%20reservar" class="nav-mobile-cta" target="_blank" style="margin-top:12px;">📲 Reservar</a>
+    `;
+    document.body.appendChild(panel);
+
+    burger.addEventListener('click', () => {
+      burger.classList.toggle('open');
+      panel.classList.toggle('open');
+      document.body.style.overflow = panel.classList.contains('open') ? 'hidden' : '';
+    });
+
+    panel.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        burger.classList.remove('open');
+        panel.classList.remove('open');
+        document.body.style.overflow = '';
+      });
+    });
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="assets/img/logo.png" />
+  <link rel="apple-touch-icon" href="assets/img/logo.png" />
+  <title>El Gigante Dormido · El Campanario — Ruta Escondida, Alchipichí</title>
+  <meta name="description" content="Conquista El Campanario, el guardián milenario de Alchipichí. Senderismo de altura con vistas panorámicas 360° de toda la Ruta Escondida. Desde $15 por persona. Full Day desde Quito." />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/ruta-page.css" />
+  <!-- Schema.org: Diego Ruiz H. — Guía Turístico Ruta Escondida -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TouristTrip",
+    "name": "El Gigante Dormido · El Campanario",
+    "description": "Ruta de senderismo de altura en Alchipichí, Ecuador. Ascenso al Campanario con vistas 360°, guiado por Diego Ruiz H., guía turístico especializado en los Andes ecuatorianos.",
+    "url": "https://rutaescondida.com/gigante-dormido.html",
+    "touristType": ["Senderismo", "Aventura", "Team Building"],
+    "provider": {
+      "@type": "LocalBusiness",
+      "name": "Ruta Escondida",
+      "address": { "@type": "PostalAddress", "addressLocality": "Alchipichí", "addressCountry": "EC" }
+    },
+    "guide": {
+      "@type": "Person",
+      "name": "Diego Ruiz H.",
+      "jobTitle": "Guía de Turismo de Naturaleza y Aventura",
+      "worksFor": { "@type": "Organization", "name": "Ruta Escondida" },
+      "knowsAbout": ["Senderismo Andino", "El Campanario Alchipichí", "Ecoturismo", "Turismo de Aventura", "Ecuador"]
+    }
+  }
+  </script>
+  <style>
+    /* ── PLANES DE PRECIOS ─────────────────── */
+    .planes-section {
+      background: var(--negro);
+      padding: 100px 48px;
+    }
+    .planes-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      max-width: 1200px;
+      margin: 64px auto 0;
+    }
+    .plan-card {
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(200,169,106,.15);
+      padding: 48px 36px;
+      position: relative;
+      transition: background .3s, border-color .3s, transform .3s;
+      display: flex; flex-direction: column;
+    }
+    .plan-card:hover {
+      background: rgba(200,169,106,.06);
+      border-color: rgba(200,169,106,.4);
+      transform: translateY(-6px);
+    }
+    .plan-card.destacado {
+      background: var(--verde-andes);
+      border-color: var(--oro);
+      z-index: 2;
+    }
+    .plan-card.destacado:hover { background: var(--verde-medio); }
+    .plan-badge {
+      position: absolute;
+      top: -14px; left: 50%;
+      transform: translateX(-50%);
+      background: var(--oro);
+      color: var(--negro);
+      font-size: 9px; font-weight: 700;
+      letter-spacing: .3em; text-transform: uppercase;
+      padding: 5px 16px;
+      white-space: nowrap;
+    }
+    .plan-icon { font-size: 2.2rem; margin-bottom: 16px; display: block; }
+    .plan-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem; font-weight: 300;
+      color: var(--blanco); margin-bottom: 8px;
+    }
+    .plan-precio {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.8rem; font-weight: 600;
+      color: var(--oro); line-height: 1; margin-bottom: 4px;
+    }
+    .plan-precio-sub {
+      font-size: 11px; letter-spacing: .2em;
+      color: rgba(255,255,255,.5); margin-bottom: 32px;
+      display: block;
+    }
+    .plan-lista {
+      list-style: none; margin-bottom: 36px; flex: 1;
+    }
+    .plan-lista li {
+      font-size: 13px; color: rgba(255,255,255,.75);
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      display: flex; align-items: flex-start; gap: 10px;
+      line-height: 1.5;
+    }
+    .plan-lista li::before { content: '✦'; color: var(--oro); font-size: 8px; flex-shrink: 0; margin-top:3px; }
+
+    /* ── ITINERARIO TIMELINE ───────────────── */
+    .itinerario-timeline {
+      background: #04080a;
+      padding: 100px 48px;
+    }
+    .timeline-grid {
+      max-width: 900px; margin: 64px auto 0;
+    }
+    .tl-item {
+      display: grid;
+      grid-template-columns: 100px 1fr;
+      gap: 0 32px;
+      position: relative;
+    }
+    .tl-item:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      left: 84px; top: 40px;
+      width: 1px; height: calc(100%);
+      background: linear-gradient(to bottom, rgba(200,169,106,.4), rgba(200,169,106,.05));
+    }
+    .tl-hora {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem; color: var(--oro);
+      text-align: right; padding-top: 12px;
+      font-weight: 400;
+    }
+    .tl-content {
+      padding: 12px 0 36px;
+      border-left: 1px solid rgba(200,169,106,.2);
+      padding-left: 32px;
+      position: relative;
+    }
+    .tl-content::before {
+      content: '';
+      position: absolute;
+      left: -5px; top: 20px;
+      width: 9px; height: 9px;
+      background: var(--oro); border-radius: 50%;
+      border: 2px solid #04080a;
+    }
+    .tl-title {
+      font-size: 13px; font-weight: 600;
+      letter-spacing: .08em;
+      color: var(--blanco); margin-bottom: 4px;
+    }
+    .tl-desc {
+      font-size: 13px; color: rgba(255,255,255,.55);
+      line-height: 1.6;
+    }
+    /* Hito especial — cumbre */
+    .tl-cumbre .tl-content::before {
+      width: 14px; height: 14px;
+      left: -7px; top: 18px;
+      background: var(--oro);
+      box-shadow: 0 0 12px rgba(200,169,106,.6);
+    }
+    .tl-cumbre .tl-title {
+      font-size: 14px;
+      color: var(--oro-light);
+    }
+
+    /* ── PÚBLICO OBJETIVO ──────────────────── */
+    .publico-section {
+      background: var(--crema);
+      padding: 100px 48px;
+    }
+    .publico-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      max-width: 1100px; margin: 64px auto 0;
+    }
+    .publico-card {
+      background: var(--blanco);
+      border: 1px solid rgba(0,0,0,.06);
+      padding: 32px 28px;
+      transition: transform .3s, box-shadow .3s;
+    }
+    .publico-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(0,0,0,.1);
+    }
+    .publico-icon { font-size: 2rem; margin-bottom: 12px; display: block; }
+    .publico-tipo {
+      font-size: 13px; font-weight: 700;
+      letter-spacing: .05em; color: var(--verde-andes);
+      margin-bottom: 8px;
+    }
+    .publico-desc { font-size: 13px; color: var(--gris); line-height: 1.6; }
+
+    /* ── QUÉ LLEVAR ────────────────────────── */
+    .llevar-section {
+      background: var(--negro);
+      padding: 100px 48px;
+    }
+    .llevar-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      max-width: 1100px; margin: 64px auto 0;
+    }
+    .llevar-item {
+      border: 1px solid rgba(200,169,106,.2);
+      padding: 24px 20px;
+      text-align: center;
+      transition: border-color .3s, background .3s;
+    }
+    .llevar-item:hover { border-color: var(--oro); background: rgba(200,169,106,.05); }
+    .llevar-emoji { font-size: 1.8rem; margin-bottom: 10px; display: block; }
+    .llevar-nombre {
+      font-size: 13px; font-weight: 600;
+      color: var(--blanco); margin-bottom: 6px;
+    }
+    .llevar-imp {
+      font-size: 10px; letter-spacing: .2em; text-transform: uppercase;
+    }
+    .llevar-imp.obligatorio { color: #E8A87C; }
+    .llevar-imp.recomendado { color: rgba(255,255,255,.4); }
+    .llevar-imp.ideal { color: var(--oro); }
+
+    /* ── CERTIFICADO SECTION ───────────────── */
+    .certificado-section {
+      background: var(--verde-andes);
+      padding: 80px 48px;
+      text-align: center;
+    }
+    .certificado-box {
+      max-width: 600px; margin: 0 auto;
+      border: 1px solid rgba(200,169,106,.4);
+      padding: 48px;
+      position: relative;
+    }
+    .certificado-box::before, .certificado-box::after {
+      content: '';
+      position: absolute;
+      width: 20px; height: 20px;
+      border-color: var(--oro);
+      border-style: solid;
+    }
+    .certificado-box::before { top: 12px; left: 12px; border-width: 2px 0 0 2px; }
+    .certificado-box::after  { bottom: 12px; right: 12px; border-width: 0 2px 2px 0; }
+
+    /* ── COMPLEMENTARIOS ───────────────────── */
+    .extras-section {
+      background: var(--crema);
+      padding: 100px 48px;
+    }
+    .extras-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      max-width: 800px; margin: 64px auto 0;
+    }
+    .extra-item {
+      background: var(--blanco);
+      border: 1px solid rgba(0,0,0,.06);
+      padding: 28px 24px;
+      display: flex; justify-content: space-between;
+      align-items: center; gap: 16px;
+      transition: box-shadow .3s, transform .3s;
+    }
+    .extra-item:hover { box-shadow: 0 8px 24px rgba(0,0,0,.08); transform: translateY(-2px); }
+    .extra-nombre { font-size: 14px; color: var(--negro); font-weight: 400; }
+    .extra-precio {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem; color: var(--verde-andes);
+      white-space: nowrap; font-weight: 600;
+    }
+
+    /* ── EMOCIONES STRIP ────────────────────── */
+    .emociones-section {
+      background: var(--negro);
+      padding: 80px 48px;
+      overflow: hidden;
+    }
+    .emociones-marquee {
+      display: flex; gap: 48px;
+      animation: marquee 22s linear infinite;
+      width: max-content;
+    }
+    .emocion-pill {
+      background: rgba(200,169,106,.08);
+      border: 1px solid rgba(200,169,106,.25);
+      padding: 14px 28px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      color: var(--oro-light);
+      white-space: nowrap;
+      font-style: italic;
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ── DIFERENCIADORES ─────────────────────── */
+    .diferenciadores {
+      background: var(--negro);
+      padding: 100px 48px;
+    }
+    .dif-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      max-width: 1100px; margin: 64px auto 0;
+    }
+    .dif-item {
+      border: 1px solid rgba(200,169,106,.15);
+      padding: 36px 28px;
+      text-align: center;
+      transition: border-color .3s, background .3s;
+    }
+    .dif-item:hover { border-color: rgba(200,169,106,.5); background: rgba(200,169,106,.04); }
+    .dif-emoji { font-size: 2rem; margin-bottom: 12px; display: block; }
+    .dif-titulo {
+      font-size: 12px; font-weight: 700;
+      letter-spacing: .08em; text-transform: uppercase;
+      color: var(--oro); margin-bottom: 8px;
+    }
+    .dif-desc { font-size: 13px; color: rgba(255,255,255,.6); line-height: 1.6; }
+
+    /* ── RESPONSIVE ──────────────────────────── */
+    @media (max-width: 1024px) {
+      .planes-grid  { grid-template-columns: 1fr; gap: 24px; }
+      .publico-grid { grid-template-columns: repeat(2,1fr); }
+      .llevar-grid  { grid-template-columns: repeat(2,1fr); }
+      .extras-grid  { grid-template-columns: 1fr; }
+      .dif-grid     { grid-template-columns: repeat(2,1fr); }
+    }
+    @media (max-width: 768px) {
+      .planes-section,.itinerario-timeline,.publico-section,
+      .llevar-section,.extras-section,.diferenciadores,
+      .certificado-section,.emociones-section { padding: 64px 24px; }
+      .publico-grid { grid-template-columns: 1fr; }
+      .llevar-grid  { grid-template-columns: repeat(2,1fr); }
+      .dif-grid     { grid-template-columns: 1fr; }
+      .tl-item      { grid-template-columns: 68px 1fr; }
+      .tl-item:not(:last-child)::after { left: 56px; }
+      .certificado-box { padding: 32px 20px; }
+    }
+  </style>
+</head>
+<body class="ruta-body">
+
+<!-- NAV -->
+<nav id="main-nav" class="scrolled">
+  <a href="index.html" class="nav-logo">
+    <img src="assets/img/logo.png" alt="Ruta Escondida" class="logo-img" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/>
+    <svg viewBox="0 0 320 90" fill="none" xmlns="http://www.w3.org/2000/svg" class="logo-svg" style="display:none">
+      <g><polygon points="140,70 168,28 196,70" fill="#5A5860"/><polygon points="160,70 192,18 224,70" fill="#4A4850"/><polygon points="168,28 174,36 162,36" fill="#E0DBD5"/><polygon points="192,18 199,28 185,28" fill="#E0DBD5"/><circle cx="210" cy="32" r="14" fill="#C8A96A"/></g>
+      <text x="0" y="52" font-family="Georgia,serif" font-size="32" font-weight="bold" fill="#C8A96A">Ruta</text>
+      <text x="0" y="76" font-family="Arial,sans-serif" font-size="22" font-weight="bold" fill="#5A5860">ESCONDIDA.COM</text>
+    </svg>
+  </a>
+  <ul class="nav-links">
+    <li class="nav-dropdown">
+      <a href="index.html#turismo">Turismo de Inmersión</a>
+      <div class="dropdown-menu">
+        <a href="gigante-dormido.html" style="color:var(--oro)">El Gigante Dormido</a>
+        <a href="sendero-agua.html">El Sendero del Agua</a>
+        <a href="tayos.html">Encañonado de los Tayos</a>
+      </div>
+    </li>
+    <li><a href="index.html#tienda">Tienda</a></li>
+    <li><a href="salidas-pedagogicas.html">Salidas Pedagógicas</a></li>
+    <li><a href="galeria.html">Galería</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li class="nav-dropdown">
+      <a href="negocios.html">Las Parroquias</a>
+      <div class="dropdown-menu">
+        <a href="negocios.html">Ver Todo</a>
+        <a href="negocios.html?parish=Puéllaro">Puéllaro</a>
+        <a href="negocios.html?parish=Perucho">Perucho</a>
+        <a href="negocios.html?parish=Atahualpa">Atahualpa</a>
+        <a href="negocios.html?parish=Chavezpamba">Chavezpamba</a>
+        <a href="negocios.html?parish=Minas">Minas</a>
+      </div>
+    </li>
+    <li><a href="index.html#impacto">Impacto</a></li>
+  </ul>
+  <a href="#planes" class="btn-cta" id="btn-nav-reservar-gigante">Reservar Expedición</a>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section class="ruta-hero" style="background-image:url('assets/img/gigante_dormido.png')">
+  <div class="ruta-hero-overlay" style="background:linear-gradient(160deg,rgba(0,0,0,.15) 0%,rgba(0,0,0,.82) 100%)"></div>
+  <div class="ruta-hero-content">
+    <a href="index.html#turismo" class="back-link">← Volver a Turismo</a>
+    <span class="ruta-hero-tag">✦ Senderismo de Altura · El Campanario · Alchipichí · Desde Quito</span>
+    <h1>El Gigante<br><em>Dormido</em></h1>
+    <p class="ruta-hero-sub">La conquista del guardián milenario de Alchipichí. Las mejores vistas panorámicas 360° de toda la Ruta Escondida te esperan en la cima de El Campanario.</p>
+    <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:32px;">
+      <a href="#planes" class="btn-primary" id="cta-planes-gigante">Ver Planes y Precios</a>
+      <a href="#itinerario" class="btn-secondary" id="cta-itinerario-gigante">Ver Itinerario →</a>
+    </div>
+  </div>
+  <div class="ruta-hero-scroll">
+    <span>Explorar</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ═══ QUICK INFO BAR ═══ -->
+<section class="ruta-quickinfo" style="background:var(--verde-andes)">
+  <div class="qi-item">
+    <span class="qi-icon">🏔️</span>
+    <span class="qi-label">Dificultad</span>
+    <span class="qi-value">Moderada–Exigente</span>
+  </div>
+  <div class="qi-item">
+    <span class="qi-icon">📅</span>
+    <span class="qi-label">Duración</span>
+    <span class="qi-value">Full Day</span>
+  </div>
+  <div class="qi-item">
+    <span class="qi-icon">🎯</span>
+    <span class="qi-label">Enfoque</span>
+    <span class="qi-value">Cumbre &amp; Panorama 360°</span>
+  </div>
+  <div class="qi-item">
+    <span class="qi-icon">👥</span>
+    <span class="qi-label">Edad mínima</span>
+    <span class="qi-value">Desde 10 años</span>
+  </div>
+  <div class="qi-item">
+    <span class="qi-icon">🕒</span>
+    <span class="qi-label">Caminata</span>
+    <span class="qi-value">4–6 horas ida/vuelta</span>
+  </div>
+  <div class="qi-item">
+    <span class="qi-icon">📍</span>
+    <span class="qi-label">Salida</span>
+    <span class="qi-value">Quito 06:00</span>
+  </div>
+</section>
+
+<!-- ═══ DESCRIPCIÓN SPLIT ═══ -->
+<section class="ruta-split" style="background:var(--crema)">
+  <div class="rs-text">
+    <span class="section-eyebrow" style="color:var(--verde-andes)">La Expedición</span>
+    <h2>La conquista del guardián:<br><em>donde el cielo y la montaña se encuentran</em></h2>
+    <p>El Gigante Dormido no es un simple ascenso. Es un viaje de superación personal hacia la cumbre de El Campanario, el cerro guardián de Alchipichí, donde el esfuerzo se convierte en recompensa y el paisaje andino te ofrece una perspectiva que cambia la manera en que ves el mundo.</p>
+    <p>Cada paso es un encuentro directo con la energía de los Andes. La ruta combina senderos naturales, diversidad de pisos climáticos y vistas panorámicas 360° de toda la Ruta Escondida que no encontrarás en ningún otro punto de la región.</p>
+    <div class="ruta-highlights">
+      <div class="rh-item">
+        <span class="rh-num">01</span>
+        <div>
+          <strong>Panorama 360° desde El Campanario</strong>
+          <p>La cima ofrece una visual privilegiada y completa de toda la cordillera, los valles andinos y la Ruta Escondida. La mejor foto de tu vida.</p>
+        </div>
+      </div>
+      <div class="rh-item">
+        <span class="rh-num">02</span>
+        <div>
+          <strong>Reto físico y logro personal</strong>
+          <p>"Hacer cumbre" es una sensación que no se olvida. Cada metro ganado en altura es un límite superado y una historia que contar.</p>
+        </div>
+      </div>
+      <div class="rh-item">
+        <span class="rh-num">03</span>
+        <div>
+          <strong>Diversidad de pisos climáticos</strong>
+          <p>El ascenso atraviesa diferentes ecosistemas: desde la finca agroecológica hasta el bosque nublado y las zonas abiertas de páramo.</p>
+        </div>
+      </div>
+      <div class="rh-item">
+        <span class="rh-num">04</span>
+        <div>
+          <strong>Silencio y desconexión absoluta</strong>
+          <p>En la cumbre de El Campanario, el único sonido es el viento andino. Un reset mental que la ciudad no puede ofrecer.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="rs-img">
+    <img src="assets/img/gigante_dormido.png" alt="Vista panorámica desde El Campanario — El Gigante Dormido, Alchipichí" />
+  </div>
+</section>
+
+<!-- ═══ EMOCIONES STRIP (MARQUEE) ═══ -->
+<div class="emociones-section">
+  <p style="text-align:center;font-size:10px;letter-spacing:.4em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:36px;">Lo que la gente siente en la cima</p>
+  <div class="emociones-marquee">
+    <span class="emocion-pill">"Valió cada gota de sudor"</span>
+    <span class="emocion-pill">"Me siento diminuto ante este paisaje"</span>
+    <span class="emocion-pill">"La mejor vista que he tenido en la vida"</span>
+    <span class="emocion-pill">"Superé mis propios límites"</span>
+    <span class="emocion-pill">"Este silencio te reinicia la cabeza"</span>
+    <span class="emocion-pill">"Necesito subir de nuevo"</span>
+    <!-- duplicate for seamless loop -->
+    <span class="emocion-pill">"Valió cada gota de sudor"</span>
+    <span class="emocion-pill">"Me siento diminuto ante este paisaje"</span>
+    <span class="emocion-pill">"La mejor vista que he tenido en la vida"</span>
+    <span class="emocion-pill">"Superé mis propios límites"</span>
+    <span class="emocion-pill">"Este silencio te reinicia la cabeza"</span>
+    <span class="emocion-pill">"Necesito subir de nuevo"</span>
+  </div>
+</div>
+
+<!-- ═══ ITINERARIO TIMELINE ═══ -->
+<section class="itinerario-timeline" id="itinerario">
+  <div style="text-align:center">
+    <span class="section-eyebrow">Full Day Premium</span>
+    <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3.2rem);font-weight:300;color:var(--blanco);margin-top:12px;">Itinerario <em style="font-style:italic;color:var(--oro-light)">del Ascenso</em></h2>
+    <p style="font-size:14px;color:rgba(255,255,255,.5);margin-top:12px;">Salida desde Quito al amanecer · Aprovechamos la mañana despejada</p>
+  </div>
+  <div class="timeline-grid">
+    <div class="tl-item">
+      <div class="tl-hora">06:00</div>
+      <div class="tl-content">
+        <div class="tl-title">🌙 Salida desde Quito</div>
+        <div class="tl-desc">Partida temprana para aprovechar el cielo despejado. La mañana es el mejor momento para las vistas panorámicas.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-hora">07:30</div>
+      <div class="tl-content">
+        <div class="tl-title">🌄 Llegada a Alchipichí · Bienvenida</div>
+        <div class="tl-desc">Bienvenida cálida campesina. Estiramiento guiado para preparar el cuerpo para el ascenso.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-hora">08:00</div>
+      <div class="tl-content">
+        <div class="tl-title">🍳 Desayuno energético rural</div>
+        <div class="tl-desc">Carga de carbohidratos con productos de la finca. La energía para conquistar El Campanario sale de la tierra andina.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-hora">08:45</div>
+      <div class="tl-content">
+        <div class="tl-title">🎒 Briefing técnico y entrega de equipo</div>
+        <div class="tl-desc">Instrucciones de seguridad, entrega de bastones de trekking y revisión de equipo personal. Pacing estratégico del guía.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-hora">09:15</div>
+      <div class="tl-content">
+        <div class="tl-title">🌿 Inicio del ascenso — Sendero del Gigante</div>
+        <div class="tl-desc">Comienzo del sendero por la finca agroecológica. El guía interpreta la flora, fauna e historia del cerro El Campanario.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-hora">11:00</div>
+      <div class="tl-content">
+        <div class="tl-title">💧 Mirador del Valle — Parada técnica</div>
+        <div class="tl-desc">Primera parada estratégica con vistas al valle. Hidratación, snack energético (chocolate negro ecuatoriano) y fotos del camino recorrido.</div>
+      </div>
+    </div>
+    <div class="tl-item tl-cumbre">
+      <div class="tl-hora">12:30</div>
+      <div class="tl-content">
+        <div class="tl-title">🏔️ ¡CUMBRE! · El Campanario — Vistas 360°</div>
+        <div class="tl-desc">El momento cumbre. Panorama completo de toda la Ruta Escondida. Fotos épicas, tomas de dron y contemplación del silencio andino. Entrega del Certificado de Cumbre.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-hora">13:30</div>
+      <div class="tl-content">
+        <div class="tl-title">🥾 Inicio del descenso</div>
+        <div class="tl-desc">Bajada controlada por ruta alterna. Más vistas y últimas fotografías del paisaje andino antes de volver a la base.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-hora">15:00</div>
+      <div class="tl-content">
+        <div class="tl-title">🍽️ Almuerzo campestre de recuperación</div>
+        <div class="tl-desc">Comida tradicional andina en la base. El cuerpo lo pide y la finca lo tiene. Pausa larga y merecida.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-hora">16:00</div>
+      <div class="tl-content">
+        <div class="tl-title">🥑 Degustación de productos locales</div>
+        <div class="tl-desc">Cata de aceite de aguacate extra virgen, té andino y otros productos de la Ruta Escondida. Cierre sensorial perfecto.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-hora">16:30</div>
+      <div class="tl-content">
+        <div class="tl-title">🏠 Retorno a Quito</div>
+        <div class="tl-desc">Regreso desde Alchipichí. Llegada estimada a Quito al atardecer. Con el certificado de cumbre y las mejores fotos del año.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PLANES Y PRECIOS ═══ -->
+<section class="planes-section" id="planes">
+  <div style="text-align:center">
+    <span class="section-eyebrow">Escoge tu conquista</span>
+    <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3.2rem);font-weight:300;color:var(--blanco);margin-top:12px;">Planes y <em style="font-style:italic;color:var(--oro-light)">Precios</em></h2>
+  </div>
+  <div class="planes-grid">
+
+    <!-- PLAN BÁSICO -->
+    <div class="plan-card">
+      <span class="plan-icon">🥾</span>
+      <div class="plan-name">Plan Básico</div>
+      <div class="plan-precio">$15</div>
+      <span class="plan-precio-sub">por persona</span>
+      <ul class="plan-lista">
+        <li>Guianza local experta en El Campanario</li>
+        <li>Ruta de senderismo hasta la cumbre</li>
+        <li>Seguro básico de aventura</li>
+        <li>Fotografías grupales de celular</li>
+        <li>Bebida de hidratación local</li>
+        <li>Certificado de Cumbre digital</li>
+      </ul>
+      <a href="#reservar" class="btn-cta" id="btn-basico-gigante-wa" style="display:block;text-align:center;">Reservar Plan →</a>
+    </div>
+
+    <!-- PLAN PREMIUM (DESTACADO) -->
+    <div class="plan-card destacado">
+      <span class="plan-badge">⭐ Más completo</span>
+      <span class="plan-icon">🎬</span>
+      <div class="plan-name">Plan Experiencia Premium</div>
+      <div class="plan-precio">$38</div>
+      <span class="plan-precio-sub">por persona</span>
+      <ul class="plan-lista">
+        <li>Todo lo del Plan Básico</li>
+        <li>Desayuno energético rural</li>
+        <li>Almuerzo campestre de recuperación</li>
+        <li>Bastones de trekking de préstamo</li>
+        <li>Tomas de cumbre con dron (entregadas por Drive)</li>
+        <li>Guía experto en flora, fauna e historia del Gigante</li>
+        <li>Snacks estratégicos en puntos de descanso</li>
+        <li>Certificado de Cumbre físico y digital</li>
+      </ul>
+      <a href="#reservar" class="btn-comprar" id="btn-premium-gigante-wa" style="display:block;text-align:center;padding:14px;">Reservar Plan →</a>
+    </div>
+
+    <!-- PLAN GLAMPING -->
+    <div class="plan-card">
+      <span class="plan-icon">🌌</span>
+      <div class="plan-name">Plan Glamping &amp; Cumbre</div>
+      <div class="plan-precio">$99</div>
+      <span class="plan-precio-sub">por persona</span>
+      <ul class="plan-lista">
+        <li>Todo lo del Plan Premium</li>
+        <li>Ascenso tarde para el atardecer en El Campanario</li>
+        <li>Noche de Glamping en base o mirador exclusivo</li>
+        <li>Cena a la fogata andina</li>
+        <li>Observación de estrellas guiada</li>
+        <li>Amanecer andino con café de especialidad</li>
+      </ul>
+      <a href="#reservar" class="btn-cta" id="btn-glamping-gigante-wa" style="display:block;text-align:center;">Reservar Plan →</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ PÚBLICO OBJETIVO ═══ -->
+<section class="publico-section">
+  <div style="text-align:center">
+    <span class="section-eyebrow" style="color:var(--verde-andes)">Para quién es</span>
+    <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3.2rem);font-weight:300;color:var(--negro);margin-top:12px;">Hecho para quienes <em style="font-style:italic;color:var(--verde-andes)">buscan la cima</em></h2>
+  </div>
+  <div class="publico-grid">
+    <div class="publico-card">
+      <span class="publico-icon">🎓</span>
+      <div class="publico-tipo">Colegios y Unidades Educativas</div>
+      <div class="publico-desc">El "Reto de Liderazgo" definitivo. Esfuerzo, trabajo en equipo y una lección de vida que ningún aula puede dar.</div>
+    </div>
+    <div class="publico-card">
+      <span class="publico-icon">🧗</span>
+      <div class="publico-tipo">Comunidad Trekker</div>
+      <div class="publico-desc">Sumar una cumbre andina auténtica. Entrenamiento real con altimetría, fotografía de paisaje y ruta técnica marcada.</div>
+    </div>
+    <div class="publico-card">
+      <span class="publico-icon">👨‍👩‍👧‍👦</span>
+      <div class="publico-tipo">Familias Activas</div>
+      <div class="publico-desc">Un reto compartido que fortalece vínculos. Accesible desde los 10 años con buena condición física y guía adaptado.</div>
+    </div>
+    <div class="publico-card">
+      <span class="publico-icon">🌍</span>
+      <div class="publico-tipo">Extranjeros y Expats</div>
+      <div class="publico-desc">Paisajismo andino auténtico, turismo de altura real y una experiencia outdoor que Ecuador sabe dar como nadie.</div>
+    </div>
+    <div class="publico-card">
+      <span class="publico-icon">🏢</span>
+      <div class="publico-tipo">Empresas · Team Building</div>
+      <div class="publico-desc">Liderazgo, superación de obstáculos y desconexión total en un entorno que pone a prueba a los equipos de verdad.</div>
+    </div>
+    <div class="publico-card">
+      <span class="publico-icon">🧘</span>
+      <div class="publico-tipo">Buscadores de Bienestar</div>
+      <div class="publico-desc">Yoga de montaña, meditación en la cima y desconexión digital absoluta. El reset definitivo a 3.800 msnm.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ QUÉ LLEVAR ═══ -->
+<section class="llevar-section">
+  <div style="text-align:center">
+    <span class="section-eyebrow">Prepárate para la cumbre</span>
+    <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3.2rem);font-weight:300;color:var(--blanco);margin-top:12px;">Qué <em style="font-style:italic;color:var(--oro-light)">llevar</em></h2>
+  </div>
+  <div class="llevar-grid">
+    <div class="llevar-item">
+      <span class="llevar-emoji">🥾</span>
+      <div class="llevar-nombre">Zapatos de trekking (buen agarre)</div>
+      <span class="llevar-imp obligatorio">● Obligatorio</span>
+    </div>
+    <div class="llevar-item">
+      <span class="llevar-emoji">🧥</span>
+      <div class="llevar-nombre">Chaqueta rompevientos</div>
+      <span class="llevar-imp obligatorio">● Obligatorio</span>
+    </div>
+    <div class="llevar-item">
+      <span class="llevar-emoji">☀️</span>
+      <div class="llevar-nombre">Protector solar y gafas</div>
+      <span class="llevar-imp obligatorio">● Obligatorio</span>
+    </div>
+    <div class="llevar-item">
+      <span class="llevar-emoji">💧</span>
+      <div class="llevar-nombre">Agua + snacks personales</div>
+      <span class="llevar-imp obligatorio">● Obligatorio</span>
+    </div>
+    <div class="llevar-item">
+      <span class="llevar-emoji">🧅</span>
+      <div class="llevar-nombre">Sistema de capas de ropa</div>
+      <span class="llevar-imp recomendado">◎ Muy recomendado</span>
+    </div>
+    <div class="llevar-item">
+      <span class="llevar-emoji">🎒</span>
+      <div class="llevar-nombre">Mochila pequeña (Daypack)</div>
+      <span class="llevar-imp recomendado">◎ Recomendado</span>
+    </div>
+    <div class="llevar-item">
+      <span class="llevar-emoji">🪄</span>
+      <div class="llevar-nombre">Bastones de senderismo</div>
+      <span class="llevar-imp ideal">✦ Ideal (incluidos en Premium)</span>
+    </div>
+    <div class="llevar-item">
+      <span class="llevar-emoji">📷</span>
+      <div class="llevar-nombre">Cámara o teléfono cargado</div>
+      <span class="llevar-imp ideal">✦ Muy recomendado</span>
+    </div>
+  </div>
+  <!-- Nivel de dificultad -->
+  <div style="max-width:800px;margin:64px auto 0;border:1px solid rgba(200,169,106,.2);padding:40px;display:grid;grid-template-columns:repeat(4,1fr);gap:24px;text-align:center;">
+    <div>
+      <div style="font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:8px">Dificultad física</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--oro)">Moderada–Exigente</div>
+    </div>
+    <div style="border-left:1px solid rgba(255,255,255,.08)">
+      <div style="font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:8px">Dificultad técnica</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--oro)">Baja</div>
+    </div>
+    <div style="border-left:1px solid rgba(255,255,255,.08)">
+      <div style="font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:8px">Riesgo</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--oro)">Bajo–Controlado</div>
+    </div>
+    <div style="border-left:1px solid rgba(255,255,255,.08)">
+      <div style="font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:8px">Desde</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--oro)">10 años</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CERTIFICADO DE CUMBRE ═══ -->
+<section class="certificado-section">
+  <span class="section-eyebrow" style="display:block;margin-bottom:16px;">Un recuerdo para siempre</span>
+  <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3rem);font-weight:300;color:var(--blanco);margin-bottom:40px;">Certificado de <em style="font-style:italic;color:var(--oro-light)">Cumbre</em></h2>
+  <div class="certificado-box">
+    <div style="font-size:2.5rem;margin-bottom:16px;">🏅</div>
+    <p style="font-family:'Cormorant Garamond',serif;font-size:1.15rem;color:rgba(255,255,255,.85);line-height:1.9;font-weight:300;">
+      Cada conquistador de El Campanario recibe su <strong style="color:var(--oro-light)">Certificado de Cumbre</strong> — un documento físico y digital que acredita que llegaste a la cima del Guardián de Alchipichí. Porque el logro merece ser recordado.
+    </p>
+    <p style="font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-top:20px;">
+      El Campanario · Ruta Escondida · Alchipichí, Ecuador
+    </p>
+  </div>
+</section>
+
+<!-- ═══ DIFERENCIADORES ═══ -->
+<section class="diferenciadores">
+  <div style="text-align:center">
+    <span class="section-eyebrow">¿Por qué esta expedición?</span>
+    <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3.2rem);font-weight:300;color:var(--blanco);margin-top:12px;">Lo que nos hace <em style="font-style:italic;color:var(--oro-light)">únicos</em></h2>
+  </div>
+  <div class="dif-grid">
+    <div class="dif-item">
+      <span class="dif-emoji">🏙️</span>
+      <div class="dif-titulo">Cerca de Quito</div>
+      <div class="dif-desc">El reto físico accesible para salir de la capital en un solo día sin necesitar vacaciones.</div>
+    </div>
+    <div class="dif-item">
+      <span class="dif-emoji">🌄</span>
+      <div class="dif-titulo">Vistas Inigualables</div>
+      <div class="dif-desc">Panorama 360° de toda la zona norte andina. Las mejores vistas de la Ruta Escondida desde El Campanario.</div>
+    </div>
+    <div class="dif-item">
+      <span class="dif-emoji">⛺</span>
+      <div class="dif-titulo">Glamping Exclusivo</div>
+      <div class="dif-desc">Único destino de la Ruta Escondida con opción de pernoctación en mirador privado. Amanecer andino incluido.</div>
+    </div>
+    <div class="dif-item">
+      <span class="dif-emoji">🏅</span>
+      <div class="dif-titulo">Certificado de Cumbre</div>
+      <div class="dif-desc">Un logro tangible. El certificado físico y digital que acredita que llegaste al tope del Guardián.</div>
+    </div>
+    <div class="dif-item">
+      <span class="dif-emoji">🌬️</span>
+      <div class="dif-titulo">Aire Puro y Silencio</div>
+      <div class="dif-desc">Oxigenación y reset mental completo en las cumbres más vírgenes y libres de contaminación de la región.</div>
+    </div>
+    <div class="dif-item">
+      <span class="dif-emoji">🌱</span>
+      <div class="dif-titulo">Ecosistema Andino Vivo</div>
+      <div class="dif-desc">El ascenso atraviesa diferentes pisos climáticos con guianza interpretativa de flora, fauna e historia local.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ACTIVIDADES COMPLEMENTARIAS ═══ -->
+<section class="extras-section">
+  <div style="text-align:center">
+    <span class="section-eyebrow" style="color:var(--verde-andes)">Sube el nivel</span>
+    <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3.2rem);font-weight:300;color:var(--negro);margin-top:12px;">Experiencias <em style="font-style:italic;color:var(--verde-andes)">Complementarias</em></h2>
+    <p style="font-size:14px;color:var(--gris);margin-top:12px;max-width:500px;margin-inline:auto">Añade extras a tu plan y convierte la expedición en algo verdaderamente irrepetible.</p>
+  </div>
+  <div class="extras-grid">
+    <div class="extra-item">
+      <span class="extra-nombre">🎬 Paquete Fotográfico Dron + Reel</span>
+      <span class="extra-precio">$15</span>
+    </div>
+    <div class="extra-item">
+      <span class="extra-nombre">🥗 Box Lunch Gourmet en Cumbre</span>
+      <span class="extra-precio">$8</span>
+    </div>
+    <div class="extra-item">
+      <span class="extra-nombre">🧘 Clase de Yoga/Mindfulness en la cima</span>
+      <span class="extra-precio">$10</span>
+    </div>
+    <div class="extra-item">
+      <span class="extra-nombre">🎽 Kit "Hice Cumbre" (Gorra + Camiseta)</span>
+      <span class="extra-precio">$15</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TESTIMONIO DESTACADO (Módulo 2) ═══ -->
+<section class="test-highlight-section" style="background:var(--blanco); padding:80px 48px 0; text-align:center;">
+  <div style="max-width:800px; margin:0 auto; padding:36px; background:rgba(27,67,50,0.02); border:1px solid rgba(27,67,50,0.06); border-radius:12px; box-shadow: 0 8px 30px rgba(0,0,0,0.01);">
+    <div style="font-size:20px; color:#C8A96A; margin-bottom:12px;">⭐⭐⭐⭐⭐</div>
+    <blockquote style="font-family:'Cormorant Garamond',serif; font-size:1.5rem; font-style:italic; line-height:1.6; color:var(--verde-andes); margin-bottom:20px; margin-top:0;">
+      "El ascenso a El Campanario fue exigente pero totalmente recompensado con la vista 360° más espectacular de los Andes. El campamento base y el café de especialidad al amanecer completan una experiencia de montaña premium. ¡Altamente recomendado!"
+    </blockquote>
+    <cite style="font-family:'Inter',sans-serif; font-size:13px; font-weight:700; color:var(--negro); font-style:normal; display:block;">— Sebastián Rengel, Ambato</cite>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ RESERVAR AHORA (Módulo 1) -->
+<section class="reservar-section" id="reservar">
+  <div class="reservar-inner">
+    <div class="reservar-header">
+      <span class="section-eyebrow">Aventura sin Fricciones</span>
+      <h2>Reserva tu <em>Expedición</em></h2>
+      <p>Selecciona tu fecha y cantidad de exploradores. Recibirás una confirmación inmediata por WhatsApp y un correo detallado de preparación.</p>
+    </div>
+
+    <form class="reservar-form" id="booking-form" action="https://formspree.io/f/xoqgbpde" method="POST">
+      <!-- Ruta Pre-seleccionada -->
+      <input type="hidden" name="Ruta" id="booking-ruta-input" value="La Ruta del Gigante Dormido" />
+      
+      <div class="form-row-2">
+        <div class="booking-form-group">
+          <label for="booking-name">Nombre Completo</label>
+          <input type="text" id="booking-name" name="Nombre" placeholder="Ej: Francisco Cevallos" required />
+        </div>
+        <div class="booking-form-group">
+          <label for="booking-email">Correo Electrónico</label>
+          <input type="email" id="booking-email" name="Email" placeholder="Ej: francisco@example.com" required />
+        </div>
+      </div>
+
+      <div class="form-row-2">
+        <div class="booking-form-group">
+          <label for="booking-wa">WhatsApp de Contacto</label>
+          <input type="tel" id="booking-wa" name="WhatsApp" placeholder="Ej: 0993356073" required />
+        </div>
+        <div class="booking-form-group">
+          <label for="booking-triptype">Tipo de Viaje</label>
+          <select id="booking-triptype" name="TipoViaje" required style="width: 100%; padding: 12px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); color: var(--blanco); border-radius: 4px; outline: none; font-family: 'Inter', sans-serif;">
+            <option value="familia">Con mi Familia</option>
+            <option value="pareja">En Pareja</option>
+            <option value="solo">Viajo Solo</option>
+            <option value="grupo">Grupo de amigos</option>
+            <option value="escolar">Grupo Escolar / Educativo</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row-2">
+        <div class="booking-form-group">
+          <label for="booking-city">Ciudad de Origen</label>
+          <input type="text" id="booking-city" name="Ciudad" placeholder="Ej: Quito" required />
+        </div>
+        <div class="booking-form-group">
+          <label for="booking-country">País</label>
+          <input type="text" id="booking-country" name="Pais" placeholder="Ej: Ecuador" required />
+        </div>
+      </div>
+
+      <div class="form-row-2">
+        <div class="booking-form-group">
+          <label for="booking-date">Fecha Deseada</label>
+          <input type="date" id="booking-date" name="Fecha" required />
+        </div>
+        <div class="booking-form-group">
+          <label>Cantidad de Personas</label>
+          <div class="quantity-controls booking-qty-controls">
+            <button type="button" class="qty-btn" id="booking-qty-minus" aria-label="Disminuir exploradores">—</button>
+            <span class="qty-val" id="booking-qty-val">2</span>
+            <button type="button" class="qty-btn" id="booking-qty-plus" aria-label="Aumentar exploradores">+</button>
+            <input type="hidden" name="Personas" id="booking-qty-input" value="2" />
+          </div>
+        </div>
+      </div>
+
+      <div class="booking-form-group">
+        <label for="booking-msg">Mensaje / Requerimientos Especiales (Opcional)</label>
+        <textarea id="booking-msg" name="Mensaje" placeholder="Ej: Viajo con un niño de 11 años. ¿Los bastones están incluidos en el plan básico?"></textarea>
+      </div>
+
+      <div class="booking-cta-group">
+        <button type="submit" class="btn-reserva-submit" id="btn-booking-email">
+          <span>✉️</span> Solicitar Reserva Nativa
+        </button>
+        <button type="button" class="btn-reserva-wa" id="btn-booking-wa">
+          <svg viewBox="0 0 24 24">
+            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.73-1.455L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.625 1.451 5.437.002 9.861-4.416 9.863-9.854.001-2.63-1.02-5.101-2.877-6.958C16.4 1.938 13.93 .917 11.299.917c-5.441 0-9.865 4.419-9.867 9.856-.001 1.958.51 3.868 1.482 5.56l-.993 3.628 3.725-.977zm11.587-6.85c-.265-.124-1.566-.77-1.81-.857-.243-.088-.419-.132-.596.133-.177.265-.685.857-.84 1.034-.154.177-.31.198-.575.075-.265-.124-1.12-.413-2.133-1.313-.788-.702-1.32-1.57-1.474-1.835-.155-.265-.017-.409.116-.54.12-.12.265-.31.398-.464.133-.155.177-.265.265-.442.088-.177.044-.332-.022-.464-.066-.132-.596-1.436-.817-1.966-.215-.518-.432-.447-.596-.456-.153-.008-.33-.009-.508-.009-.177 0-.464.066-.707.332-.243.265-.928.906-.928 2.21 0 1.303.95 2.564 1.083 2.74.133.177 1.87 2.854 4.529 4.001.633.273 1.125.435 1.51.557.636.202 1.215.174 1.673.106.51-.077 1.566-.64 1.787-1.258.222-.619.222-1.15.155-1.258-.066-.109-.243-.177-.508-.31z"/>
+          </svg>
+          Confirmar por WhatsApp Express
+        </button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- ═══ CTA FINAL ═══ -->
+<section class="ruta-cta-section" style="background:var(--verde-andes)">
+  <div style="max-width:700px;margin:0 auto;text-align:center">
+    <span class="section-eyebrow">El guardián te espera</span>
+    <h2>¿Listo para despertar<br><em>al Gigante?</em></h2>
+    <p>Cupos limitados por fecha. Reserva con anticipación y asegura tu lugar en la cumbre de El Campanario.</p>
+  </div>
+  <div class="ruta-cta-btns">
+    <a href="https://wa.me/593984480203?text=Hola,%20quiero%20reservar%20el%20Gigante%20Dormido%20(El%20Campanario)%20en%20Ruta%20Escondida" class="btn-comprar" id="btn-reservar-gigante-final" target="_blank" rel="noopener">📲 Reservar por WhatsApp</a>
+    <a href="mailto:reservas@rutaescondida.com?subject=Reserva%20El%20Gigante%20Dormido%20-%20El%20Campanario" class="btn-cta" id="btn-email-gigante">Escribir por Email →</a>
+  </div>
+  <div class="otras-rutas">
+    <span>También te puede interesar:</span>
+    <a href="sendero-agua.html">El Sendero del Agua</a>
+    <a href="tayos.html">Encañonado de los Tayos</a>
+    <a href="salidas-pedagogicas.html">Salidas Pedagógicas</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-bottom" style="border-top:1px solid rgba(255,255,255,.08);padding:24px 48px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;">
+    <a href="index.html" class="nav-logo" style="text-decoration:none;">
+      <img src="assets/img/logo.png" alt="Ruta Escondida" style="height:40px;width:auto;object-fit:contain;filter:drop-shadow(0 1px 3px rgba(0,0,0,0.4));" onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
+      <span style="display:none;font-size:11px;letter-spacing:.2em;color:var(--oro);">RUTA ESCONDIDA</span>
+    </a>
+    <p style="font-size:12px;color:rgba(255,255,255,.35)">© 2026 Ruta Escondida · Corredor Turístico (Puéllaro, Perucho, Atahualpa, Chavezpamba y Minas) · Todos los derechos reservados</p>
+    <a href="index.html" style="font-size:11px;letter-spacing:.2em;color:var(--oro);text-decoration:none;">← Volver al inicio</a>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="assets/js/ruta-page.js"></script>
+<script>
+  // Smooth scroll for anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const href = a.getAttribute('href');
+      if (href === '#') return;
+      const target = document.querySelector(href);
+      if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    });
+  });
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  gsap.fromTo('.plan-card',
+    { opacity: 0, y: 40 },
+    { opacity: 1, y: 0, duration: .9, stagger: 0.2, ease: 'power3.out',
+      scrollTrigger: { trigger: '.planes-grid', start: 'top 80%' } }
+  );
+  gsap.fromTo('.publico-card',
+    { opacity: 0, y: 30 },
+    { opacity: 1, y: 0, duration: .7, stagger: 0.1, ease: 'power3.out',
+      scrollTrigger: { trigger: '.publico-grid', start: 'top 80%' } }
+  );
+  gsap.fromTo('.tl-item',
+    { opacity: 0, x: -20 },
+    { opacity: 1, x: 0, duration: .6, stagger: 0.07, ease: 'power2.out',
+      scrollTrigger: { trigger: '.timeline-grid', start: 'top 80%' } }
+  );
+  gsap.fromTo('.extra-item',
+    { opacity: 0, y: 20 },
+    { opacity: 1, y: 0, duration: .6, stagger: 0.12, ease: 'power3.out',
+      scrollTrigger: { trigger: '.extras-grid', start: 'top 80%' } }
+  );
+  gsap.fromTo('.dif-item',
+    { opacity: 0, y: 24 },
+    { opacity: 1, y: 0, duration: .7, stagger: 0.09, ease: 'power3.out',
+      scrollTrigger: { trigger: '.dif-grid', start: 'top 80%' } }
+  );
+</script>
+<a href="https://wa.me/593984480203?text=Hola%20Diego,%20quiero%20información%20sobre%20Ruta%20Escondida" class="wa-float" id="wa-float-btn" target="_blank" rel="noopener" aria-label="Contactar por WhatsApp">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" fill="currentColor"/></svg>
+</a>
+</body>
+</html>

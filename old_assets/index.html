@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="assets/img/logo.png" />
+  <link rel="apple-touch-icon" href="assets/img/logo.png" />
+  <title>Ruta Escondida | Corredor Turístico Norcentral: Puéllaro, Perucho, Atahualpa, Chavezpamba y Minas</title>
+  <meta name="description" content="Descubre Ruta Escondida, el corredor turístico que une a Puéllaro, Perucho, Atahualpa, Chavezpamba y Minas. Ecoturismo, agroecología y desconexión absoluta en los Andes." />
+  
+  <!-- SEO & OpenGraph Social Meta Tags -->
+  <meta property="og:title" content="Ruta Escondida | Corredor Turístico de 5 Parroquias" />
+  <meta property="og:description" content="Ecoturismo, laboratorios vivos y experiencias de desconexión absoluta en Puéllaro, Perucho, Atahualpa, Chavezpamba y Minas con Diego Ruiz H." />
+  <meta property="og:image" content="https://rutaescondida.com/assets/img/ruta_hero.png" />
+  <meta property="og:url" content="https://rutaescondida.com" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/cart.css" />
+  <!-- Leaflet Maps CSS & JS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+  <!-- Schema.org: Ruta Escondida & Diego Ruiz H. — Guía Turístico -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "Ruta Escondida",
+    "description": "Operadora líder del corredor turístico de la Ruta Escondida (Puéllaro, Perucho, Atahualpa, Chavezpamba y Minas). Ecoturismo, laboratorios vivos y desconexión absoluta.",
+    "url": "https://rutaescondida.com",
+    "address": { "@type": "PostalAddress", "addressLocality": "Chavezpamba", "addressRegion": "Pichincha", "addressCountry": "EC" },
+    "geo": { "@type": "GeoCoordinates", "latitude": 0.12, "longitude": -78.3791 },
+    "priceRange": "$$",
+    "touristType": ["Familias", "Aventura", "Educación Ambiental"],
+    "employee": {
+      "@type": "Person",
+      "name": "Diego Ruiz H.",
+      "jobTitle": "Guía de Turismo de Naturaleza · Ruta Escondida · Corredor Norcentral, Ecuador",
+      "worksFor": { "@type": "Organization", "name": "Ruta Escondida" },
+      "knowsAbout": [
+        "Ecoturismo Andes Ecuador",
+        "Senderismo Alchipichí",
+        "Turismo Familiar Ecuador",
+        "Educación Ambiental Colegios",
+        "El Gigante Dormido El Campanario",
+        "Sendero del Agua Cascada",
+        "Encañonado de los Tayos",
+        "Agroecología Andina"
+      ]
+    }
+  }
+  </script>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════ EXPEDITION LOADER -->
+<div id="site-loader">
+  <div class="loader-bg"></div>
+  <div class="loader-grid-overlay"></div>
+  <div class="loader-container">
+    <!-- Top Left Information -->
+    <div class="loader-info-top">
+      <div class="info-line"><span class="prompt">></span> SISTEMA: <span class="val">EXPEDICIÓN ACTIVA</span></div>
+      <div class="info-line"><span class="prompt">></span> REGÍMEN: <span class="val">CONSERVACIÓN ANDINA</span></div>
+      <div class="info-line"><span class="prompt">></span> COORDENADAS: <span class="val">0°07'12"N / 78°22'45"W</span></div>
+    </div>
+    
+    <!-- Top Right Information -->
+    <div class="loader-info-right">
+      <div class="info-line"><span class="prompt">></span> ALTITUD: <span class="val">2.100 MSN</span></div>
+      <div class="info-line"><span class="prompt">></span> DESTINO: <span class="val">ALCHIPICHÍ, ECUADOR</span></div>
+    </div>
+
+    <!-- Center Progress HUD -->
+    <div class="loader-hud">
+      <div class="hud-circle-wrapper">
+        <svg class="hud-svg" viewBox="0 0 200 200">
+          <circle class="hud-track" cx="100" cy="100" r="85" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="4" stroke-dasharray="3 6" />
+          <circle class="hud-fill" cx="100" cy="100" r="85" fill="none" stroke="var(--oro)" stroke-width="4" stroke-dasharray="3 6" stroke-dashoffset="534" />
+        </svg>
+        <div class="hud-data">
+          <div class="hud-number" id="loader-percent">00</div>
+          <div class="hud-status" id="loader-status">CONECTANDO</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom copyright -->
+    <div class="loader-copyright">
+      <span>RUTA ESCONDIDA © 2026</span>
+      <span>TURISMO DE INMERSIÓN DE ALTA GAMA</span>
+    </div>
+
+    <!-- Action Button -->
+    <div class="loader-action" id="loader-action" style="display: none; opacity: 0;">
+      <button class="btn-expedicion" id="btn-enter-site">
+        <span class="btn-exp-text">INICIAR EXPEDICIÓN</span>
+        <span class="decor decor-tl"></span>
+        <span class="decor decor-tr"></span>
+        <span class="decor decor-bl"></span>
+        <span class="decor decor-br"></span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ NAV -->
+<nav id="main-nav">
+  <a href="#" class="nav-logo" aria-label="Ruta Escondida Home">
+    <img src="assets/img/logo.png" alt="Ruta Escondida" class="logo-img"
+         onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
+    <svg viewBox="0 0 320 90" fill="none" xmlns="http://www.w3.org/2000/svg" class="logo-svg" style="display:none">
+      <g><polygon points="140,70 168,28 196,70" fill="#5A5860"/><polygon points="160,70 192,18 224,70" fill="#4A4850"/><polygon points="168,28 174,36 162,36" fill="#E0DBD5"/><polygon points="192,18 199,28 185,28" fill="#E0DBD5"/><circle cx="210" cy="32" r="14" fill="#C8A96A"/></g>
+      <text x="0" y="52" font-family="Georgia,serif" font-size="32" font-weight="bold" fill="#C8A96A">Ruta</text>
+      <text x="0" y="76" font-family="Arial,sans-serif" font-size="22" font-weight="bold" fill="#5A5860">ESCONDIDA.COM</text>
+    </svg>
+  </a>
+
+  <ul class="nav-links">
+    <li class="nav-dropdown">
+      <a href="#turismo" id="nav-turismo">Turismo de Inmersión</a>
+      <div class="dropdown-menu">
+        <a href="#ruta-gigante">El Gigante Dormido</a>
+        <a href="#ruta-agua">El Sendero del Agua</a>
+        <a href="#ruta-tayos">Encañonado de los Tayos</a>
+      </div>
+    </li>
+    <li><a href="#tienda" id="nav-tienda">Tienda</a></li>
+    <li><a href="salidas-pedagogicas.html" id="nav-pedagogicas">Salidas Pedagógicas</a></li>
+    <li><a href="galeria.html" id="nav-galeria">Galería</a></li>
+    <li><a href="blog.html" id="nav-blog">Blog</a></li>
+    <li class="nav-dropdown">
+      <a href="negocios.html" id="nav-negocios">Las Parroquias</a>
+      <div class="dropdown-menu">
+        <a href="negocios.html">Ver Todo</a>
+        <a href="negocios.html?parish=Puéllaro">Puéllaro</a>
+        <a href="negocios.html?parish=Perucho">Perucho</a>
+        <a href="negocios.html?parish=Atahualpa">Atahualpa</a>
+        <a href="negocios.html?parish=Chavezpamba">Chavezpamba</a>
+        <a href="negocios.html?parish=Minas">Minas</a>
+      </div>
+    </li>
+    <li><a href="#impacto" id="nav-impacto">Impacto</a></li>
+  </ul>
+
+  <a href="#turismo" class="btn-cta" id="nav-unete">Únete a la Ruta</a>
+</nav>
+
+<!-- ═══════════════════════════════════════ HERO -->
+<section id="hero">
+  <div class="hero-bg" id="hero-bg"></div>
+  <video autoplay loop muted playsinline id="hero-video" poster="assets/img/ruta_hero.png">
+    <source src="assets/img/hero_video.mp4" type="video/mp4">
+    Tu navegador no soporta la reproducción de video.
+  </video>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <span class="hero-label">Corredor Turístico · 5 Parroquias · Ecuador</span>
+    <h1 class="hero-title">
+      Ruta Escondida:<br>Laboratorios Vivos y Experiencias de<br><em>Desconexión Absoluta.</em>
+    </h1>
+    <p class="hero-sub">Descubre el corredor natural y cultural más fascinante del norte de Quito: Puéllaro, Perucho, Atahualpa, Chavezpamba y Minas.</p>
+    <div class="hero-cta-group">
+      <a href="#turismo" class="btn-primary" id="cta-aventura">Descubrir la Ruta</a>
+      <a href="#tienda" class="btn-secondary" id="cta-mision">Tienda Artesanal →</a>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <span>Explorar</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ MISIÓN -->
+<section id="mision">
+  <div class="mision-text reveal">
+    <h2>Donde la tierra<br>aún <em>respira libre.</em></h2>
+    <p>
+      Ruta Escondida es la operadora líder del corredor turístico global que abarca las 5 parroquias de la mancomunidad: Puéllaro, Perucho, Atahualpa, Chavezpamba y Minas. Nacimos del convencimiento de que estos laboratorios vivos y ecosistemas andinos son un patrimonio irreemplazable, fusionando el turismo consciente, la agroecología y el desarrollo comunitario para ofrecer experiencias de desconexión absoluta.
+    </p>
+    <a href="#impacto" class="btn-cta">Ver nuestro impacto</a>
+  </div>
+  <div class="mision-stats reveal">
+    <div class="stat-item">
+      <span class="stat-num">3</span>
+      <span class="stat-label">Rutas de inmersión únicas</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">800+</span>
+      <span class="stat-label">Hectáreas en conservación</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">12</span>
+      <span class="stat-label">Familias beneficiadas</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">100%</span>
+      <span class="stat-label">Producción artesanal</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ TURISMO -->
+<section id="turismo">
+  <div class="section-header">
+    <span class="section-eyebrow">Las 3 Joyas de la Corona</span>
+    <h2 class="section-title reveal">Turismo de <em>Inmersión</em></h2>
+  </div>
+
+  <div class="rutas-grid">
+    <!-- RUTA 1 -->
+    <a href="gigante-dormido.html" class="ruta-card" id="ruta-gigante">
+      <div class="ruta-card-bg" style="background-image:url('assets/img/gigante_dormido_2.jpg'); background-position: center center;"></div>
+      <div class="ruta-card-overlay"></div>
+      <div class="ruta-card-content">
+        <div class="ruta-meta-grid">
+          <span class="ruta-meta-item">🏔️ Moderado–Exigente</span>
+          <span class="ruta-meta-item">⏱️ Full Day · Glamping</span>
+          <span class="ruta-meta-item">🔭 Cumbre 360°</span>
+        </div>
+        <span class="ruta-tag">✦ El Campanario · Desde $15</span>
+        <h3>La Ruta del<br>Gigante Dormido</h3>
+        <p>Conquista El Campanario, el guardián de Alchipichí. Las mejores vistas panorámicas 360° de toda la Ruta Escondida y Certificado de Cumbre.</p>
+        <span class="ruta-arrow">Descubrir la expedición →</span>
+      </div>
+    </a>
+
+    <!-- RUTA 2 -->
+    <a href="sendero-agua.html" class="ruta-card" id="ruta-agua">
+      <div class="ruta-card-bg" style="background-image:url('assets/img/sendero_portada.jpg'); background-position: center 30%;"></div>
+      <div class="ruta-card-overlay"></div>
+      <div class="ruta-card-content">
+        <div class="ruta-meta-grid">
+          <span class="ruta-meta-item">💧 Baja · Familiar</span>
+          <span class="ruta-meta-item">⏱️ Family Day</span>
+          <span class="ruta-meta-item">👧 Desde 4 años</span>
+        </div>
+        <span class="ruta-tag">✦ La Pequeña Cascada · Desde $13.50</span>
+        <h3>El Sendero<br>del Agua</h3>
+        <p>Magia, agua y naturaleza a la medida de la familia. La primera aventura ecológica de tus hijos — con Pasaporte de Explorador incluido.</p>
+        <span class="ruta-arrow">Descubrir la experiencia →</span>
+      </div>
+    </a>
+
+    <!-- RUTA 3 -->
+    <a href="tayos.html" class="ruta-card" id="ruta-tayos">
+      <div class="ruta-card-bg" style="background-image:url('assets/img/tayos_cave_2.jpg'); background-position: center top;"></div>
+      <div class="ruta-card-overlay"></div>
+      <div class="ruta-card-content">
+        <div class="ruta-meta-grid">
+          <span class="ruta-meta-item">⚡ Moderado · Desde 8 años</span>
+          <span class="ruta-meta-item">⏱️ Full Day</span>
+          <span class="ruta-meta-item">🎬 Aventura Cinematográfica</span>
+        </div>
+        <span class="ruta-tag">✦ Expedición Secreta · Desde $19</span>
+        <h3>El Encañonado<br>de los Tayos</h3>
+        <p>Una expedición secreta entre paredes de roca, cascadas y río. El lugar que Ecuador ocultó demasiado tiempo. A pocas horas de Quito.</p>
+        <span class="ruta-arrow">Descubrir la expedición →</span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- PARALLAX SEPARATOR -->
+<div class="parallax-section" id="parallax-1">
+  <div class="parallax-bg" id="pb-1" style="background-image:url('assets/img/ruta_hero.png')"></div>
+  <div class="parallax-overlay"></div>
+  <div class="parallax-content">
+    <h2>"La naturaleza no<br>es un lugar a visitar.<br><em>Es el hogar.</em>"</h2>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ TIENDA -->
+<section id="tienda">
+  <div class="section-header">
+    <span class="section-eyebrow" style="color:var(--verde-medio)">Del campo a tus manos</span>
+    <h2 class="section-title reveal" style="color:var(--negro)">Nuestra <em style="color:var(--verde-andes)">Tienda</em></h2>
+  </div>
+
+  <div class="productos-grid">
+    <!-- PRODUCTO 1 -->
+    <a href="#" class="producto-card reveal" id="prod-aceite" onclick="openProducto('aceite'); return false;">
+      <div class="producto-img">
+        <img src="assets/img/aceite_hero.png" alt="Aceite de Aguacate Extra Virgen Ruta Escondida" loading="lazy" />
+        <span class="grid-badge badge-mas-vendido">Más Vendido</span>
+      </div>
+      <div class="producto-info">
+        <span class="producto-categoria">Gastronomía · Origen Alchipichí · 2.100 msnm</span>
+        <h3>Aceite Extra Virgen<br>de Aguacate</h3>
+        <p class="producto-desc">Prensado en frío a 2.100 msnm. Rico en Omega 3, 6 y 9. Sabor a fruto verde con notas herbáceas.</p>
+        <div class="producto-footer">
+          <span class="producto-precio">$7.50 <small>/ 250 ml</small></span>
+          <button class="btn-add" id="btn-aceite">Ver producto</button>
+        </div>
+      </div>
+    </a>
+
+    <!-- PRODUCTO 2 -->
+    <a href="#" class="producto-card reveal" id="prod-serum" onclick="openProducto('serum'); return false;">
+      <div class="producto-img">
+        <img src="assets/img/serum_facial.png" alt="Sérum Facial de Aguacate Ruta Escondida" loading="lazy" />
+        <span class="grid-badge badge-nuevo">Nuevo</span>
+      </div>
+      <div class="producto-info">
+        <span class="producto-categoria">Cosmética · Vegano · Artesanal</span>
+        <h3>Sérum Facial<br>de Aguacate</h3>
+        <p class="producto-desc">Vitamina E natural, Omega 9 y extracto de aloe andino. Hidratación profunda sin químicos.</p>
+        <div class="producto-footer">
+          <span class="producto-precio">$6.50 <small>/ 30 ml</small></span>
+          <button class="btn-add" id="btn-serum">Ver producto</button>
+        </div>
+      </div>
+    </a>
+
+    <!-- PRODUCTO 3 -->
+    <a href="#" class="producto-card reveal" id="prod-mandarinas" onclick="openProducto('mandarinas'); return false;">
+      <div class="producto-img">
+        <img src="assets/img/mandarinas_frescas.png" alt="Mandarinas Frescas de Alchipichí Ruta Escondida" loading="lazy" />
+        <span class="grid-badge badge-cosecha">Cosecha del Día</span>
+      </div>
+      <div class="producto-info">
+        <span class="producto-categoria">Fruta Fresca · Agroecológico · 2.100 msnm</span>
+        <h3>Mandarinas Frescas<br>de Alchipichí</h3>
+        <p class="producto-desc">Cultivadas a 2.100 msnm, dulces y jugosas. Cosechadas bajo pedido para máxima frescura.</p>
+        <div class="producto-footer">
+          <span class="producto-precio">$3.00 <small>/ kg</small></span>
+          <button class="btn-add" id="btn-mandarinas">Ver producto</button>
+        </div>
+      </div>
+    </a>
+
+    <!-- PRODUCTO 4 -->
+    <a href="#" class="producto-card reveal" id="prod-te-naranja" onclick="openProducto('te_naranja'); return false;">
+      <div class="producto-img">
+        <img src="assets/img/te_aguacate.png" alt="Té de Hojas de Aguacate con Naranja Ruta Escondida" loading="lazy" />
+        <span class="grid-badge badge-recomendado">Recomendado</span>
+      </div>
+      <div class="producto-info">
+        <span class="producto-categoria">Infusión · Bienestar · 100% Orgánico</span>
+        <h3>Té de Hojas de Aguacate<br>con Naranja</h3>
+        <p class="producto-desc">Hojas de aguacate seleccionadas y hojas de naranja deshidratadas. Un bálsamo digestivo sin cafeína.</p>
+        <div class="producto-footer">
+          <span class="producto-precio">$5.00 <small>/ 100 g</small></span>
+          <button class="btn-add" id="btn-te-naranja">Ver producto</button>
+        </div>
+      </div>
+    </a>
+
+    <!-- PRODUCTO 5 -->
+    <a href="#" class="producto-card reveal" id="prod-aguacates" onclick="openProducto('aguacates'); return false;">
+      <div class="producto-img">
+        <img src="assets/img/aguacates_frescos.png" alt="Aguacates frescos ecológicos de Alchipichí" loading="lazy" />
+        <span class="grid-badge badge-popular">Popular</span>
+      </div>
+      <div class="producto-info">
+        <span class="producto-categoria">Fruta Fresca · Agroecológico · 2.100 msnm</span>
+        <h3>Aguacates Frescos<br>de Alchipichí</h3>
+        <p class="producto-desc">Cosechados a mano en la Ruta Escondida a 2.100 msnm. Textura cremosa, sabor andino auténtico.</p>
+        <div class="producto-footer">
+          <span class="producto-precio">$2.30 <small>/ kg</small></span>
+          <button class="btn-add" id="btn-aguacates">Ver producto</button>
+        </div>
+      </div>
+    </a>
+
+    <!-- PRODUCTO 6 -->
+    <a href="#" class="producto-card reveal" id="prod-huevos" onclick="openProducto('huevos'); return false;">
+      <div class="producto-img">
+        <img src="assets/img/huevos_felices.png" alt="Huevos felices de pastoreo libre" loading="lazy" />
+        <span class="grid-badge badge-mas-vendido">Más Vendido</span>
+      </div>
+      <div class="producto-info">
+        <span class="producto-categoria">Granja · Pastoreo Libre</span>
+        <h3>Huevos Felices<br>de Pastoreo</h3>
+        <p class="producto-desc">Gallinas en libertad alimentadas con aguacates, pasto fresco y granos. Sabor campestre excepcional.</p>
+        <div class="producto-footer">
+          <span class="producto-precio">$6.00</span>
+          <button class="btn-add" id="btn-huevos">Ver producto</button>
+        </div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ SALIDAS PEDAGÓGICAS -->
+<section id="pedagogicas">
+  <div class="pedagogicas-inner">
+    <div class="ped-img">
+      <img src="assets/img/salidas_pedagogicas.png" alt="Salidas pedagógicas en la finca Ruta Escondida" loading="lazy" />
+    </div>
+    <div class="ped-content">
+      <span class="section-eyebrow">Educación y Sostenibilidad</span>
+      <h2 class="reveal">Salidas<br><em>Pedagógicas</em></h2>
+      <p>
+        Un brochure digital de experiencia viva. Traemos colegios y universidades 
+        a la finca para una inmersión en agroecología, biodiversidad andina y 
+        producción sostenible. Cada visita es una semilla de conciencia.
+      </p>
+      <ul class="ped-features">
+        <li>Recorrido guiado por el proceso del aguacate (siembra → producto)</li>
+        <li>Taller de prensado en frío y cata de aceites</li>
+        <li>Senderismo educativo en senderos nativos</li>
+        <li>Material didáctico digital descargable</li>
+        <li>Certificado de participación ambiental</li>
+      </ul>
+      <div style="display:flex;gap:16px;flex-wrap:wrap;">
+        <a href="salidas-pedagogicas.html" class="btn-brochure" id="btn-brochure-pdf">
+          <span>→</span> Ver programa completo
+        </a>
+        <a href="salidas-pedagogicas.html#formulario" class="btn-cta" id="btn-reservar-salida">Reservar visita</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PARALLAX 2 -->
+<div class="parallax-section" id="parallax-2">
+  <div class="parallax-bg" id="pb-2" style="background-image:url('assets/img/gigante_dormido.png')"></div>
+  <div class="parallax-overlay"></div>
+  <div class="parallax-content">
+    <span class="section-eyebrow" style="display:block;margin-bottom:20px">Origen: Alchipichí · 2.400 msnm</span>
+    <h2>Cada producto es<br>un acto de <em>conservación.</em></h2>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ IMPACTO -->
+<section id="impacto">
+  <div class="section-header" style="padding:0 48px;margin-bottom:0">
+    <span class="section-eyebrow">Nuestra Misión</span>
+    <h2 class="section-title reveal">Midiendo nuestro <em>Impacto</em></h2>
+  </div>
+
+  <div class="impacto-grid">
+    <div class="impacto-item reveal">
+      <span class="impacto-num" data-target="800">0</span>
+      <span class="impacto-label">Hectáreas conservadas</span>
+    </div>
+    <div class="impacto-item reveal">
+      <span class="impacto-num" data-target="12">0</span>
+      <span class="impacto-label">Familias beneficiadas</span>
+    </div>
+    <div class="impacto-item reveal">
+      <span class="impacto-num" data-target="350">0</span>
+      <span class="impacto-label">Estudiantes impactados</span>
+    </div>
+    <div class="impacto-item reveal">
+      <span class="impacto-num" data-target="100">0</span>
+      <span class="impacto-label">% Producción limpia</span>
+    </div>
+  </div>
+
+  <blockquote class="impacto-quote reveal">
+    "Proteger el ecosistema andino no es un lujo — es la única forma de 
+    garantizar agua, alimento y vida para las próximas generaciones."
+    <cite>— Ruta Escondida · Alchipichí, Ecuador</cite>
+  </blockquote>
+
+  <div style="text-align:center">
+    <a href="mailto:hola@rutaescondida.com" class="btn-cta" id="cta-contacto">Únete al movimiento</a>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ CÓMO LLEGAR (Módulo 4) -->
+<section id="ubicacion">
+  <div class="section-header">
+    <span class="section-eyebrow" style="color:var(--verde-medio)">Planifica tu Expedición</span>
+    <h2 class="section-title reveal" style="color:var(--negro)">¿Cómo <em>Llegar</em>?</h2>
+  </div>
+
+  <div class="ubicacion-container reveal">
+    <div class="ubicacion-info">
+      <h3>Encuentra tu Camino</h3>
+      <p style="color:#666; font-size:14px; margin-bottom:24px;">Ruta Escondida se encuentra en la hermosa parroquia de Alchipichí, Ecuador, a solo 1.5 horas de Quito. El clima es templado, rodeado de huertos agroecológicos.</p>
+      
+      <div class="map-tabs">
+        <button class="map-tab-btn active" id="btn-tab-auto" data-tab="auto">🚗 En Auto</button>
+        <button class="map-tab-btn" id="btn-tab-bus" data-tab="bus">🚌 En Autobús</button>
+      </div>
+
+      <div class="map-tab-content active" id="tab-auto">
+        <ul class="map-guide-list">
+          <li><strong>Ruta desde Quito (1.5 h):</strong> Toma la Panamericana Norte hacia Guayllabamba. Gira a la izquierda antes del peaje en dirección a Puéllaro/Ruta Escondida.</li>
+          <li><strong>Por Chavezpamba:</strong> Sigue por la vía asfaltada cruzando Puéllaro y Perucho, hasta el desvío señalizado a Chavezpamba/Alchipichí.</li>
+          <li><strong>Finca y Estacionamiento:</strong> El ingreso a la Finca es por un camino empedrado apto para todo tipo de auto. Contamos con parqueadero privado vigilado y gratis.</li>
+        </ul>
+        <a href="https://maps.google.com/?q=0.1200,-78.3791" class="btn-cta" target="_blank" rel="noopener" style="margin-top:8px; display:inline-block;">📍 Abrir en Google Maps</a>
+      </div>
+
+      <div class="map-tab-content" id="tab-bus">
+        <ul class="map-guide-list">
+          <li><strong>Salida desde Quito:</strong> Dirígete a la Terminal Terrestre de Carcelén.</li>
+          <li><strong>Cooperativas de Transporte:</strong> Toma los buses de la Cooperativa "Minas" o "Flor de Valle" con destino a San José de Minas (vía Ruta Escondida).</li>
+          <li><strong>Parada Alchipichí:</strong> Pídele al chofer bajarte en la parada principal de Alchipichí. Desde allí, son 10 minutos de caminata escénica o podemos recogerte si nos avisas antes.</li>
+        </ul>
+        <a href="https://wa.me/593984480203?text=Hola%20Diego,%20quiero%20conocer%20los%20horarios%20de%20buses%20para%20ir%20a%20Alchipichí" class="btn-cta" target="_blank" rel="noopener" style="margin-top:8px; display:inline-block;">📲 Consultar Horarios de Buses</a>
+      </div>
+    </div>
+
+    <div class="ubicacion-map-wrapper">
+      <div id="map-leaflet"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ TESTIMONIOS (Módulo 2) -->
+<section id="testimonios">
+  <div class="section-header">
+    <span class="section-eyebrow" style="color:var(--verde-medio)">Expedicionarios Satisfechos</span>
+    <h2 class="section-title reveal" style="color:var(--negro)">Prueba <em>Social</em></h2>
+  </div>
+
+  <div class="testimonios-filters reveal">
+    <button class="test-filter-btn active" data-filter="all">Todos</button>
+    <button class="test-filter-btn" data-filter="agua">Sendero del Agua</button>
+    <button class="test-filter-btn" data-filter="gigante">Gigante Dormido</button>
+    <button class="test-filter-btn" data-filter="tayos">Encañonado Tayos</button>
+    <button class="test-filter-btn" data-filter="pedagogica">Salidas Pedagógicas</button>
+  </div>
+
+  <div class="testimonios-grid" id="testimonios-list">
+    <!-- Testimonio 1 -->
+    <div class="test-card reveal" data-category="agua">
+      <div class="test-stars">⭐⭐⭐⭐⭐</div>
+      <blockquote class="test-quote">
+        "La primera aventura ecológica real de mis hijos (4 y 7 años). Su cara al llegar a la cascada y sellar su Pasaporte de Explorador no tiene precio. Diego es un guía sensacional, paciente y con un conocimiento increíble. ¡Volveremos!"
+      </blockquote>
+      <div class="test-author">
+        <div class="test-avatar">👤</div>
+        <div class="test-meta">
+          <cite>Gabriela Torres</cite>
+          <span>Quito · Exploración Familiar</span>
+        </div>
+      </div>
+      <span class="test-route-tag">💧 Sendero del Agua</span>
+    </div>
+
+    <!-- Testimonio 2 -->
+    <div class="test-card reveal" data-category="gigante">
+      <div class="test-stars">⭐⭐⭐⭐⭐</div>
+      <blockquote class="test-quote">
+        "El ascenso a El Campanario fue exigente pero totalmente recompensado con la vista 360° más espectacular de los Andes. El campamento base y el café de especialidad al amanecer completan una experiencia de montaña premium. ¡Altamente recomendado!"
+      </blockquote>
+      <div class="test-author">
+        <div class="test-avatar">👤</div>
+        <div class="test-meta">
+          <cite>Sebastián Rengel</cite>
+          <span>Ambato · Senderismo Técnico</span>
+        </div>
+      </div>
+      <span class="test-route-tag">🏔️ Gigante Dormido</span>
+    </div>
+
+    <!-- Testimonio 3 -->
+    <div class="test-card reveal" data-category="tayos">
+      <div class="test-stars">⭐⭐⭐⭐⭐</div>
+      <blockquote class="test-quote">
+        "Una expedición de aventura cinematográfica. Caminar entre esas paredes gigantes de piedra y cruzar el río es mágico. Se siente como estar explorando un mundo secreto a pocas horas de la ciudad. El almuerzo campestre con aguacates locales fue la gloria."
+      </blockquote>
+      <div class="test-author">
+        <div class="test-avatar">👤</div>
+        <div class="test-meta">
+          <cite>Estefanía Paz</cite>
+          <span>Quito · Exploración Extrema</span>
+        </div>
+      </div>
+      <span class="test-route-tag">⚡ Encañonado de los Tayos</span>
+    </div>
+
+    <!-- Testimonio 4 -->
+    <div class="test-card reveal" data-category="pedagogica">
+      <div class="test-stars">⭐⭐⭐⭐⭐</div>
+      <blockquote class="test-quote">
+        "Trajimos a 40 alumnos de bachillerato y fue un éxito rotundo. Aprendieron agroecología y conservación en el campo, conectándose de verdad con el origen de los alimentos. El material didáctico previo y el taller de prensado son excelentes herramientas didácticas."
+      </blockquote>
+      <div class="test-author">
+        <div class="test-avatar">👤</div>
+        <div class="test-meta">
+          <cite>Mariana Vinueza</cite>
+          <span>Docente Colegio Bilingüe</span>
+        </div>
+      </div>
+      <span class="test-route-tag">🏫 Salida Pedagógica</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ ENVÍO -->
+<section id="envio">
+  <div class="envio-inner">
+    <div class="envio-icon">🚐</div>
+    <div class="envio-content">
+      <h3>Costo de Envío</h3>
+      <p>Realizamos entregas desde nuestra finca en <strong>Alchipichí</strong> directamente a tu puerta. Los pedidos se coordinan por WhatsApp para garantizar frescura en productos perecederos.</p>
+      <div class="envio-table">
+        <div class="envio-row">
+          <span class="envio-zona">🏔️ Alchipichí y alrededores</span>
+          <span class="envio-precio">Gratis</span>
+        </div>
+        <div class="envio-row">
+          <span class="envio-zona">🏙️ Ciudad de Quito (Entregas en día predeterminado)</span>
+          <span class="envio-precio">Según distancia (máx $3.50)</span>
+        </div>
+        <div class="envio-row">
+          <span class="envio-zona">🌎 Envíos a todo el Ecuador</span>
+          <span class="envio-precio">Según tarifas de transporte</span>
+        </div>
+      </div>
+    </div>
+    <div class="envio-cta">
+      <a href="https://wa.me/593984480203" class="btn-cta" id="btn-coordinar-envio" target="_blank" rel="noopener">📲 Coordinar pedido</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <img src="assets/img/logo.png" alt="Ruta Escondida" style="height:48px; width:auto; margin-bottom:16px;" onerror="this.style.display='none'" />
+      <p>Turismo consciente, productos artesanales y conservación desde el corazón de los Andes ecuatorianos.</p>
+    </div>
+
+    <div>
+      <h4>Turismo</h4>
+      <ul>
+        <li><a href="#ruta-gigante">El Gigante Dormido</a></li>
+        <li><a href="#ruta-agua">El Sendero del Agua</a></li>
+        <li><a href="#ruta-tayos">Encañonado de los Tayos</a></li>
+        <li><a href="#pedagogicas">Salidas Pedagógicas</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h4>Tienda</h4>
+      <ul>
+        <li><a href="#tienda" onclick="openProducto('aceite'); return false;">Aceite Extra Virgen</a></li>
+        <li><a href="#tienda" onclick="openProducto('serum'); return false;">Sérum Facial</a></li>
+        <li><a href="#tienda" onclick="openProducto('mandarinas'); return false;">Mandarinas Frescas</a></li>
+        <li><a href="#tienda" onclick="openProducto('te_naranja'); return false;">Té de Hojas de Aguacate</a></li>
+        <li><a href="#tienda" onclick="openProducto('aguacates'); return false;">Aguacates Frescos</a></li>
+        <li><a href="#tienda" onclick="openProducto('huevos'); return false;">Huevos Felices</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h4>Contacto</h4>
+      <ul>
+        <li><a href="mailto:hola@rutaescondida.com">hola@rutaescondida.com</a></li>
+        <li><a href="#impacto">Sobre nosotros</a></li>
+        <li><a href="#pedagogicas">Reservar visita</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>© 2026 Ruta Escondida · Corredor Turístico (Puéllaro, Perucho, Atahualpa, Chavezpamba y Minas) · Todos los derechos reservados</p>
+    <div class="social-links">
+      <a href="https://www.instagram.com/rutaescondida.adv/" id="footer-ig" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.facebook.com/profile.php?id=100064267710557" id="footer-fb" target="_blank" rel="noopener">Facebook</a>
+      <a href="https://wa.me/593984480203" id="footer-wa" target="_blank" rel="noopener">WhatsApp</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══════════════════════════════════════ PRODUCTO DETALLE (Modal) -->
+<div id="producto-detalle" role="dialog" aria-modal="true" aria-label="Detalle de producto">
+  <button class="pd-close" id="pd-close-btn" aria-label="Cerrar">✕</button>
+  <div class="pd-left">
+    <div class="pd-main-img-wrapper">
+      <img id="pd-img" src="" alt="Producto" />
+      <span class="pd-badge-floating" id="pd-badge" style="display: none;"></span>
+    </div>
+    <div class="pd-thumbs-grid" id="pd-thumbs" style="display: none;"></div>
+  </div>
+  <div class="pd-right">
+    <span class="pd-category" id="pd-category"></span>
+    <h2 id="pd-title"></h2>
+    
+    <div class="pd-price-row">
+      <p class="pd-price-container">
+        <span class="pd-price" id="pd-price"></span>
+        <span class="pd-price-unit" id="pd-price-unit"></span>
+      </p>
+      <span class="pd-stock-badge" id="pd-stock" style="display: none;"></span>
+    </div>
+    
+    <p id="pd-desc" style="font-size:15px;color:#555;line-height:1.8;margin-bottom:24px"></p>
+
+    <div class="pd-icons" id="pd-icons"></div>
+
+    <div class="pd-benefits" id="pd-benefits"></div>
+
+    <div class="pd-quantity-selector">
+      <span class="pd-qty-label">Cantidad:</span>
+      <div class="quantity-controls product-qty-controls">
+        <button class="qty-btn" id="pd-qty-minus" aria-label="Disminuir cantidad">—</button>
+        <span class="qty-val" id="pd-qty-val">1</span>
+        <button class="qty-btn" id="pd-qty-plus" aria-label="Aumentar cantidad">+</button>
+      </div>
+    </div>
+
+    <div class="pd-cta" style="margin-top: 24px;">
+      <button class="btn-comprar" id="btn-comprar-now">Agregar al carrito</button>
+      <a href="mailto:hola@rutaescondida.com?subject=Consulta%20sobre%20producto%20Ruta%20Escondida" class="btn-cta" id="btn-consultar-prod">Consultar</a>
+    </div>
+
+    <div class="pd-related-section">
+      <h4>Productos relacionados</h4>
+      <div class="pd-related-grid" id="pd-related"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ BOTÓN FLOTANTE DEL CARRITO -->
+<div id="cart-float-btn" role="button" aria-label="Ver carrito de compras">
+  <svg viewBox="0 0 24 24">
+    <path d="M17.21 9l-4.38-6.56c-.19-.28-.51-.42-.83-.42-.32 0-.64.14-.83.43L6.79 9H2c-1.1 0-2 .9-2 2v2c0 .96.69 1.76 1.62 1.93L3.38 20c.15.58.68 1 1.28 1h14.68c.6 0 1.13-.42 1.28-1l1.76-5.07c.93-.17 1.62-.97 1.62-1.93v-2c0-1.1-.9-2-2-2h-4.79zM9 9l3-4.5L15 9H9zm3 8c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/>
+  </svg>
+  <span id="cart-badge">0</span>
+</div>
+
+<!-- ═══════════════════════════════════════ OVERLAY/BACKDROP -->
+<div id="cart-overlay"></div>
+
+<!-- ═══════════════════════════════════════ PANEL LATERAL DEL CARRITO -->
+<div id="cart-drawer" role="dialog" aria-modal="true" aria-label="Carrito de compras">
+  <div class="cart-header">
+    <h3>Tu Carrito</h3>
+    <button class="cart-close-btn" id="cart-close-btn" aria-label="Cerrar carrito">✕</button>
+  </div>
+  
+  <div class="cart-items-container" id="cart-items-list">
+    <!-- Renderizado dinámico desde cart.js -->
+  </div>
+  
+  <div class="cart-checkout-section" id="cart-checkout-section" style="display: none;">
+    <h4>Datos para el Envío</h4>
+    <form id="cart-checkout-form">
+      <div class="form-group">
+        <label for="cart-c-name">Nombre Completo</label>
+        <input type="text" id="cart-c-name" class="form-input" placeholder="Ej: María Augusta Ortega" required />
+      </div>
+      <div class="form-group">
+        <label for="cart-c-phone">WhatsApp / Teléfono</label>
+        <input type="tel" id="cart-c-phone" class="form-input" placeholder="Ej: 0993356073" required />
+      </div>
+      <div class="form-group">
+        <label for="cart-c-address">Dirección de Entrega</label>
+        <textarea id="cart-c-address" class="form-input" placeholder="Ej: Pasaje Alchipichí y Av. Principal, San Antonio de Pichincha" required></textarea>
+      </div>
+    </form>
+  </div>
+  
+  <div class="cart-footer">
+    <div class="cart-total-row">
+      <span class="cart-total-label">Total del Pedido</span>
+      <span class="cart-total-value" id="cart-total-amount">$0.00</span>
+    </div>
+    
+    <button type="button" class="checkout-btn btn-checkout-wa" id="btn-checkout-whatsapp" style="display: none;">
+      <svg viewBox="0 0 24 24">
+        <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.73-1.455L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.625 1.451 5.437.002 9.861-4.416 9.863-9.854.001-2.63-1.02-5.101-2.877-6.958C16.4 1.938 13.93 .917 11.299.917c-5.441 0-9.865 4.419-9.867 9.856-.001 1.958.51 3.868 1.482 5.56l-.993 3.628 3.725-.977zm11.587-6.85c-.265-.124-1.566-.77-1.81-.857-.243-.088-.419-.132-.596.133-.177.265-.685.857-.84 1.034-.154.177-.31.198-.575.075-.265-.124-1.12-.413-2.133-1.313-.788-.702-1.32-1.57-1.474-1.835-.155-.265-.017-.409.116-.54.12-.12.265-.31.398-.464.133-.155.177-.265.265-.442.088-.177.044-.332-.022-.464-.066-.132-.596-1.436-.817-1.966-.215-.518-.432-.447-.596-.456-.153-.008-.33-.009-.508-.009-.177 0-.464.066-.707.332-.243.265-.928.906-.928 2.21 0 1.303.95 2.564 1.083 2.74.133.177 1.87 2.854 4.529 4.001.633.273 1.125.435 1.51.557.636.202 1.215.174 1.673.106.51-.077 1.566-.64 1.787-1.258.222-.619.222-1.15.155-1.258-.066-.109-.243-.177-.508-.31z"/>
+      </svg>
+      Solicitar por WhatsApp (Efectivo/Transferencia)
+    </button>
+    
+    <button type="button" class="checkout-btn btn-checkout-card" id="btn-checkout-card" style="display: none;">
+      <svg viewBox="0 0 24 24">
+        <path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/>
+      </svg>
+      Pagar con Tarjeta (Payphone / Stripe)
+    </button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ MODAL PASARELA TARJETA (SIMULACIÓN) -->
+<div id="gateway-modal" class="gateway-modal" role="dialog" aria-modal="true" aria-label="Pasarela de pago segura">
+  <div class="gateway-header">
+    <h4>Pago Seguro con Tarjeta</h4>
+    <button class="gateway-close" id="gateway-close" aria-label="Cerrar pasarela">✕</button>
+  </div>
+  
+  <div class="gateway-body">
+    <p>Estás pagando a **Ruta Escondida** un total de:</p>
+    <div class="cart-total-value" id="gateway-total-amount" style="margin-bottom: 20px; font-size: 36px;">$0.00</div>
+    
+    <div class="gateway-info-box">
+      🔒 <strong>Conexión Cifrada SSL:</strong> Las credenciales y datos de tu tarjeta están protegidos. Esta pasarela simula el entorno de producción seguro de <strong>Payphone Ecuador</strong> / <strong>Stripe</strong>.
+    </div>
+    
+    <form id="simulated-card-form">
+      <div class="form-group" style="text-align: left;">
+        <label for="card-number">Número de Tarjeta</label>
+        <input type="text" id="card-number" class="form-input" placeholder="4575 •••• •••• ••••" maxlength="19" required pattern="[0-9 ]{15,19}" />
+      </div>
+      
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 24px;">
+        <div class="form-group" style="text-align: left; margin-bottom: 0;">
+          <label for="card-expiry">Vencimiento</label>
+          <input type="text" id="card-expiry" class="form-input" placeholder="MM / AA" maxlength="7" required pattern="(0[1-9]|1[0-2])\s?/\s?([0-9]{2})" />
+        </div>
+        <div class="form-group" style="text-align: left; margin-bottom: 0;">
+          <label for="card-cvv">Código CVV</label>
+          <input type="password" id="card-cvv" class="form-input" placeholder="•••" maxlength="4" required pattern="[0-9]{3,4}" />
+        </div>
+      </div>
+      
+      <button type="submit" class="checkout-btn btn-checkout-card" id="simulated-pay-btn" style="background: #1b4332;">
+        🔒 Pagar Seguro Ahora
+      </button>
+    </form>
+  </div>
+</div>
+
+<!-- GSAP -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="assets/js/main.js"></script>
+<script src="assets/js/cart.js"></script>
+<a href="https://wa.me/593984480203?text=Hola%20Diego,%20quiero%20información%20sobre%20Ruta%20Escondida" class="wa-float" id="wa-float-btn" target="_blank" rel="noopener" aria-label="Contactar por WhatsApp">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" fill="currentColor"/></svg>
+</a>
+</body>
+</html>

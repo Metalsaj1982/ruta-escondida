@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="assets/img/logo.png" />
+  <link rel="apple-touch-icon" href="assets/img/logo.png" />
+  <title>Blog · Naturaleza, Andes y Aventura — Ruta Escondida, Alchipichí</title>
+  <meta name="description" content="El blog de Ruta Escondida: ecoturismo, senderismo, agroecología y aventura familiar en los Andes ecuatorianos. Guía turístico Diego Ruiz H. desde Alchipichí." />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/ruta-page.css" />
+  <style>
+    /* ── BLOG HERO ─────────────────────────── */
+    .blog-hero {
+      position: relative;
+      height: 70vh; min-height: 420px;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--verde-andes);
+      overflow: hidden;
+    }
+    .blog-hero-pattern {
+      position: absolute; inset: 0;
+      background-image:
+        radial-gradient(circle at 20% 50%, rgba(200,169,106,.08) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(200,169,106,.06) 0%, transparent 50%),
+        linear-gradient(135deg, rgba(0,0,0,.3) 0%, transparent 60%);
+      z-index: 1;
+    }
+    .blog-hero-lines {
+      position: absolute; inset: 0; z-index: 1; overflow: hidden;
+    }
+    .blog-hero-lines::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(to right, rgba(200,169,106,.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(200,169,106,.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .blog-hero-content {
+      position: relative; z-index: 2;
+      text-align: center; padding: 0 24px;
+      max-width: 800px;
+    }
+    .blog-hero-eyebrow {
+      font-size: 10px; letter-spacing: .5em; text-transform: uppercase;
+      color: var(--oro); display: block; margin-bottom: 20px;
+    }
+    .blog-hero-content h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.4rem, 5.5vw, 4.5rem);
+      font-weight: 300; color: var(--blanco); line-height: 1.1;
+      margin-bottom: 20px;
+    }
+    .blog-hero-content h1 em {
+      font-style: italic; color: var(--oro-light);
+    }
+    .blog-hero-sub {
+      font-size: 14px; color: rgba(255,255,255,.65);
+      line-height: 1.7; max-width: 560px; margin: 0 auto;
+    }
+
+    /* ── BLOG GRID ─────────────────────────── */
+    .blog-section {
+      background: var(--crema);
+      padding: 100px 48px;
+    }
+    .blog-section-header {
+      text-align: center; margin-bottom: 64px;
+    }
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      max-width: 1200px; margin: 0 auto;
+    }
+    .blog-card {
+      background: var(--blanco);
+      overflow: hidden;
+      display: flex; flex-direction: column;
+      text-decoration: none; color: var(--negro);
+      border: 1px solid rgba(0,0,0,.06);
+      transition: transform .4s ease, box-shadow .4s ease;
+    }
+    .blog-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 24px 60px rgba(0,0,0,.12);
+    }
+    .blog-card-img {
+      position: relative;
+      height: 240px; overflow: hidden;
+    }
+    .blog-card-img img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform .6s ease;
+    }
+    .blog-card:hover .blog-card-img img { transform: scale(1.06); }
+    .blog-card-img-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,.45) 0%, transparent 60%);
+    }
+    .blog-card-cat {
+      position: absolute; top: 16px; left: 16px;
+      background: var(--verde-andes);
+      color: var(--oro);
+      font-size: 9px; font-weight: 700; letter-spacing: .3em; text-transform: uppercase;
+      padding: 5px 14px;
+    }
+    .blog-card-body { padding: 28px 24px 24px; flex: 1; display: flex; flex-direction: column; }
+    .blog-card-date {
+      font-size: 10px; letter-spacing: .2em; text-transform: uppercase;
+      color: var(--gris); margin-bottom: 12px; display: block;
+    }
+    .blog-card-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.35rem; font-weight: 400; line-height: 1.3;
+      color: var(--negro); margin-bottom: 12px;
+    }
+    .blog-card-excerpt {
+      font-size: 13px; color: var(--gris); line-height: 1.7;
+      flex: 1; margin-bottom: 20px;
+    }
+    .blog-card-link {
+      font-size: 10px; font-weight: 700; letter-spacing: .25em;
+      text-transform: uppercase; color: var(--verde-andes);
+      display: inline-flex; align-items: center; gap: 6px;
+      border-bottom: 1px solid var(--verde-andes);
+      padding-bottom: 2px;
+      transition: color .3s, border-color .3s;
+    }
+    .blog-card:hover .blog-card-link { color: var(--oro); border-color: var(--oro); }
+
+    /* ── TAGS CLOUD ────────────────────────── */
+    .tags-section {
+      background: var(--verde-andes);
+      padding: 60px 48px;
+      text-align: center;
+    }
+    .tags-eyebrow {
+      font-size: 9px; letter-spacing: .45em; text-transform: uppercase;
+      color: rgba(255,255,255,.45); display: block; margin-bottom: 24px;
+    }
+    .tags-cloud {
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 12px;
+      max-width: 700px; margin: 0 auto;
+    }
+    .tag-chip {
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(200,169,106,.25);
+      color: rgba(255,255,255,.75);
+      font-size: 11px; font-weight: 500; letter-spacing: .1em;
+      padding: 8px 20px;
+      transition: background .3s, border-color .3s, color .3s;
+      cursor: default;
+    }
+    .tag-chip:hover {
+      background: rgba(200,169,106,.15);
+      border-color: var(--oro);
+      color: var(--oro-light);
+    }
+
+    /* ── CTA BLOG ──────────────────────────── */
+    .blog-cta-section {
+      background: var(--negro);
+      padding: 80px 48px;
+      text-align: center;
+    }
+    .blog-cta-section h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 300;
+      color: var(--blanco); margin-bottom: 16px;
+    }
+    .blog-cta-section h2 em { font-style: italic; color: var(--oro-light); }
+    .blog-cta-section p {
+      font-size: 14px; color: rgba(255,255,255,.55); line-height: 1.8;
+      max-width: 520px; margin: 0 auto 32px;
+    }
+
+    /* ── RESPONSIVE ────────────────────────── */
+    @media (max-width: 1024px) {
+      .blog-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 768px) {
+      .blog-section { padding: 64px 24px; }
+      .blog-grid { grid-template-columns: 1fr; }
+      .tags-section { padding: 48px 24px; }
+      .blog-cta-section { padding: 64px 24px; }
+    }
+  </style>
+</head>
+<body class="ruta-body">
+
+<!-- NAV -->
+<nav id="main-nav" class="scrolled">
+  <a href="index.html" class="nav-logo">
+    <img src="assets/img/logo.png" alt="Ruta Escondida" class="logo-img" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/>
+    <svg viewBox="0 0 320 90" fill="none" xmlns="http://www.w3.org/2000/svg" class="logo-svg" style="display:none">
+      <g><polygon points="140,70 168,28 196,70" fill="#5A5860"/><polygon points="160,70 192,18 224,70" fill="#4A4850"/><polygon points="168,28 174,36 162,36" fill="#E0DBD5"/><polygon points="192,18 199,28 185,28" fill="#E0DBD5"/><circle cx="210" cy="32" r="14" fill="#C8A96A"/></g>
+      <text x="0" y="52" font-family="Georgia,serif" font-size="32" font-weight="bold" fill="#C8A96A">Ruta</text>
+      <text x="0" y="76" font-family="Arial,sans-serif" font-size="22" font-weight="bold" fill="#5A5860">ESCONDIDA.COM</text>
+    </svg>
+  </a>
+  <ul class="nav-links">
+    <li class="nav-dropdown">
+      <a href="index.html#turismo">Turismo de Inmersión</a>
+      <div class="dropdown-menu">
+        <a href="gigante-dormido.html">El Gigante Dormido</a>
+        <a href="sendero-agua.html">El Sendero del Agua</a>
+        <a href="tayos.html">Encañonado de los Tayos</a>
+      </div>
+    </li>
+    <li><a href="index.html#tienda">Tienda</a></li>
+    <li><a href="salidas-pedagogicas.html">Salidas Pedagógicas</a></li>
+    <li><a href="galeria.html">Galería</a></li>
+    <li><a href="blog.html" style="color:var(--oro)">Blog</a></li>
+    <li class="nav-dropdown">
+      <a href="negocios.html">Las Parroquias</a>
+      <div class="dropdown-menu">
+        <a href="negocios.html">Ver Todo</a>
+        <a href="negocios.html?parish=Puéllaro">Puéllaro</a>
+        <a href="negocios.html?parish=Perucho">Perucho</a>
+        <a href="negocios.html?parish=Atahualpa">Atahualpa</a>
+        <a href="negocios.html?parish=Chavezpamba">Chavezpamba</a>
+        <a href="negocios.html?parish=Minas">Minas</a>
+      </div>
+    </li>
+    <li><a href="index.html#impacto">Impacto</a></li>
+  </ul>
+  <a href="https://wa.me/593984480203?text=Hola,%20quiero%20reservar%20una%20experiencia%20en%20Ruta%20Escondida" class="btn-cta" id="btn-nav-reservar-blog" target="_blank" rel="noopener">Reservar</a>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section class="blog-hero">
+  <div class="blog-hero-pattern"></div>
+  <div class="blog-hero-lines"></div>
+  <div class="blog-hero-content">
+    <span class="blog-hero-eyebrow">✦ Alchipichí · 2.100 msnm · Ecuador</span>
+    <h1>Blog · <em>Naturaleza,<br>Andes y Aventura</em></h1>
+    <p class="blog-hero-sub">Relatos, guías y reflexiones desde el corazón de los Andes ecuatorianos — escritos por Diego Ruiz H., guía turístico de la Ruta Escondida.</p>
+  </div>
+</section>
+
+<!-- ═══ ARTÍCULOS ═══ -->
+<section class="blog-section">
+  <div class="blog-section-header">
+    <span class="section-eyebrow" style="color:var(--verde-andes)">Historias desde el camino</span>
+    <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3rem);font-weight:300;color:var(--negro);margin-top:12px;">
+      Artículos <em style="font-style:italic;color:var(--verde-andes)">recientes</em>
+    </h2>
+  </div>
+  <div class="blog-grid">
+
+    <!-- ARTÍCULO MINAS -->
+    <a href="blog-san-jose-minas.html" class="blog-card" id="blog-card-minas">
+      <div class="blog-card-img">
+        <img src="assets/img/minas_landscape.png" alt="San José de Minas - Ruta Escondida Ecuador" loading="lazy" />
+        <div class="blog-card-img-overlay"></div>
+        <span class="blog-card-cat">Ecoturismo e Historia</span>
+      </div>
+      <div class="blog-card-body">
+        <span class="blog-card-date">Junio 2026 · 9 min lectura</span>
+        <h2 class="blog-card-title">San José de Minas: Entre Cascadas Sagradas y Leyendas de Oro y Plata</h2>
+        <p class="blog-card-excerpt">Explora el tesoro mejor guardado de la Ruta Escondida. Una guía definitiva por sus senderos ecológicos, cascadas cristalinas, rica historia agrícola y gastronomía local.</p>
+        <span class="blog-card-link">Leer artículo →</span>
+      </div>
+    </a>
+
+    <!-- ARTÍCULO 1 -->
+    <a href="blog-sendero-agua.html" class="blog-card" id="blog-card-sendero-agua">
+      <div class="blog-card-img">
+        <img src="assets/img/sendero_agua_1.jpg" alt="El Sendero del Agua y la Pequeña Cascada en Alchipichí" loading="lazy" />
+        <div class="blog-card-img-overlay"></div>
+        <span class="blog-card-cat">Turismo Familiar</span>
+      </div>
+      <div class="blog-card-body">
+        <span class="blog-card-date">Mayo 2026 · 8 min lectura</span>
+        <h2 class="blog-card-title">El Sendero del Agua: La aventura familiar que Ecuador necesita</h2>
+        <p class="blog-card-excerpt">Un riachuelo como sendero, una cascada como recompensa y la naturaleza andina como aula. Descubre por qué el Sendero del Agua se convierte en el plan de fin de semana favorito de las familias ecuatorianas.</p>
+        <span class="blog-card-link">Leer artículo →</span>
+      </div>
+    </a>
+
+    <!-- ARTÍCULO 2 -->
+    <a href="blog-salidas-pedagogicas.html" class="blog-card" id="blog-card-salidas">
+      <div class="blog-card-img">
+        <img src="assets/img/salidas_pedagogicas.png" alt="Salidas pedagógicas en la naturaleza para colegios en Ecuador" loading="lazy" />
+        <div class="blog-card-img-overlay"></div>
+        <span class="blog-card-cat">Educación Ambiental</span>
+      </div>
+      <div class="blog-card-body">
+        <span class="blog-card-date">Mayo 2026 · 11 min lectura</span>
+        <h2 class="blog-card-title">Salidas Pedagógicas en la Naturaleza: Por qué los niños aprenden mejor en el campo</h2>
+        <p class="blog-card-excerpt">La educación desconectada de la tierra tiene un costo invisible. En Ruta Escondida llevamos a colegios y universidades a aprender agroecología, biodiversidad y conservación directamente en los Andes ecuatorianos.</p>
+        <span class="blog-card-link">Leer artículo →</span>
+      </div>
+    </a>
+
+    <!-- ARTÍCULO 3 -->
+    <a href="blog-gigante-dormido.html" class="blog-card" id="blog-card-gigante">
+      <div class="blog-card-img">
+        <img src="assets/img/gigante_dormido_2.jpg" alt="El Gigante Dormido - Ruta de senderismo a El Campanario en Alchipichí" loading="lazy" />
+        <div class="blog-card-img-overlay"></div>
+        <span class="blog-card-cat">Senderismo</span>
+      </div>
+      <div class="blog-card-body">
+        <span class="blog-card-date">Mayo 2026 · 9 min lectura</span>
+        <h2 class="blog-card-title">El Gigante Dormido: La cumbre andina que cambia perspectivas</h2>
+        <p class="blog-card-excerpt">Conquistar El Campanario no es solo escalar una montaña — es redescubrir la escala de las cosas. Las vistas 360° de los Andes desde Alchipichí son de las más impresionantes cercanas a Quito.</p>
+        <span class="blog-card-link">Leer artículo →</span>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- ═══ TAGS CLOUD ═══ -->
+<section class="tags-section">
+  <span class="tags-eyebrow">Temas que exploramos</span>
+  <div class="tags-cloud">
+    <span class="tag-chip">San José de Minas</span>
+    <span class="tag-chip">Minas</span>
+    <span class="tag-chip">ecoturismo</span>
+    <span class="tag-chip">naturaleza</span>
+    <span class="tag-chip">andes</span>
+    <span class="tag-chip">Ecuador</span>
+    <span class="tag-chip">familias</span>
+    <span class="tag-chip">senderismo</span>
+    <span class="tag-chip">agroecología</span>
+    <span class="tag-chip">educación ambiental</span>
+    <span class="tag-chip">turismo consciente</span>
+    <span class="tag-chip">Alchipichí</span>
+    <span class="tag-chip">cascadas</span>
+    <span class="tag-chip">biodiversidad</span>
+    <span class="tag-chip">colegios</span>
+    <span class="tag-chip">aventura</span>
+    <span class="tag-chip">Quito</span>
+    <span class="tag-chip">montaña</span>
+  </div>
+</section>
+
+<!-- ═══ CTA WHATSAPP ═══ -->
+<section class="blog-cta-section">
+  <span class="section-eyebrow">¿Listo para vivirlo?</span>
+  <h2>De la <em>lectura</em> a la experiencia</h2>
+  <p>Cada artículo que lees es una invitación a venir a la Ruta Escondida. Diego Ruiz H. te espera en Alchipichí para guiarte en persona.</p>
+  <a href="https://wa.me/593984480203?text=Hola%20Diego,%20leí%20el%20blog%20de%20Ruta%20Escondida%20y%20quiero%20reservar%20una%20experiencia" class="btn-comprar" id="btn-cta-blog-wa" target="_blank" rel="noopener">📲 Reservar por WhatsApp</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <img src="assets/img/logo.png" alt="Ruta Escondida" style="height:48px; width:auto; margin-bottom:16px;" onerror="this.style.display='none'" />
+      <p>Turismo consciente, productos artesanales y conservación desde el corazón de los Andes ecuatorianos.</p>
+    </div>
+    <div>
+      <h4>Turismo</h4>
+      <ul>
+        <li><a href="gigante-dormido.html">El Gigante Dormido</a></li>
+        <li><a href="sendero-agua.html">El Sendero del Agua</a></li>
+        <li><a href="tayos.html">Encañonado de los Tayos</a></li>
+        <li><a href="salidas-pedagogicas.html">Salidas Pedagógicas</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Blog</h4>
+      <ul>
+        <li><a href="blog-san-jose-minas.html">San José de Minas</a></li>
+        <li><a href="blog-sendero-agua.html">Sendero del Agua</a></li>
+        <li><a href="blog-salidas-pedagogicas.html">Salidas Pedagógicas</a></li>
+        <li><a href="blog-gigante-dormido.html">El Gigante Dormido</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Contacto</h4>
+      <ul>
+        <li><a href="mailto:hola@rutaescondida.com">hola@rutaescondida.com</a></li>
+        <li><a href="index.html#impacto">Sobre nosotros</a></li>
+        <li><a href="salidas-pedagogicas.html#formulario">Reservar visita</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Ruta Escondida · Corredor Turístico (Puéllaro, Perucho, Atahualpa, Chavezpamba y Minas) · Todos los derechos reservados</p>
+    <div class="social-links">
+      <a href="https://www.instagram.com/rutaescondida.adv/" id="footer-ig-blog" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.facebook.com/profile.php?id=100064267710557" id="footer-fb-blog" target="_blank" rel="noopener">Facebook</a>
+      <a href="https://www.tiktok.com/@rutaescondida" id="footer-tiktok-blog" target="_blank" rel="noopener">TikTok</a>
+      <a href="https://wa.me/593984480203" id="footer-wa-blog" target="_blank" rel="noopener">WhatsApp</a>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+  gsap.registerPlugin(ScrollTrigger);
+  gsap.fromTo('.blog-card',
+    { opacity: 0, y: 50 },
+    { opacity: 1, y: 0, duration: .9, stagger: 0.18, ease: 'power3.out',
+      scrollTrigger: { trigger: '.blog-grid', start: 'top 80%' } }
+  );
+  gsap.fromTo('.tag-chip',
+    { opacity: 0, scale: .85 },
+    { opacity: 1, scale: 1, duration: .5, stagger: 0.05, ease: 'back.out(1.7)',
+      scrollTrigger: { trigger: '.tags-cloud', start: 'top 85%' } }
+  );
+</script>
+<a href="https://wa.me/593984480203?text=Hola%20Diego,%20quiero%20información%20sobre%20Ruta%20Escondida" class="wa-float" id="wa-float-btn" target="_blank" rel="noopener" aria-label="Contactar por WhatsApp">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" fill="currentColor"/></svg>
+</a>
+</body>
+</html>

@@ -1,0 +1,64 @@
+[
+  {
+    "id": "glamping",
+    "name": "Glamping Andes Escondidos",
+    "category": "hospedaje",
+    "categoryLabel": "🏡 Hospedaje Premium",
+    "parish": "Chavezpamba",
+    "description": "Domo de lujo con vista panorámica de 360° al cañón de Alchipichí. Equipado con jacuzzi privado, fogata y desayuno agroecológico incluido. Una desconexión total bajo las estrellas andinas.",
+    "phone": "593984480203",
+    "photo": "assets/img/glamping_alchipichi.png",
+    "location": "Alchipichí, Sector El Campanario",
+    "coords": [0.1220, -78.3750]
+  },
+  {
+    "id": "restaurante",
+    "name": "El Mirador de Alchipichí",
+    "category": "gastronomia",
+    "categoryLabel": "🍴 Gastronomía Local",
+    "parish": "Puéllaro",
+    "description": "Comida típica ecuatoriana elaborada con ingredientes 100% orgánicos de nuestro propio huerto. Disfruta de la mejor fritada andina, truchas frescas y helados artesanales con una vista espectacular del valle.",
+    "phone": "593984480203",
+    "photo": "assets/img/restaurante_alchipichi.png",
+    "location": "Vía Principal a Alchipichí, Km 3",
+    "coords": [0.1180, -78.3810]
+  },
+  {
+    "id": "cafe",
+    "name": "Café de Especialidad Andino",
+    "category": "gastronomia",
+    "categoryLabel": "☕ Cafetería & Dulces",
+    "parish": "Perucho",
+    "description": "Barra de café cultivado y tostado localmente a 2.100 msnm. Ofrecemos espressos, lattes con arte y repostería artesanal con frutas de la zona como mandarinas y aguacates. Ambiente moderno y relajante.",
+    "phone": "593984480203",
+    "photo": "assets/img/cafe_alchipichi.png",
+    "location": "Frente a la Plaza Central de Alchipichí",
+    "coords": [0.1205, -78.3780]
+  },
+  {
+    "id": "artesanias",
+    "name": "Taller Cerámico Casa Alchipichí",
+    "category": "artesanias",
+    "categoryLabel": "🏺 Artesanías & Talleres",
+    "parish": "Atahualpa",
+    "description": "Piezas únicas de vajilla de arcilla y utensilios de madera de aguacate tallados a mano. Ofrecemos talleres interactivos de modelado en torno cerámico para que te lleves tu propia obra de arte andina.",
+    "phone": "593984480203",
+    "photo": "assets/img/artesanias_alchipichi.png",
+    "location": "Callejón de los Artesanos, Casa N° 4",
+    "coords": [0.1215, -78.3820]
+  },
+  {
+    "id": "hosteria_sol_minas",
+    "name": "Hostería Sol de Minas",
+    "category": "hospedaje",
+    "categoryLabel": "🏡 Hospedaje Premium",
+    "parish": "Minas",
+    "description": "Hospedaje de montaña rodeado de naturaleza. Habitaciones acogedoras con chimenea, piscina temperada, senderismo guiado a cascadas y restaurante campestre con cocina típica de la parroquia.",
+    "phone": "593984480203",
+    "photo": "assets/img/hosteria_minas.png",
+    "location": "Calle Principal y 24 de Septiembre, San José de Minas",
+    "coords": [0.1742, -78.4312],
+    "instagram": "https://instagram.com/soldeminas.hosteria",
+    "facebook": "https://facebook.com/soldeminas.hosteria"
+  }
+]

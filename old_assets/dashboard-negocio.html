@@ -1,0 +1,1263 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="assets/img/logo.png" />
+  <link rel="apple-touch-icon" href="assets/img/logo.png" />
+  <title>Portal de Socios · Ruta Escondida</title>
+  <meta name="robots" content="noindex, nofollow" />
+  
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/ruta-page.css" />
+  
+  <!-- FontAwesome & SortableJS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
+
+  <style>
+    /* Estilos del Portal de Socios */
+    .dashboard-body {
+      background: linear-gradient(160deg, #07120c 0%, #0c0f0d 60%, #050505 100%);
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    /* ── AUTH CONTAINER ─────────────────────────── */
+    .auth-container {
+      max-width: 420px;
+      width: 90%;
+      margin: 80px auto;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 40px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+      text-align: center;
+    }
+    .auth-logo {
+      height: 60px;
+      margin-bottom: 24px;
+    }
+    .auth-container h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      color: var(--oro);
+      margin-bottom: 8px;
+      font-weight: 300;
+    }
+    .auth-container p {
+      font-size: 13px;
+      color: var(--gris);
+      margin-bottom: 30px;
+    }
+    
+    /* ── DASHBOARD LAYOUT ───────────────────────── */
+    .dash-layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      min-height: calc(100vh - 80px);
+      max-width: 1400px;
+      width: 100%;
+      margin: 90px auto 40px auto;
+      gap: 30px;
+      padding: 0 24px;
+    }
+    
+    /* Sidebar */
+    .dash-sidebar {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 16px;
+      padding: 24px;
+      backdrop-filter: blur(10px);
+      display: flex;
+      flex-direction: column;
+      height: fit-content;
+    }
+    .biz-profile-summary {
+      text-align: center;
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      margin-bottom: 20px;
+    }
+    .biz-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--oro);
+      margin: 0 auto 12px auto;
+    }
+    .biz-name-side {
+      font-size: 15px;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+    .biz-badge-side {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--oro-light);
+      background: rgba(200, 169, 106, 0.12);
+      padding: 4px 8px;
+      border-radius: 4px;
+      display: inline-block;
+    }
+    .dash-menu {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .dash-menu-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: rgba(255,255,255,0.7);
+      padding: 12px 16px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 13.5px;
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+    .dash-menu-item:hover, .dash-menu-item.active {
+      color: #fff;
+      background: rgba(200, 169, 106, 0.08);
+      box-shadow: inset 3px 0 0 var(--oro);
+    }
+    .dash-menu-item i {
+      width: 18px;
+      font-size: 16px;
+      color: var(--oro-light);
+    }
+    
+    /* Content Panel */
+    .dash-content {
+      background: rgba(255, 255, 255, 0.01);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      padding: 40px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 30px rgba(0,0,0,0.3);
+    }
+    .tab-pane {
+      display: none;
+    }
+    .tab-pane.active {
+      display: block;
+    }
+    
+    /* ── DASHBOARD TAB ──────────────────────────── */
+    .dash-header-tab {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 32px;
+    }
+    .dash-header-tab h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.2rem;
+      font-weight: 300;
+      color: var(--oro);
+      margin: 0;
+    }
+    .dash-grid-metrics {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+    .metric-card-biz {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 12px;
+      padding: 24px;
+      position: relative;
+    }
+    .metric-card-biz h4 {
+      font-size: 11px;
+      color: var(--gris);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+    }
+    .metric-card-biz .metric-num {
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: #fff;
+      font-family: 'Cormorant Garamond', serif;
+    }
+    .metric-card-biz .sparkline {
+      height: 30px;
+      margin-top: 12px;
+      width: 100%;
+    }
+    
+    /* ── GALERÍA DE IMÁGENES TAB ────────────────── */
+    .gallery-dropzone {
+      border: 2px dashed rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.01);
+      border-radius: 12px;
+      padding: 40px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-bottom: 30px;
+    }
+    .gallery-dropzone:hover {
+      border-color: var(--oro);
+      background: rgba(200, 169, 106, 0.02);
+    }
+    .gallery-dropzone i {
+      font-size: 32px;
+      color: var(--oro-light);
+      margin-bottom: 12px;
+    }
+    .gallery-grid-admin {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 20px;
+    }
+    .gallery-card-admin {
+      position: relative;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.06);
+      background: rgba(0,0,0,0.3);
+      aspect-ratio: 4/3;
+      cursor: grab;
+    }
+    .gallery-card-admin img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .gallery-card-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 12px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .gallery-card-admin:hover .gallery-card-overlay {
+      opacity: 1;
+    }
+    .gallery-badge-primary {
+      font-size: 8px;
+      background: var(--oro);
+      color: var(--negro);
+      text-transform: uppercase;
+      font-weight: 700;
+      padding: 4px 8px;
+      border-radius: 4px;
+      align-self: flex-start;
+    }
+    .gallery-btn-delete {
+      background: rgba(231, 76, 60, 0.8);
+      border: none;
+      color: #fff;
+      width: 24px;
+      height: 24px;
+      border-radius: 4px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      align-self: flex-end;
+    }
+    
+    /* ── TABLAS Y FORMULARIOS ─────────────────────── */
+    .biz-form-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    .form-group-span {
+      grid-column: span 2;
+    }
+    .reg-grid-half {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    
+    /* Billetera */
+    .wallet-metrics {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+    .wallet-card-main {
+      background: linear-gradient(135deg, #1b4332 0%, #07140e 100%);
+      border: 1px solid rgba(200, 169, 106, 0.2);
+      border-radius: 16px;
+      padding: 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    /* Calendario */
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 8px;
+      margin-top: 20px;
+    }
+    .calendar-day-header {
+      text-align: center;
+      font-size: 11px;
+      color: var(--gris);
+      text-transform: uppercase;
+      font-weight: 700;
+      padding: 8px 0;
+    }
+    .calendar-day {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.04);
+      aspect-ratio: 1;
+      border-radius: 8px;
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .calendar-day:hover {
+      border-color: var(--oro-light);
+      background: rgba(255,255,255,0.05);
+    }
+    .calendar-day.blocked {
+      background: rgba(231, 76, 60, 0.1);
+      border-color: rgba(231, 76, 60, 0.3);
+      color: #e74c3c;
+    }
+    .calendar-day.blocked::after {
+      content: 'Bloqueado';
+      font-size: 8px;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: #e74c3c;
+    }
+    
+    @media(max-width: 1024px) {
+      .dash-layout { grid-template-columns: 1fr; margin-top: 100px; }
+      .biz-form-section { grid-template-columns: 1fr; }
+      .form-group-span { grid-column: span 1; }
+      .wallet-metrics { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body class="dashboard-body">
+
+<!-- NAV -->
+<nav id="main-nav" class="scrolled">
+  <a href="index.html" class="nav-logo">
+    <img src="assets/img/logo.png" alt="Ruta Escondida" class="logo-img" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/>
+    <svg viewBox="0 0 320 90" fill="none" xmlns="http://www.w3.org/2000/svg" class="logo-svg" style="display:none">
+      <g><polygon points="140,70 168,28 196,70" fill="#5A5860"/><polygon points="160,70 192,18 224,70" fill="#4A4850"/><polygon points="168,28 174,36 162,36" fill="#E0DBD5"/><polygon points="192,18 199,28 185,28" fill="#E0DBD5"/><circle cx="210" cy="32" r="14" fill="#C8A96A"/></g>
+      <text x="0" y="52" font-family="Georgia,serif" font-size="32" font-weight="bold" fill="#C8A96A">Ruta</text>
+      <text x="0" y="76" font-family="Arial,sans-serif" font-size="22" font-weight="bold" fill="#5A5860">ESCONDIDA.COM</text>
+    </svg>
+  </a>
+  <ul class="nav-links">
+    <li class="nav-dropdown">
+      <a href="index.html#turismo">Turismo de Inmersión</a>
+      <div class="dropdown-menu">
+        <a href="gigante-dormido.html">El Gigante Dormido</a>
+        <a href="sendero-agua.html">El Sendero del Agua</a>
+        <a href="tayos.html">Encañonado de los Tayos</a>
+      </div>
+    </li>
+    <li><a href="index.html#tienda">Tienda</a></li>
+    <li><a href="salidas-pedagogicas.html">Salidas Pedagógicas</a></li>
+    <li><a href="galeria.html">Galería</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li class="nav-dropdown">
+      <a href="negocios.html">Las Parroquias</a>
+      <div class="dropdown-menu">
+        <a href="negocios.html">Ver Todo</a>
+        <a href="negocios.html?parish=Puéllaro">Puéllaro</a>
+        <a href="negocios.html?parish=Perucho">Perucho</a>
+        <a href="negocios.html?parish=Atahualpa">Atahualpa</a>
+        <a href="negocios.html?parish=Chavezpamba">Chavezpamba</a>
+        <a href="negocios.html?parish=Minas">Minas</a>
+      </div>
+    </li>
+  </ul>
+  <button onclick="handleLogout()" class="btn-cta" style="background:transparent; color:#fff; border:1px solid rgba(255,255,255,0.2);" id="btn-logout-side">Cerrar Sesión</button>
+</nav>
+
+<!-- LOGIN SECTION -->
+<div class="auth-container" id="auth-panel">
+  <img src="assets/img/logo.png" class="auth-logo" alt="Ruta Escondida" onerror="this.style.display='none'" />
+  <h2>Acceso de Negocios</h2>
+  <p>Inicia sesión en tu panel del Marketplace</p>
+  
+  <form id="login-form">
+    <div class="form-group" style="margin-bottom: 16px; text-align: left;">
+      <label style="font-size:12px; color:var(--gris); display:block; margin-bottom:6px;">Correo Electrónico *</label>
+      <input type="email" id="login-email" class="form-input" placeholder="ejemplo@negocio.com" style="background:rgba(255,255,255,0.06); color:#fff; border-color:rgba(255,255,255,0.15);" required />
+    </div>
+    <div class="form-group" style="margin-bottom: 24px; text-align: left;">
+      <label style="font-size:12px; color:var(--gris); display:block; margin-bottom:6px;">Contraseña *</label>
+      <input type="password" id="login-pass" class="form-input" placeholder="••••••••" style="background:rgba(255,255,255,0.06); color:#fff; border-color:rgba(255,255,255,0.15);" required />
+    </div>
+    
+    <button type="submit" class="btn-cta" style="width:100%; border:none; background:var(--oro); color:var(--negro); font-weight:700;">
+      🔑 Entrar al Panel
+    </button>
+  </form>
+  
+  <p style="margin-top:20px; font-size:11px; color:#888;">Credencial de Prueba: Usa cualquier correo y contraseña <code>password123</code></p>
+</div>
+
+<!-- DASHBOARD PANEL -->
+<div class="dash-layout" id="dash-panel" style="display: none;">
+  <!-- Sidebar -->
+  <aside class="dash-sidebar">
+    <div class="biz-profile-summary">
+      <img src="" class="biz-avatar" id="side-biz-avatar" alt="Avatar" />
+      <div class="biz-name-side" id="side-biz-name">Negocio Local</div>
+      <div class="biz-badge-side" id="side-biz-plan">Plan Básico</div>
+    </div>
+    <ul class="dash-menu">
+      <li><a class="dash-menu-item active" data-tab="tab-summary"><i class="fa-solid fa-chart-line"></i> Dashboard</a></li>
+      <li><a class="dash-menu-item" data-tab="tab-profile"><i class="fa-solid fa-store"></i> Mi Perfil</a></li>
+      <li><a class="dash-menu-item" data-tab="tab-gallery"><i class="fa-solid fa-images"></i> Galería Airbnb</a></li>
+      <li><a class="dash-menu-item" data-tab="tab-products"><i class="fa-solid fa-tags"></i> Experiencias</a></li>
+      <li><a class="dash-menu-item" data-tab="tab-calendar"><i class="fa-solid fa-calendar-days"></i> Disponibilidad</a></li>
+      <li><a class="dash-menu-item" data-tab="tab-wallet"><i class="fa-solid fa-wallet"></i> Billetera (10%)</a></li>
+    </ul>
+  </aside>
+
+  <!-- Main Panel -->
+  <main class="dash-content">
+    
+    <!-- ── TAB: SUMMARY ────────────────────────── -->
+    <div class="tab-pane active" id="tab-summary">
+      <div class="dash-header-tab">
+        <h2>Panel de Desempeño</h2>
+      </div>
+      <div class="dash-grid-metrics">
+        <div class="metric-card-biz">
+          <h4>Visitas Recibidas</h4>
+          <div class="metric-num" id="stat-visits">1,248</div>
+          <svg class="sparkline" viewBox="0 0 100 30" preserveAspectRatio="none">
+            <path d="M0,25 Q15,5 30,20 T60,10 T90,22 T100,5" fill="none" stroke="var(--oro)" stroke-width="2"></path>
+          </svg>
+        </div>
+        <div class="metric-card-biz">
+          <h4>Clics WhatsApp</h4>
+          <div class="metric-num" id="stat-clicks">382</div>
+          <svg class="sparkline" viewBox="0 0 100 30" preserveAspectRatio="none">
+            <path d="M0,28 Q20,15 40,25 T70,5 T100,18" fill="none" stroke="#3498db" stroke-width="2"></path>
+          </svg>
+        </div>
+        <div class="metric-card-biz">
+          <h4>Reservas Realizadas</h4>
+          <div class="metric-num" id="stat-bookings">24</div>
+          <svg class="sparkline" viewBox="0 0 100 30" preserveAspectRatio="none">
+            <path d="M0,22 Q10,12 30,28 T65,8 T100,2" fill="none" stroke="#2ecc71" stroke-width="2"></path>
+          </svg>
+        </div>
+        <div class="metric-card-biz">
+          <h4>Ventas Procesadas</h4>
+          <div class="metric-num" id="stat-sales">$360.00</div>
+          <svg class="sparkline" viewBox="0 0 100 30" preserveAspectRatio="none">
+            <path d="M0,25 Q20,10 50,18 T80,2 T100,10" fill="none" stroke="#e67e22" stroke-width="2"></path>
+          </svg>
+        </div>
+      </div>
+      
+      <h3 style="font-family:'Cormorant Garamond', serif; font-size:1.6rem; color:var(--oro); margin-bottom:20px;">Reservas Recientes</h3>
+      <div class="admin-table-wrapper">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Cliente</th>
+              <th>Servicio</th>
+              <th>Personas</th>
+              <th>Monto Total</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+          <tbody id="summary-booking-table">
+            <!-- Cargado dinámicamente -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ── TAB: PROFILE ────────────────────────── -->
+    <div class="tab-pane" id="tab-profile">
+      <div class="dash-header-tab">
+        <h2>Editar Información del Negocio</h2>
+      </div>
+      <form id="profile-edit-form">
+        <div class="biz-form-section">
+          <div class="form-group">
+            <label style="font-size:12px; color:var(--gris); display:block; margin-bottom:6px;">Nombre del Negocio *</label>
+            <input type="text" id="prof-name" class="form-input" style="background:rgba(255,255,255,0.06); color:#fff; border-color:rgba(255,255,255,0.12);" required />
+          </div>
+          <div class="form-group">
+            <label style="font-size:12px; color:var(--gris); display:block; margin-bottom:6px;">Responsable / Representante *</label>
+            <input type="text" id="prof-manager" class="form-input" style="background:rgba(255,255,255,0.06); color:#fff; border-color:rgba(255,255,255,0.12);" required />
+          </div>
+          <div class="form-group">
+            <label style="font-size:12px; color:var(--gris); display:block; margin-bottom:6px;">Categoría *</label>
+            <select id="prof-category" class="form-input" style="background:rgba(255,255,255,0.06); color:#fff; border-color:rgba(255,255,255,0.12); appearance:none;" required>
+              <option value="hospedaje">🏡 Hospedaje</option>
+              <option value="gastronomia">🍴 Gastronomía / Restaurante</option>
+              <option value="artesanias">🏺 Artesanías / Talleres</option>
+              <option value="tours">🧗 Tours y Aventura</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label style="font-size:12px; color:var(--gris); display:block; margin-bottom:6px;">Parroquia *</label>
+            <select id="prof-parish" class="form-input" style="background:rgba(255,255,255,0.06); color:#fff; border-color:rgba(255,255,255,0.12); appearance:none;" required>
+              <option value="Puéllaro">Puéllaro</option>
+              <option value="Perucho">Perucho</option>
+              <option value="Atahualpa">Atahualpa</option>
+              <option value="Chavezpamba">Chavezpamba</option>
+              <option value="Minas">Minas</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label style="font-size:12px; color:var(--gris); display:block; margin-bottom:6px;">Correo Electrónico *</label>
+            <input type="email" id="prof-email" class="form-input" style="background:rgba(255,255,255,0.06); color:#fff; border-color:rgba(255,255,255,0.12);" required />
+          </div>
+          <div class="form-group">
+            <label style="font-size:12px; color:var(--gris); display:block; margin-bottom:6px;">WhatsApp de Ventas *</label>
+            <input type="tel" id="prof-whatsapp" class="form-input" style="background:rgba(255,255,255,0.06); color:#fff; border-color:rgba(255,255,255,0.12);" placeholder="Ej: 593984480203" required />
+          </div>
+          <div class="form-group">
+            <label style="font-size:12px; color:var(--gris); display:block; margin-bottom:6px;">Dirección física *</label>
+            <input type="text" id="prof-address" class="form-input" style="background:rgba(255,255,255,0.06); color:#fff; border-color:rgba(255,255,255,0.12);" required />
+          </div>
+          <div class="form-group">
+            <label style="font-size:12px; color:var(--gris); display:block; margin-bottom:6px;">Horarios de Atención *</label>
+            <input type="text" id="prof-schedule" class="form-input" style="background:rgba(255,255,255,0.06); color:#fff; border-color:rgba(255,255,255,0.12);" placeholder="Ej: Viernes a Domingo de 09:00 a 18:00" required />
+          </div>
+          
+          <div class="form-group-span reg-grid-half">
+            <div class="form-group">
+              <label style="font-size:12px; color:var(--gris); display:block; margin-bottom:6px;">Instagram Link</label>
+              <input type="url" id="prof-instagram" class="form-input" style="background:rgba(255,255,255,0.06); color:#fff; border-color:rgba(255,255,255,0.12);" placeholder="https://instagram.com/nombre" />
+            </div>
+            <div class="form-group">
+              <label style="font-size:12px; color:var(--gris); display:block; margin-bottom:6px;">Facebook Link</label>
+              <input type="url" id="prof-facebook" class="form-input" style="background:rgba(255,255,255,0.06); color:#fff; border-color:rgba(255,255,255,0.12);" placeholder="https://facebook.com/nombre" />
+            </div>
+          </div>
+          
+          <div class="form-group-span">
+            <label style="font-size:12px; color:var(--gris); display:block; margin-bottom:6px;">Descripción Corta *</label>
+            <input type="text" id="prof-desc-short" class="form-input" style="background:rgba(255,255,255,0.06); color:#fff; border-color:rgba(255,255,255,0.12);" placeholder="Frase destacada de hasta 150 caracteres" required />
+          </div>
+          
+          <div class="form-group-span">
+            <label style="font-size:12px; color:var(--gris); display:block; margin-bottom:6px;">Descripción Larga / Detallada *</label>
+            <textarea id="prof-desc-long" class="form-input" rows="5" style="background:rgba(255,255,255,0.06); color:#fff; border-color:rgba(255,255,255,0.12); resize:none;" placeholder="Detalles de tus servicios, instalaciones y experiencia..." required></textarea>
+          </div>
+        </div>
+        
+        <button type="submit" class="btn-cta" style="background:var(--oro); color:var(--negro); font-weight:700; border:none; margin-top:30px;">
+          💾 Guardar Cambios
+        </button>
+      </form>
+    </div>
+
+    <!-- ── TAB: GALLERY ────────────────────────── -->
+    <div class="tab-pane" id="tab-gallery">
+      <div class="dash-header-tab">
+        <h2>Galería de Fotos (Estilo Airbnb)</h2>
+      </div>
+      
+      <p style="font-size:13.5px; color:var(--gris); margin-bottom:20px;">Arrastra las imágenes para ordenar su visualización. La primera imagen (esquina superior izquierda) será la foto de portada principal.</p>
+      
+      <div class="gallery-dropzone" onclick="document.getElementById('gallery-file-input').click()">
+        <i class="fa-solid fa-cloud-arrow-up"></i>
+        <h3>Arrastra archivos aquí o haz clic para subir</h3>
+        <p style="font-size:12px; color:rgba(255,255,255,0.4);">Tamaño recomendado: 800x600px. Optimización local automática activada.</p>
+        <input type="file" id="gallery-file-input" style="display:none" accept="image/*" multiple />
+      </div>
+      
+      <div class="gallery-grid-admin" id="gallery-sort-grid">
+        <!-- Rellenado dinámicamente -->
+      </div>
+    </div>
+
+    <!-- ── TAB: PRODUCTS ───────────────────────── -->
+    <div class="tab-pane" id="tab-products">
+      <div class="dash-header-tab">
+        <h2>Crear Experiencias y Productos</h2>
+        <button onclick="openProductModal()" class="btn-cta" style="background:var(--oro); color:var(--negro); border:none; font-weight:700;">+ Agregar Producto</button>
+      </div>
+      
+      <div class="admin-table-wrapper">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Tipo</th>
+              <th>Precio</th>
+              <th>Duración</th>
+              <th>Capacidad</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+          <tbody id="products-table-list">
+            <!-- Dinámico -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ── TAB: CALENDAR ───────────────────────── -->
+    <div class="tab-pane" id="tab-calendar">
+      <div class="dash-header-tab">
+        <h2>Calendario de Disponibilidad</h2>
+      </div>
+      <p style="font-size:13.5px; color:var(--gris); margin-bottom:20px;">Haz clic en cualquier fecha para bloquearla o desbloquearla para reservas online.</p>
+      
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <h4 style="font-family:'Cormorant Garamond', serif; font-size:1.4rem; color:var(--oro);" id="calendar-month-title">Julio 2026</h4>
+        <div style="display:flex; gap:10px;">
+          <button class="admin-btn btn-admin-action" onclick="prevMonth()"><i class="fa-solid fa-chevron-left"></i></button>
+          <button class="admin-btn btn-admin-action" onclick="nextMonth()"><i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+      </div>
+      
+      <div class="calendar-grid">
+        <div class="calendar-day-header">Lun</div>
+        <div class="calendar-day-header">Mar</div>
+        <div class="calendar-day-header">Mié</div>
+        <div class="calendar-day-header">Jue</div>
+        <div class="calendar-day-header">Vie</div>
+        <div class="calendar-day-header">Sáb</div>
+        <div class="calendar-day-header">Dom</div>
+      </div>
+      <div class="calendar-grid" id="calendar-days-container">
+        <!-- Generado dinámicamente -->
+      </div>
+    </div>
+
+    <!-- ── TAB: WALLET ─────────────────────────── -->
+    <div class="tab-pane" id="tab-wallet">
+      <div class="dash-header-tab">
+        <h2>Billetera y Comisiones</h2>
+      </div>
+      
+      <div class="wallet-metrics">
+        <div class="wallet-card-main">
+          <div>
+            <h4 style="font-size:11px; color:rgba(255,255,255,0.6); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:8px;">Saldo Disponible</h4>
+            <div style="font-family:'Cormorant Garamond', serif; font-size:2.8rem; font-weight:300; color:var(--oro-light);" id="wallet-balance-val">$0.00</div>
+            <p style="font-size:12px; color:rgba(255,255,255,0.4); margin-top:8px;">Todas las transacciones descuentan la comisión automática del 10%.</p>
+          </div>
+          <button class="btn-cta" onclick="requestWithdrawal()" style="background:var(--oro); color:var(--negro); border:none; font-weight:700;">Retirar Saldo</button>
+        </div>
+        <div class="metric-card-biz" style="display:flex; flex-direction:column; justify-content:center;">
+          <h4>Comisión Ruta Escondida</h4>
+          <div class="metric-num" style="color:#e74c3c;" id="wallet-commission-val">$0.00</div>
+          <p style="font-size:12px; color:var(--gris); margin-top:4px;">10% descontado de las ventas.</p>
+        </div>
+      </div>
+      
+      <h3 style="font-family:'Cormorant Garamond', serif; font-size:1.6rem; color:var(--oro); margin-bottom:20px;">Historial de Transacciones</h3>
+      <div class="admin-table-wrapper">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Concepto</th>
+              <th>Monto Bruto</th>
+              <th>Comisión (10%)</th>
+              <th>Abono Neto (90%)</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+          <tbody id="wallet-history-list">
+            <!-- Dinámico -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+    
+  </main>
+</div>
+
+<!-- PRODUCT ENTRY MODAL -->
+<div class="booking-modal" id="product-modal">
+  <div class="booking-modal-content" style="max-width:500px;">
+    <button class="booking-modal-close" onclick="closeProductModal()">&times;</button>
+    <h3 style="font-family:'Cormorant Garamond', serif; font-size:1.8rem; color:var(--oro);">Agregar Producto / Experiencia</h3>
+    <form id="product-add-form" style="margin-top:20px;">
+      <div class="form-group" style="margin-bottom:14px;">
+        <label style="font-size:12px; color:var(--gris); display:block; margin-bottom:6px;">Nombre del Producto *</label>
+        <input type="text" id="prod-name" class="form-input" style="background:rgba(255,255,255,0.06); color:#fff; border-color:rgba(255,255,255,0.15);" placeholder="Ej: Tour a Caballo Campanario" required />
+      </div>
+      <div class="reg-grid-half" style="margin-bottom:14px;">
+        <div class="form-group">
+          <label style="font-size:12px; color:var(--gris); display:block; margin-bottom:6px;">Precio ($) *</label>
+          <input type="number" id="prod-price" class="form-input" style="background:rgba(255,255,255,0.06); color:#fff; border-color:rgba(255,255,255,0.15);" min="0" step="0.01" required />
+        </div>
+        <div class="form-group">
+          <label style="font-size:12px; color:var(--gris); display:block; margin-bottom:6px;">Tipo de Experiencia *</label>
+          <select id="prod-type" class="form-input" style="background:rgba(255,255,255,0.06); color:#fff; border-color:rgba(255,255,255,0.15); appearance:none;" required>
+            <option value="tour">🧗 Tour o Aventura</option>
+            <option value="hospedaje">🏡 Hospedaje / Cabina</option>
+            <option value="gastronomia">🍴 Almuerzo / Comida</option>
+            <option value="transporte">🚗 Transporte</option>
+            <option value="experiencia_agricola">🌾 Experiencia Agrícola</option>
+          </select>
+        </div>
+      </div>
+      <div class="reg-grid-half" style="margin-bottom:14px;">
+        <div class="form-group">
+          <label style="font-size:12px; color:var(--gris); display:block; margin-bottom:6px;">Duración *</label>
+          <input type="text" id="prod-duration" class="form-input" style="background:rgba(255,255,255,0.06); color:#fff; border-color:rgba(255,255,255,0.15);" placeholder="Ej: 3 horas / 1 noche" required />
+        </div>
+        <div class="form-group">
+          <label style="font-size:12px; color:var(--gris); display:block; margin-bottom:6px;">Capacidad (personas) *</label>
+          <input type="number" id="prod-capacity" class="form-input" style="background:rgba(255,255,255,0.06); color:#fff; border-color:rgba(255,255,255,0.15);" min="1" value="4" required />
+        </div>
+      </div>
+      <div class="form-group" style="margin-bottom:20px;">
+        <label style="font-size:12px; color:var(--gris); display:block; margin-bottom:6px;">Descripción de la experiencia *</label>
+        <textarea id="prod-desc" class="form-input" rows="3" style="background:rgba(255,255,255,0.06); color:#fff; border-color:rgba(255,255,255,0.15); resize:none;" placeholder="Describe qué incluye la actividad..." required></textarea>
+      </div>
+      
+      <button type="submit" class="btn-cta" style="background:var(--oro); color:var(--negro); font-weight:700; width:100%; border:none; height:44px; border-radius:8px;">
+        ➕ Registrar Experiencia
+      </button>
+    </form>
+  </div>
+</div>
+
+<!-- LÓGICA DE CONTROL DEL DASHBOARD -->
+<script>
+  let activeBusiness = null;
+  let activeMonthOffset = 0; // 0 para Julio 2026
+  
+  // Base de datos de simulación
+  const MOCK_BUSINESSES = {
+    "glamping": {
+      id: "glamping",
+      name: "Glamping Andes Escondidos",
+      manager_name: "Diego Ruiz H.",
+      category: "hospedaje",
+      parish: "Chavezpamba",
+      email: "glamping@rutaescondida.com",
+      whatsapp: "593984480203",
+      address: "Alchipichí, Sector El Campanario",
+      schedule: "Viernes a Domingo las 24 horas",
+      description_short: "Domo de lujo con vista panorámica de 360° al cañón de Alchipichí.",
+      description_long: "Disfruta de una desconexión total en un domo geodésico premium con jacuzzi privado y desayuno orgánico en las faldas de la cordillera andina.",
+      plan: "Digital Pro",
+      photo: "assets/img/glamping_alchipichi.png",
+      photos: ["assets/img/glamping_alchipichi.png", "assets/img/restaurante_alchipichi.png", "assets/img/cafe_alchipichi.png"],
+      blocked_dates: ["2026-07-15", "2026-07-20"],
+      products: [
+        { id: "p1", name: "Noche en Domo Geodésico", type: "hospedaje", price: 95.00, duration: "1 noche", capacity: 2, description: "Cama King size, jacuzzi privado y vista al cañón." }
+      ],
+      bookings: [
+        { id: "b1", clientName: "Carlos Tobar", date: "2026-07-04", guests: 2, service: "Noche en Domo", total: 95.00, commission: 9.50, net: 85.50, status: "completada", timestamp: "2026-06-20T10:00:00Z" },
+        { id: "b2", clientName: "Lucía Vélez", date: "2026-07-11", guests: 2, service: "Noche en Domo", total: 95.00, commission: 9.50, net: 85.50, status: "completada", timestamp: "2026-06-22T14:30:00Z" }
+      ]
+    },
+    "restaurante": {
+      id: "restaurante",
+      name: "El Mirador de Alchipichí",
+      manager_name: "María Cobo",
+      category: "gastronomia",
+      parish: "Puéllaro",
+      email: "restaurante@rutaescondida.com",
+      whatsapp: "593984480203",
+      address: "Vía Principal a Alchipichí, Km 3",
+      schedule: "Sábados y Domingos de 11:30 a 17:00",
+      description_short: "Comida típica ecuatoriana elaborada con ingredientes 100% orgánicos.",
+      description_long: "Ofrecemos la mejor sazón serrana de Puéllaro con carnes al horno, sopa criolla, truchas frescas de criadero y ensaladas de nuestro huerto orgánico.",
+      plan: "Visibilidad Digital",
+      photo: "assets/img/restaurante_alchipichi.png",
+      photos: ["assets/img/restaurante_alchipichi.png"],
+      blocked_dates: [],
+      products: [
+        { id: "p2", name: "Almuerzo Típico Familiar", type: "gastronomia", price: 15.00, duration: "2 horas", capacity: 20, description: "Menú de 3 tiempos: entrada, plato fuerte andino y helado de paila." }
+      ],
+      bookings: [
+        { id: "b3", clientName: "Juan Paz", date: "2026-07-05", guests: 4, service: "Almuerzo Familiar", total: 60.00, commission: 6.00, net: 54.00, status: "completada", timestamp: "2026-06-21T12:00:00Z" }
+      ]
+    }
+  };
+
+  document.addEventListener('DOMContentLoaded', () => {
+    // Verificar si ya hay una sesión iniciada
+    const savedSession = sessionStorage.getItem('active_biz_session');
+    if (savedSession) {
+      const tempBiz = JSON.parse(savedSession);
+      // Intentar cargar la versión más fresca de este negocio desde localStorage
+      const storedBizs = localStorage.getItem('ruta_escondida_negocios');
+      if (storedBizs) {
+        const bizList = JSON.parse(storedBizs);
+        const freshBiz = bizList.find(b => b.id === tempBiz.id);
+        if (freshBiz) {
+          activeBusiness = freshBiz;
+          sessionStorage.setItem('active_biz_session', JSON.stringify(freshBiz));
+        } else {
+          activeBusiness = tempBiz;
+        }
+      } else {
+        activeBusiness = tempBiz;
+      }
+      showDashboard();
+    }
+    
+    // Formulario de Inicio de Sesión
+    document.getElementById('login-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = document.getElementById('login-email').value.toLowerCase().trim();
+      const pass = document.getElementById('login-pass').value;
+      
+      if (pass === 'password123') {
+        // 1. Intentar encontrar el negocio por correo en localStorage
+        const storedBizs = localStorage.getItem('ruta_escondida_negocios');
+        let biz = null;
+        if (storedBizs) {
+          const bizList = JSON.parse(storedBizs);
+          biz = bizList.find(b => b.email === email);
+        }
+        
+        // 2. Si no está en localStorage, buscar en MOCK_BUSINESSES
+        if (!biz) {
+          biz = Object.values(MOCK_BUSINESSES).find(b => b.email === email);
+        }
+        
+        // 3. Si tampoco está en MOCK_BUSINESSES, crear uno mock temporal
+        if (!biz) {
+          const nameFromEmail = email.split('@')[0].toUpperCase();
+          biz = {
+            id: email.split('@')[0],
+            name: nameFromEmail + " RURAL",
+            manager_name: "Administrador",
+            category: "hospedaje",
+            parish: "Chavezpamba",
+            email: email,
+            whatsapp: "593984480203",
+            address: "Calle Principal",
+            schedule: "Lunes a Domingo",
+            description_short: "Servicio premium rural.",
+            description_long: "Descripción extendida del negocio registrado.",
+            plan: "Digital Pro",
+            photo: "assets/img/logo.png",
+            photos: ["assets/img/logo.png"],
+            blocked_dates: [],
+            products: [],
+            bookings: []
+          };
+        }
+        
+        activeBusiness = biz;
+        sessionStorage.setItem('active_biz_session', JSON.stringify(biz));
+        
+        // Guardar en localStorage para que negocios.html también lo tenga sincronizado
+        sincronizarConLocalStorage();
+        
+        showDashboard();
+      } else {
+        alert("Contraseña de prueba incorrecta. Usa: password123");
+      }
+    });
+
+    // Menú de Navegación del Dashboard
+    const menuItems = document.querySelectorAll('.dash-menu-item');
+    menuItems.forEach(item => {
+      item.addEventListener('click', () => {
+        menuItems.forEach(i => i.classList.remove('active'));
+        item.classList.add('active');
+        
+        const targetTab = item.getAttribute('data-tab');
+        const panes = document.querySelectorAll('.tab-pane');
+        panes.forEach(p => p.classList.remove('active'));
+        document.getElementById(targetTab).classList.add('active');
+        
+        if (targetTab === 'tab-calendar') {
+          renderCalendar();
+        }
+      });
+    });
+
+    // Guardar Perfil
+    document.getElementById('profile-edit-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      activeBusiness.name = document.getElementById('prof-name').value;
+      activeBusiness.manager_name = document.getElementById('prof-manager').value;
+      activeBusiness.category = document.getElementById('prof-category').value;
+      activeBusiness.parish = document.getElementById('prof-parish').value;
+      activeBusiness.email = document.getElementById('prof-email').value;
+      activeBusiness.whatsapp = document.getElementById('prof-whatsapp').value;
+      activeBusiness.address = document.getElementById('prof-address').value;
+      activeBusiness.schedule = document.getElementById('prof-schedule').value;
+      activeBusiness.instagram = document.getElementById('prof-instagram').value;
+      activeBusiness.facebook = document.getElementById('prof-facebook').value;
+      activeBusiness.description_short = document.getElementById('prof-desc-short').value;
+      activeBusiness.description_long = document.getElementById('prof-desc-long').value;
+      
+      sessionStorage.setItem('active_biz_session', JSON.stringify(activeBusiness));
+      sincronizarConLocalStorage();
+      
+      // Actualizar vista lateral
+      document.getElementById('side-biz-name').innerText = activeBusiness.name;
+      alert("¡Perfil de negocio guardado y sincronizado!");
+    });
+
+    // Compresión y subida de imágenes a la Galería
+    document.getElementById('gallery-file-input').addEventListener('change', (e) => {
+      const files = Array.from(e.target.files);
+      if (files.length === 0) return;
+      
+      const uploadPromises = files.map(file => {
+        return new Promise((resolve) => {
+          const reader = new FileReader();
+          reader.readAsDataURL(file);
+          reader.onload = (event) => {
+            const img = new Image();
+            img.src = event.target.result;
+            img.onload = () => {
+              const canvas = document.createElement('canvas');
+              const ctx = canvas.getContext('2d');
+              const maxDim = 800;
+              let w = img.width;
+              let h = img.height;
+              
+              if (w > h) {
+                if (w > maxDim) { h = (h * maxDim) / w; w = maxDim; }
+              } else {
+                if (h > maxDim) { w = (w * maxDim) / h; h = maxDim; }
+              }
+              
+              canvas.width = w;
+              canvas.height = h;
+              ctx.drawImage(img, 0, 0, w, h);
+              
+              // Comprimir en formato base64 JPEG al 70%
+              const compressedBase64 = canvas.toDataURL('image/jpeg', 0.70);
+              resolve(compressedBase64);
+            };
+          };
+        });
+      });
+      
+      Promise.all(uploadPromises).then(compressedImages => {
+        if (!activeBusiness.photos) activeBusiness.photos = [];
+        activeBusiness.photos.push(...compressedImages);
+        
+        sessionStorage.setItem('active_biz_session', JSON.stringify(activeBusiness));
+        sincronizarConLocalStorage();
+        renderGallery();
+      });
+    });
+
+    // Inicializar Sortable para reordenamiento de fotos
+    const gridEl = document.getElementById('gallery-sort-grid');
+    new Sortable(gridEl, {
+      animation: 150,
+      ghostClass: 'sortable-ghost',
+      onEnd: () => {
+        // Recoger nuevo orden
+        const cards = Array.from(gridEl.querySelectorAll('.gallery-card-admin'));
+        const newOrder = cards.map(c => c.getAttribute('data-img-src'));
+        activeBusiness.photos = newOrder;
+        
+        sessionStorage.setItem('active_biz_session', JSON.stringify(activeBusiness));
+        sincronizarConLocalStorage();
+        renderGallery();
+      }
+    });
+
+    // Formulario de Productos
+    document.getElementById('product-add-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const pName = document.getElementById('prod-name').value;
+      const pPrice = parseFloat(document.getElementById('prod-price').value) || 0.00;
+      const pType = document.getElementById('prod-type').value;
+      const pDuration = document.getElementById('prod-duration').value;
+      const pCapacity = parseInt(document.getElementById('prod-capacity').value) || 1;
+      const pDesc = document.getElementById('prod-desc').value;
+      
+      const newProduct = {
+        id: "prod_" + Date.now(),
+        name: pName,
+        price: pPrice,
+        type: pType,
+        duration: pDuration,
+        capacity: pCapacity,
+        description: pDesc
+      };
+      
+      if (!activeBusiness.products) activeBusiness.products = [];
+      activeBusiness.products.push(newProduct);
+      
+      sessionStorage.setItem('active_biz_session', JSON.stringify(activeBusiness));
+      sincronizarConLocalStorage();
+      
+      closeProductModal();
+      renderProducts();
+    });
+  });
+
+  function showDashboard() {
+    document.getElementById('auth-panel').style.display = 'none';
+    document.getElementById('dash-panel').style.display = 'grid';
+    
+    // Llenar vista
+    document.getElementById('side-biz-avatar').src = activeBusiness.photo || "assets/img/logo.png";
+    document.getElementById('side-biz-name').innerText = activeBusiness.name;
+    document.getElementById('side-biz-plan').innerText = activeBusiness.plan || "Plan Básico";
+    
+    // Cargar formularios e indicadores
+    cargarCamposPerfil();
+    calcularMetricasYTablas();
+    renderGallery();
+    renderProducts();
+  }
+
+  function handleLogout() {
+    sessionStorage.removeItem('active_biz_session');
+    window.location.reload();
+  }
+
+  // Cargar Perfil
+  function cargarCamposPerfil() {
+    document.getElementById('prof-name').value = activeBusiness.name || '';
+    document.getElementById('prof-manager').value = activeBusiness.manager_name || '';
+    document.getElementById('prof-category').value = activeBusiness.category || 'hospedaje';
+    document.getElementById('prof-parish').value = activeBusiness.parish || 'Chavezpamba';
+    document.getElementById('prof-email').value = activeBusiness.email || '';
+    document.getElementById('prof-whatsapp').value = activeBusiness.whatsapp || '';
+    document.getElementById('prof-address').value = activeBusiness.address || '';
+    document.getElementById('prof-schedule').value = activeBusiness.schedule || '';
+    document.getElementById('prof-instagram').value = activeBusiness.instagram || '';
+    document.getElementById('prof-facebook').value = activeBusiness.facebook || '';
+    document.getElementById('prof-desc-short').value = activeBusiness.description_short || '';
+    document.getElementById('prof-desc-long').value = activeBusiness.description_long || '';
+  }
+
+  // Guardar en localStorage para sincronizar con negocios.html
+  function sincronizarConLocalStorage() {
+    const stored = localStorage.getItem('ruta_escondida_negocios');
+    let list = stored ? JSON.parse(stored) : [];
+    
+    // Eliminar el negocio previo si ya existe y re-insertar el actualizado
+    list = list.filter(b => b.id !== activeBusiness.id);
+    list.push(activeBusiness);
+    localStorage.setItem('ruta_escondida_negocios', JSON.stringify(list));
+  }
+
+  // Renderizar Galería
+  function renderGallery() {
+    const grid = document.getElementById('gallery-sort-grid');
+    grid.innerHTML = '';
+    
+    if (!activeBusiness.photos || activeBusiness.photos.length === 0) {
+      grid.innerHTML = '<p style="color:#666; font-style:italic; grid-column:span 4;">No hay fotos cargadas aún.</p>';
+      return;
+    }
+    
+    activeBusiness.photos.forEach((src, idx) => {
+      const card = document.createElement('div');
+      card.className = 'gallery-card-admin';
+      card.setAttribute('data-img-src', src);
+      card.innerHTML = `
+        <img src="${src}" alt="Foto ${idx + 1}" />
+        <div class="gallery-card-overlay">
+          ${idx === 0 ? '<span class="gallery-badge-primary">Portada</span>' : '<span></span>'}
+          <button class="gallery-btn-delete" onclick="deletePhoto(${idx})"><i class="fa-solid fa-trash-can"></i></button>
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+  }
+
+  function deletePhoto(idx) {
+    if (!confirm("¿Deseas eliminar esta foto?")) return;
+    activeBusiness.photos.splice(idx, 1);
+    sessionStorage.setItem('active_biz_session', JSON.stringify(activeBusiness));
+    sincronizarConLocalStorage();
+    renderGallery();
+  }
+
+  // Renderizar Productos
+  function renderProducts() {
+    const list = document.getElementById('products-table-list');
+    list.innerHTML = '';
+    
+    if (!activeBusiness.products || activeBusiness.products.length === 0) {
+      list.innerHTML = `<tr><td colspan="6" style="text-align:center; color:#666;">No has creado experiencias o productos.</td></tr>`;
+      return;
+    }
+    
+    activeBusiness.products.forEach(p => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td style="font-weight:600; color:var(--oro);">${p.name}</td>
+        <td style="text-transform:uppercase; font-size:11px;">${p.type}</td>
+        <td>$${p.price.toFixed(2)}</td>
+        <td>${p.duration}</td>
+        <td>${p.capacity} pers.</td>
+        <td><span class="status-badge status-paid">Activo</span></td>
+      `;
+      list.appendChild(row);
+    });
+  }
+
+  function openProductModal() {
+    document.getElementById('product-modal').classList.add('active');
+  }
+  function closeProductModal() {
+    document.getElementById('product-modal').classList.remove('active');
+    document.getElementById('product-add-form').reset();
+  }
+
+  // Renderizar Billetera e Indicadores
+  function calcularMetricasYTablas() {
+    const list = activeBusiness.bookings || [];
+    let grossTotal = 0;
+    let commissionTotal = 0;
+    let netTotal = 0;
+    
+    const summaryTable = document.getElementById('summary-booking-table');
+    const walletTable = document.getElementById('wallet-history-list');
+    
+    summaryTable.innerHTML = '';
+    walletTable.innerHTML = '';
+    
+    if (list.length === 0) {
+      summaryTable.innerHTML = `<tr><td colspan="6" style="text-align:center; color:#666;">No hay historial de reservas.</td></tr>`;
+      walletTable.innerHTML = `<tr><td colspan="6" style="text-align:center; color:#666;">No hay movimientos.</td></tr>`;
+      
+      document.getElementById('stat-bookings').innerText = "0";
+      document.getElementById('stat-sales').innerText = "$0.00";
+      document.getElementById('wallet-balance-val').innerText = "$0.00";
+      document.getElementById('wallet-commission-val').innerText = "$0.00";
+      return;
+    }
+    
+    list.forEach(b => {
+      grossTotal += b.total;
+      commissionTotal += b.commission;
+      netTotal += b.net;
+      
+      const dateStr = new Date(b.timestamp || Date.now()).toLocaleDateString();
+      
+      // Fila para Dashboard
+      const rowSum = document.createElement('tr');
+      rowSum.innerHTML = `
+        <td>${dateStr}</td>
+        <td style="font-weight:600;">${b.clientName}</td>
+        <td>${b.service}</td>
+        <td>${b.guests}</td>
+        <td style="font-weight:600; color:var(--oro);">$${b.total.toFixed(2)}</td>
+        <td><span class="status-badge status-paid">${b.status}</span></td>
+      `;
+      summaryTable.appendChild(rowSum);
+      
+      // Fila para Billetera
+      const rowWal = document.createElement('tr');
+      rowWal.innerHTML = `
+        <td>${dateStr}</td>
+        <td>Venta - Reserva de ${b.clientName}</td>
+        <td style="font-weight:600;">$${b.total.toFixed(2)}</td>
+        <td style="color:#e74c3c;">-$${b.commission.toFixed(2)}</td>
+        <td style="color:#2ecc71; font-weight:600;">+$${b.net.toFixed(2)}</td>
+        <td><span class="status-badge status-paid">Abonado</span></td>
+      `;
+      walletTable.appendChild(rowWal);
+    });
+    
+    // Rellenar métricas
+    document.getElementById('stat-bookings').innerText = list.length;
+    document.getElementById('stat-sales').innerText = `$${grossTotal.toFixed(2)}`;
+    document.getElementById('wallet-balance-val').innerText = `$${netTotal.toFixed(2)}`;
+    document.getElementById('wallet-commission-val').innerText = `$${commissionTotal.toFixed(2)}`;
+  }
+
+  function requestWithdrawal() {
+    const balance = parseFloat(document.getElementById('wallet-balance-val').innerText.replace('$', '')) || 0;
+    if (balance <= 0) {
+      alert("No cuentas con saldo suficiente para solicitar retiros.");
+      return;
+    }
+    alert(`Solicitud de retiro enviada por $${balance.toFixed(2)}. Tu transferencia bancaria de la wallet se procesará en las próximas 48 horas laborales.`);
+  }
+
+  // Renderizar Calendario de Bloqueos
+  function renderCalendar() {
+    const container = document.getElementById('calendar-days-container');
+    container.innerHTML = '';
+    
+    // Simular Julio 2026: empieza un Miércoles (2 días vacíos al inicio: Lunes, Martes)
+    // 31 días
+    const monthDays = 31;
+    const offset = 2; // Miércoles
+    
+    for (let i = 0; i < offset; i++) {
+      const cell = document.createElement('div');
+      cell.style.background = 'transparent';
+      cell.style.border = 'none';
+      container.appendChild(cell);
+    }
+    
+    for (let day = 1; day <= monthDays; day++) {
+      const dateStr = `2026-07-${day < 10 ? '0' + day : day}`;
+      const isBlocked = activeBusiness.blocked_dates && activeBusiness.blocked_dates.includes(dateStr);
+      
+      const dayCell = document.createElement('div');
+      dayCell.className = `calendar-day ${isBlocked ? 'blocked' : ''}`;
+      dayCell.innerHTML = `<strong>${day}</strong>`;
+      
+      dayCell.addEventListener('click', () => {
+        toggleDateBlock(dateStr);
+      });
+      
+      container.appendChild(dayCell);
+    }
+  }
+
+  function toggleDateBlock(dateStr) {
+    if (!activeBusiness.blocked_dates) activeBusiness.blocked_dates = [];
+    
+    if (activeBusiness.blocked_dates.includes(dateStr)) {
+      // Quitar bloqueo
+      activeBusiness.blocked_dates = activeBusiness.blocked_dates.filter(d => d !== dateStr);
+    } else {
+      // Añadir bloqueo
+      activeBusiness.blocked_dates.push(dateStr);
+    }
+    
+    sessionStorage.setItem('active_biz_session', JSON.stringify(activeBusiness));
+    sincronizarConLocalStorage();
+    renderCalendar();
+  }
+
+  function prevMonth() { alert("Simulación: Navegar meses anteriores."); }
+  function nextMonth() { alert("Simulación: Navegar meses posteriores."); }
+</script>
+
+</body>
+</html>
