@@ -94,7 +94,7 @@ export default function NegociosMarketplace() {
       categoryLabel: regCategory === 'hospedaje' ? '🏡 Hospedaje' : (regCategory === 'gastronomia' ? '🍴 Gastronomía' : (regCategory === 'experiencias' ? '🗺️ Experiencias' : '🏺 Artesanías')),
       phone: regPhone,
       description: regDescription,
-      status: regPlan === 'free' ? 'pending' : 'pending_payment',
+      status: regPlan === 'free' ? 'active' : 'pending_payment',
       subscription_plan: regPlan,
       photo: '/assets/img/logo.png',
       photos: ['/assets/img/logo.png'],
@@ -367,13 +367,13 @@ export default function NegociosMarketplace() {
       </div>
 
       {/* NAV */}
-      <nav id="main-nav" className="scrolled" style={{ position: 'sticky', top: 0, zIndex: 99, background: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(20px)', borderBottom: '1px solid var(--glass-border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '15px 48px' }}>
+      <nav id="main-nav" className="scrolled header-custom-negocios" style={{ position: 'sticky', top: 0, zIndex: 99, background: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(20px)', borderBottom: '1px solid var(--glass-border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '15px 48px' }}>
         <a href="/" className="nav-logo" style={{ display: 'flex', alignItems: 'center' }}>
           <img src="/assets/img/logo.png" alt="Ruta Escondida" className="logo-img" style={{ height: '50px' }} />
         </a>
         
         {/* Unified Navigation Links (Light Theme compliant) */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '30px' }}>
+        <div className="nav-links-desktop" style={{ display: 'flex', alignItems: 'center', gap: '30px' }}>
           <a href="/" style={{ fontSize: '11px', fontWeight: 'bold', letterSpacing: '.15em', textTransform: 'uppercase', textDecoration: 'none', color: 'var(--verde-andes)' }}>Inicio</a>
           <a href="/negocios" style={{ fontSize: '11px', fontWeight: 'bold', letterSpacing: '.15em', textTransform: 'uppercase', textDecoration: 'none', color: 'var(--verde-medio)' }}>Negocios</a>
           <a href="/#tienda" style={{ fontSize: '11px', fontWeight: 'bold', letterSpacing: '.15em', textTransform: 'uppercase', textDecoration: 'none', color: 'var(--verde-andes)' }}>Tienda</a>
@@ -382,7 +382,7 @@ export default function NegociosMarketplace() {
           <a href="/blog" style={{ fontSize: '11px', fontWeight: 'bold', letterSpacing: '.15em', textTransform: 'uppercase', textDecoration: 'none', color: 'var(--verde-andes)' }}>Blog</a>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+        <div className="nav-right-actions" style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
           <a href="/login" style={{ fontSize: '11px', fontWeight: 'bold', letterSpacing: '.1em', textTransform: 'uppercase', textDecoration: 'none', color: 'var(--verde-andes)' }}>SaaS LogIn</a>
           <button onClick={() => setShowCart(true)} style={{ background: 'transparent', border: 'none', color: 'var(--verde-andes)', cursor: 'pointer', fontSize: '18px', position: 'relative' }}>
             <i className="fa-solid fa-shopping-cart"></i>
@@ -410,7 +410,7 @@ export default function NegociosMarketplace() {
           <p style={{ fontSize: '15px', color: 'rgba(255,255,255,0.8)', marginBottom: '32px' }}>Compra artesanías, reserva hospedajes o contrata guías directamente a los productores locales.</p>
 
           {/* SEARCH BAR */}
-          <div className="search-engine" style={{ background: '#fff', borderRadius: '12px', padding: '15px', display: 'grid', gridTemplateColumns: '1.5fr 1fr 1fr auto', gap: '10px', alignItems: 'center', boxShadow: '0 10px 30px rgba(27,67,50,0.15)' }}>
+          <div className="search-engine search-engine-grid" style={{ background: '#fff', borderRadius: '12px', padding: '15px', display: 'grid', gridTemplateColumns: '1.5fr 1fr 1fr auto', gap: '10px', alignItems: 'center', boxShadow: '0 10px 30px rgba(27,67,50,0.15)' }}>
             <div className="search-field" style={{ borderRight: '1px solid #eee', textAlign: 'left', padding: '0 10px' }}>
               <label style={{ fontSize: '9px', fontWeight: '800', color: '#888', textTransform: 'uppercase' }}><i className="fa-solid fa-search"></i> Buscar Producto/Negocio</label>
               <input 
@@ -463,7 +463,7 @@ export default function NegociosMarketplace() {
           <h2 style={{ fontFamily: 'Playfair Display, serif', fontSize: '2rem', marginBottom: '10px', color: 'var(--verde-andes)' }}>Territorios de la Ruta Escondida</h2>
           <p style={{ color: 'var(--texto)', fontSize: '14px', marginBottom: '40px' }}>Selecciona una parroquia en el mapa interactivo para ver exclusivamente sus servicios.</p>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '40px', alignItems: 'center' }}>
+          <div className="map-grid" style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '40px', alignItems: 'center' }}>
             <div style={{ background: '#fff', borderRadius: '12px', padding: '20px', border: '1px solid rgba(27,67,50,0.1)', boxShadow: '0 4px 20px rgba(0,0,0,0.02)' }}>
               <svg viewBox="0 0 500 400" style={{ width: '100%', height: 'auto' }}>
                 {/* Minas */}
@@ -537,7 +537,7 @@ export default function NegociosMarketplace() {
 
       {/* FACEBOOK STYLE MARKETPLACE FEED */}
       <section style={{ padding: '80px 48px', maxWidth: '1400px', margin: '0 auto' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 3fr', gap: '40px' }}>
+        <div className="feed-layout-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 3fr', gap: '40px' }}>
           
           {/* LEFT SIDEBAR FILTERS (Facebook Marketplace style) */}
           <aside style={{ background: 'var(--crema)', border: '1px solid rgba(27,67,50,0.1)', borderRadius: '12px', padding: '24px', height: 'fit-content' }}>
@@ -738,7 +738,7 @@ export default function NegociosMarketplace() {
               ✕
             </button>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', maxHeight: '80vh', overflowY: 'auto' }}>
+            <div className="drawer-grid" style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', maxHeight: '80vh', overflowY: 'auto' }}>
               
               {/* Left Side: Images & Info */}
               <div style={{ borderRight: '1px solid rgba(27,67,50,0.1)', padding: '24px' }}>

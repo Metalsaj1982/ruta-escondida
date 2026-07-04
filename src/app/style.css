@@ -665,6 +665,18 @@ footer ul a:hover { color:var(--blanco); }
   .footer-grid { grid-template-columns:1fr; }
   .footer-bottom { flex-direction:column; gap:16px; text-align:center; }
   .ped-content { padding:48px 24px; }
+
+  /* Negocios Page Responsive Layouts */
+  .header-custom-negocios { padding: 12px 24px !important; }
+  .nav-links-desktop { display: none !important; }
+  .nav-right-actions { gap: 10px !important; }
+  .role-bar-container { flex-direction: column !important; gap: 8px !important; text-align: center; }
+  .role-buttons { flex-wrap: wrap; justify-content: center; }
+  .search-engine-grid { grid-template-columns: 1fr !important; gap: 12px !important; }
+  .search-field { border-right: none !important; border-bottom: 1px solid rgba(27,67,50,0.1); padding: 0 0 8px 0 !important; }
+  .map-grid { grid-template-columns: 1fr !important; gap: 20px !important; }
+  .feed-layout-grid { grid-template-columns: 1fr !important; gap: 25px !important; }
+  .drawer-grid { grid-template-columns: 1fr !important; max-height: 90vh !important; }
 }
 
 /* ── SITE LOADER ────────────────────────── */

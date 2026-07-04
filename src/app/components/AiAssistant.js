@@ -48,7 +48,7 @@ export default function AiAssistant() {
   };
 
   const handleClientGeminiFallback = async (userText) => {
-    const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
+    const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY || "AIzaSyBa5ROukjBsVcrgvno4GSgvOiTYO1rDmf0";
     if (!apiKey) {
       const fallbackText = getAiResponse(userText);
       setMessages(prev => [...prev, { sender: 'ai', text: fallbackText }]);
