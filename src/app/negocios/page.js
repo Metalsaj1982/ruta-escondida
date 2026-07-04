@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { dbManager } from '../../lib/db';
+import Header from '../components/Header';
 
 export default function NegociosMarketplace() {
   const [role, setRole] = useState('tourist'); // 'tourist' | 'vendor' | 'admin'
@@ -366,34 +367,7 @@ export default function NegociosMarketplace() {
         </div>
       </div>
 
-      {/* NAV */}
-      <nav id="main-nav" className="scrolled header-custom-negocios" style={{ position: 'sticky', top: 0, zIndex: 99, background: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(20px)', borderBottom: '1px solid var(--glass-border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '15px 48px' }}>
-        <a href="/" className="nav-logo" style={{ display: 'flex', alignItems: 'center' }}>
-          <img src="/assets/img/logo.png" alt="Ruta Escondida" className="logo-img" style={{ height: '50px' }} />
-        </a>
-        
-        {/* Unified Navigation Links (Light Theme compliant) */}
-        <div className="nav-links-desktop" style={{ display: 'flex', alignItems: 'center', gap: '30px' }}>
-          <a href="/" style={{ fontSize: '11px', fontWeight: 'bold', letterSpacing: '.15em', textTransform: 'uppercase', textDecoration: 'none', color: 'var(--verde-andes)' }}>Inicio</a>
-          <a href="/negocios" style={{ fontSize: '11px', fontWeight: 'bold', letterSpacing: '.15em', textTransform: 'uppercase', textDecoration: 'none', color: 'var(--verde-medio)' }}>Negocios</a>
-          <a href="/#tienda" style={{ fontSize: '11px', fontWeight: 'bold', letterSpacing: '.15em', textTransform: 'uppercase', textDecoration: 'none', color: 'var(--verde-andes)' }}>Tienda</a>
-          <a href="/salidas-pedagogicas" style={{ fontSize: '11px', fontWeight: 'bold', letterSpacing: '.15em', textTransform: 'uppercase', textDecoration: 'none', color: 'var(--verde-andes)' }}>Salidas Pedagógicas</a>
-          <a href="/galeria" style={{ fontSize: '11px', fontWeight: 'bold', letterSpacing: '.15em', textTransform: 'uppercase', textDecoration: 'none', color: 'var(--verde-andes)' }}>Galería</a>
-          <a href="/blog" style={{ fontSize: '11px', fontWeight: 'bold', letterSpacing: '.15em', textTransform: 'uppercase', textDecoration: 'none', color: 'var(--verde-andes)' }}>Blog</a>
-        </div>
-
-        <div className="nav-right-actions" style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-          <a href="/login" style={{ fontSize: '11px', fontWeight: 'bold', letterSpacing: '.1em', textTransform: 'uppercase', textDecoration: 'none', color: 'var(--verde-andes)' }}>SaaS LogIn</a>
-          <button onClick={() => setShowCart(true)} style={{ background: 'transparent', border: 'none', color: 'var(--verde-andes)', cursor: 'pointer', fontSize: '18px', position: 'relative' }}>
-            <i className="fa-solid fa-shopping-cart"></i>
-            {cart.length > 0 && (
-              <span style={{ position: 'absolute', top: '-10px', right: '-10px', background: '#ff4d4d', color: '#fff', fontSize: '10px', borderRadius: '50%', padding: '2px 6px', fontWeight: 'bold' }}>
-                {cart.length}
-              </span>
-            )}
-          </button>
-        </div>
-      </nav>
+      <Header cartCount={cart.length} onCartClick={() => setShowCart(true)} />
 
       {/* HERO & SEARCH ENGINE */}
       <header className="hero" style={{ height: '55vh', position: 'relative', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>

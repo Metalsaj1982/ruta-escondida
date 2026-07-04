@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { dbManager } from '../lib/db';
+import Header from './components/Header';
 import './style.css';
 import './cart.css';
 
@@ -545,51 +546,7 @@ export default function Home() {
         </div>
       )}
 
-      {/* Main navigation Header */}
-      <nav id="main-nav" className="scrolled" style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100, display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '15px 48px', background: 'rgba(255,255,255,0.95)', borderBottom: '1px solid var(--glass-border)' }}>
-        <a href="#" className="nav-logo" style={{ display: 'flex', alignItems: 'center' }}>
-          <img src="/assets/img/logo.png" alt="Ruta Escondida" className="logo-img" style={{ height: '48px' }} />
-        </a>
-
-        <ul className="nav-links" style={{ display: 'flex', alignItems: 'center', gap: '25px', listStyle: 'none', margin: 0 }}>
-          <li className="nav-dropdown">
-            <a href="#turismo" id="nav-turismo" style={{ color: 'var(--verde-andes)' }}>Turismo de Inmersión</a>
-            <div className="dropdown-menu">
-              <a href="/gigante-dormido">El Gigante Dormido</a>
-              <a href="/sendero-agua">El Sendero del Agua</a>
-              <a href="/tayos">Encañonado de los Tayos</a>
-            </div>
-          </li>
-          <li><a href="#tienda" id="nav-tienda" style={{ color: 'var(--verde-andes)' }}>Tienda</a></li>
-          <li><a href="/salidas-pedagogicas" id="nav-pedagogicas" style={{ color: 'var(--verde-andes)' }}>Salidas Pedagógicas</a></li>
-          <li><a href="/galeria" id="nav-galeria" style={{ color: 'var(--verde-andes)' }}>Galería</a></li>
-          <li><a href="/blog" id="nav-blog" style={{ color: 'var(--verde-andes)' }}>Blog</a></li>
-          <li className="nav-dropdown">
-            <a href="/negocios" id="nav-negocios" style={{ color: 'var(--verde-medio)', fontWeight: 'bold' }}>Negocios</a>
-            <div className="dropdown-menu">
-              <a href="/negocios">Ver Todo</a>
-              <a href="/negocios?parish=Puéllaro">Puéllaro</a>
-              <a href="/negocios?parish=Perucho">Perucho</a>
-              <a href="/negocios?parish=Chavezpamba">Chavezpamba</a>
-              <a href="/negocios?parish=Atahualpa">Atahualpa</a>
-              <a href="/negocios?parish=Minas">Minas</a>
-            </div>
-          </li>
-          <li><a href="#impacto" id="nav-impacto" style={{ color: 'var(--verde-andes)' }}>Impacto</a></li>
-        </ul>
-
-        <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-          <a href="/login" style={{ fontSize: '11px', fontWeight: 'bold', letterSpacing: '.1em', textTransform: 'uppercase', textDecoration: 'none', color: 'var(--verde-andes)' }}>SaaS LogIn</a>
-          <button onClick={() => setShowCart(true)} style={{ background: 'transparent', border: 'none', color: 'var(--verde-andes)', cursor: 'pointer', fontSize: '18px', position: 'relative' }}>
-            <i className="fa-solid fa-shopping-cart"></i>
-            {cart.length > 0 && (
-              <span style={{ position: 'absolute', top: '-10px', right: '-10px', background: '#ff4d4d', color: '#fff', fontSize: '10px', borderRadius: '50%', padding: '2px 6px', fontWeight: 'bold' }}>
-                {cart.length}
-              </span>
-            )}
-          </button>
-        </div>
-      </nav>
+      <Header cartCount={cart.length} onCartClick={() => setShowCart(true)} />
 
       {/* HERO SECTION */}
       <section id="hero">
@@ -605,38 +562,7 @@ export default function Home() {
           </h1>
           <p className="hero-sub">Reserva experiencias auténticas directamente con Ruta Escondida. Turismo comunitario, educativo, de aventura y gastronomía local sin intermediarios.</p>
           
-          {/* DYNAMIC SEARCH BAR OVER VIDEO */}
-          <div className="hero-search-container">
-            <div className="search-field">
-              <label htmlFor="search-parish">Destino / Parroquia</label>
-              <select id="search-parish" value={searchParish} onChange={(e) => setSearchParish(e.target.value)}>
-                <option value="all">Todos los destinos</option>
-                <option value="Puéllaro">Puéllaro</option>
-                <option value="Perucho">Perucho</option>
-                <option value="Atahualpa">Atahualpa</option>
-                <option value="Chavezpamba">Chavezpamba</option>
-                <option value="Minas">Minas</option>
-              </select>
-            </div>
-            <div className="search-field">
-              <label htmlFor="search-category">Experiencia</label>
-              <select id="search-category" value={searchCategory} onChange={(e) => setSearchCategory(e.target.value)}>
-                <option value="all">Todas las categorías</option>
-                <option value="hospedaje">🏡 Hospedaje Rural</option>
-                <option value="aventura">🧭 Aventura & Hikes</option>
-                <option value="gastronomia">🍴 Gastronomía Local</option>
-                <option value="comunidad">🏺 Turismo Comunitario</option>
-                <option value="educativo">🏫 Turismo Educativo</option>
-              </select>
-            </div>
-            <div className="search-field">
-              <label htmlFor="search-date">Fecha</label>
-              <input type="date" id="search-date" value={searchDate} onChange={(e) => setSearchDate(e.target.value)} />
-            </div>
-            <button className="search-btn" id="btn-search-submit" onClick={handleSearchSubmit}>
-              🔍 Buscar
-            </button>
-          </div>
+
 
           <div className="scroll-hint">
             <span>Explorar Experiencias</span>

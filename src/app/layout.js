@@ -17,7 +17,7 @@ export default function RootLayout({ children }) {
         {/* Vista previa en enlaces de WhatsApp y redes sociales (Logo Oficial) */}
         <meta property="og:title" content="Ruta Escondida | Central de Reservas" />
         <meta property="og:description" content="Descubre los mejores destinos, hospedajes y experiencias de turismo rural en la Ruta Escondida." />
-        <meta property="og:image" content="/assets/img/logo.png" />
+        <meta property="og:image" content="https://rutaescondida.com/assets/img/logo.png" />
         <meta property="og:type" content="website" />
 
         <link rel="preconnect" href="https://fonts.googleapis.com" />

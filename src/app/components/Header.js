@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 
-export default function Header() {
+export default function Header({ cartCount = 0, onCartClick = null }) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -92,6 +92,29 @@ export default function Header() {
 
         {/* Right Buttons / Actions */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }} className="nav-right-actions">
+          {onCartClick && (
+            <button 
+              onClick={onCartClick} 
+              aria-label="Ver Carrito"
+              style={{ 
+                background: 'transparent', 
+                border: 'none', 
+                color: scrolled || mobileMenuOpen ? 'var(--verde-andes)' : '#fff', 
+                cursor: 'pointer', 
+                fontSize: '18px', 
+                position: 'relative',
+                marginRight: '5px'
+              }}
+            >
+              <i className="fa-solid fa-shopping-cart"></i>
+              {cartCount > 0 && (
+                <span style={{ position: 'absolute', top: '-10px', right: '-10px', background: '#ff4d4d', color: '#fff', fontSize: '10px', borderRadius: '50%', padding: '2px 6px', fontWeight: 'bold' }}>
+                  {cartCount}
+                </span>
+              )}
+            </button>
+          )}
+
           <a href="/login" className="login-link-desktop" style={{ fontSize: '10px', fontWeight: 'bold', letterSpacing: '.1em', textTransform: 'uppercase', textDecoration: 'none', color: scrolled ? 'var(--verde-andes)' : '#fff' }}>
             SaaS LogIn
           </a>
@@ -151,6 +174,29 @@ export default function Header() {
           <a href="/galeria" onClick={() => setMobileMenuOpen(false)} style={{ fontSize: '16px', fontWeight: 'bold', color: 'var(--verde-andes)' }}>Galería de Fotos</a>
           <a href="/blog" onClick={() => setMobileMenuOpen(false)} style={{ fontSize: '16px', fontWeight: 'bold', color: 'var(--verde-andes)' }}>Blog de Aventura</a>
           <a href="/login" onClick={() => setMobileMenuOpen(false)} style={{ fontSize: '16px', fontWeight: 'bold', color: 'var(--verde-medio)', borderTop: '1px solid #eee', paddingTop: '15px' }}>SaaS LogIn (Emprendedores)</a>
+          
+          {onCartClick && (
+            <button 
+              onClick={() => { setMobileMenuOpen(false); onCartClick(); }} 
+              style={{ 
+                background: 'var(--verde-medio)', 
+                color: '#fff', 
+                border: 'none', 
+                padding: '12px', 
+                borderRadius: '6px', 
+                fontWeight: 'bold', 
+                cursor: 'pointer',
+                textAlign: 'left',
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                marginTop: '10px'
+              }}
+            >
+              <span>🛒 Ver Carrito</span>
+              <span>{cartCount} items</span>
+            </button>
+          )}
         </div>
       )}
       
