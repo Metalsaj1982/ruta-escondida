@@ -601,7 +601,7 @@ export default function Home() {
         <div className="hero-content">
           <span className="hero-label">Experiencias Auténticas · Ecuador Rural</span>
           <h1 className="hero-title">
-            Descubre lugares que<br /><em>pocos conocen.</em>
+            Descubre pueblitos mágicos<br />en la <em>Ruta Escondida.</em>
           </h1>
           <p className="hero-sub">Reserva experiencias auténticas directamente con Ruta Escondida. Turismo comunitario, educativo, de aventura y gastronomía local sin intermediarios.</p>
           

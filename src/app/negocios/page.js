@@ -94,7 +94,7 @@ export default function NegociosMarketplace() {
       categoryLabel: regCategory === 'hospedaje' ? '🏡 Hospedaje' : (regCategory === 'gastronomia' ? '🍴 Gastronomía' : (regCategory === 'experiencias' ? '🗺️ Experiencias' : '🏺 Artesanías')),
       phone: regPhone,
       description: regDescription,
-      status: regPlan === 'free' ? 'active' : 'pending_payment',
+      status: regPlan === 'free' ? 'pending' : 'pending_payment',
       subscription_plan: regPlan,
       photo: '/assets/img/logo.png',
       photos: ['/assets/img/logo.png'],
