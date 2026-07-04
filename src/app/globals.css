@@ -91,3 +91,10 @@ a {
   -webkit-backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.18);
 }
+
+/* Article responsive rules */
+@media (max-width: 1024px) {
+  .article-container {
+    grid-template-columns: 1fr !important;
+  }
+}

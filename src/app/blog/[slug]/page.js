@@ -1,6 +1,3 @@
-"use client";
-
-import { use } from 'react';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 
@@ -95,8 +92,17 @@ const articlesDb = {
   }
 };
 
-export default function BlogPostPage({ params }) {
-  const { slug } = use(params);
+export function generateStaticParams() {
+  return [
+    { slug: 'san-jose-minas' },
+    { slug: 'sendero-agua' },
+    { slug: 'salidas-pedagogicas' },
+    { slug: 'gigante-dormido' }
+  ];
+}
+
+export default async function BlogPostPage({ params }) {
+  const { slug } = await params;
   const article = articlesDb[slug];
 
   if (!article) {
@@ -240,14 +246,6 @@ export default function BlogPostPage({ params }) {
         </aside>
 
       </div>
-
-      <style jsx global>{`
-        @media (max-width: 1024px) {
-          .article-container {
-            grid-template-columns: 1fr !important;
-          }
-        }
-      `}</style>
 
       <Footer />
     </div>
