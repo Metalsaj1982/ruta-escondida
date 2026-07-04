@@ -47,6 +47,61 @@ export default function AiAssistant() {
     return "¡Excelente pregunta! Ruta Escondida es un corredor turístico sostenible en el norte de Pichincha. ¿Deseas información específica sobre alguna parroquia, la Tienda local, o quieres saber cómo afiliar tu negocio al sistema?";
   };
 
+  const handleClientGeminiFallback = async (userText) => {
+    const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
+    if (!apiKey) {
+      const fallbackText = getAiResponse(userText);
+      setMessages(prev => [...prev, { sender: 'ai', text: fallbackText }]);
+      return;
+    }
+
+    try {
+      const path = typeof window !== 'undefined' ? window.location.pathname : '/';
+      const response = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            contents: [
+              ...messages.slice(-4).map(msg => ({
+                role: msg.sender === 'user' ? 'user' : 'model',
+                parts: [{ text: msg.text }]
+              })),
+              { role: 'user', parts: [{ text: userText }] }
+            ],
+            systemInstruction: {
+              parts: [{ text: `
+                Eres el Asistente Virtual de "Ruta Escondida", un corredor turístico en Pichincha, Ecuador (Puéllaro, Perucho, Chavezpamba, Atahualpa, San José de Minas).
+                Usa un tono cálido ecuatoriano, sé breve (máximo 2 párrafos). Actualmente el usuario está en la página: "${path}".
+                Recomienda Glamping Andes Escondidos ($120/noche en Chavezpamba) o comida en El Mirador de Alchipichí (Puéllaro) si es pertinente.
+                Sugiere navegar con enlaces: [Cueva de los Tayos](/tayos), [Ruta del Agua](/sendero-agua), [Negocios](/negocios).
+              ` }]
+            },
+            generationConfig: {
+              maxOutputTokens: 350,
+              temperature: 0.7
+            }
+          })
+        }
+      );
+
+      if (response.ok) {
+        const responseData = await response.json();
+        const reply = responseData.candidates?.[0]?.content?.parts?.[0]?.text || "No pude procesar la respuesta.";
+        setMessages(prev => [...prev, { sender: 'ai', text: reply }]);
+      } else {
+        const fallbackText = getAiResponse(userText);
+        setMessages(prev => [...prev, { sender: 'ai', text: fallbackText }]);
+      }
+    } catch (e) {
+      const fallbackText = getAiResponse(userText);
+      setMessages(prev => [...prev, { sender: 'ai', text: fallbackText }]);
+    }
+  };
+
   const handleSend = async (e) => {
     e.preventDefault();
     if (!input.trim() || isLoading) return;
@@ -74,12 +129,10 @@ export default function AiAssistant() {
         const data = await res.json();
         setMessages(prev => [...prev, { sender: 'ai', text: data.text }]);
       } else {
-        const fallbackText = getAiResponse(userText);
-        setMessages(prev => [...prev, { sender: 'ai', text: fallbackText }]);
+        await handleClientGeminiFallback(userText);
       }
     } catch (error) {
-      const fallbackText = getAiResponse(userText);
-      setMessages(prev => [...prev, { sender: 'ai', text: fallbackText }]);
+      await handleClientGeminiFallback(userText);
     } finally {
       setIsLoading(false);
     }
