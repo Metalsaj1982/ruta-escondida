@@ -58,45 +58,38 @@ export default function LoginPage() {
     });
 
     if (signInError) {
-      // 🚨 AUTOMATIC FAIL-SAFE FALLBACK (Allows owner & admins to login if Supabase auth fails or email is unconfirmed)
-      const lowerEmail = email.toLowerCase().trim();
-      
-      // 1. Admin fallback
-      if (lowerEmail.includes('admin') || lowerEmail === 'hola@rutaescondida.com') {
-        localStorage.setItem('active_business_id', 'admin');
-        router.push('/admin');
-        return;
-      }
-      
-      // 2. El Mirador de Alchipichí fallback
-      if (lowerEmail === 'contacto@miradoralchipichi.com') {
-        localStorage.setItem('active_business_id', 'restaurante');
-        router.push('/emprendedor');
-        return;
-      }
-      
-      // 3. Local Database / Register fallback lookup
-      const list = await dbManager.getBusinesses();
-      const found = list.find(b => b.email.toLowerCase().trim() === lowerEmail);
-      if (found) {
-        localStorage.setItem('active_business_id', found.id);
-        router.push('/emprendedor');
-        return;
-      }
-
       setError(signInError.message);
       setLoading(false);
     } else {
-      // Determine route based on user role
-      const { data: profile } = await supabase.from('profiles').select('role').eq('id', data.user.id).single();
-      
-      if (profile?.role === 'admin') {
+      // 🛡️ SECURE ROLE ROUTING (Verified Server-Side by Supabase Auth Session)
+      const verifiedEmail = data.user.email?.toLowerCase().trim();
+
+      // 1. Admin verification
+      if (verifiedEmail === 'hola@rutaescondida.com' || verifiedEmail === 'admin@rutaescondida.com') {
         localStorage.setItem('active_business_id', 'admin');
         router.push('/admin');
       } else {
-        const { data: biz } = await supabase.from('businesses').select('id').eq('owner_id', data.user.id).single();
-        localStorage.setItem('active_business_id', biz?.id || 'glamping');
-        router.push('/emprendedor');
+        // 2. Business Owner lookup by verified email
+        const { data: biz } = await supabase
+          .from('businesses')
+          .select('id')
+          .eq('email', verifiedEmail)
+          .maybeSingle();
+
+        if (biz) {
+          localStorage.setItem('active_business_id', biz.id);
+          router.push('/emprendedor');
+        } else {
+          // Fallback to local storage business mapping if database sync is pending
+          const list = await dbManager.getBusinesses();
+          const found = list.find(b => b.email.toLowerCase().trim() === verifiedEmail);
+          if (found) {
+            localStorage.setItem('active_business_id', found.id);
+          } else {
+            localStorage.setItem('active_business_id', 'glamping');
+          }
+          router.push('/emprendedor');
+        }
       }
     }
   };
