@@ -56,11 +56,6 @@ export default function Header({ cartCount = 0, onCartClick = null }) {
             </div>
           </li>
           <li>
-            <a href="/#tienda" style={{ fontSize: '10px', fontWeight: '600', letterSpacing: '.15em', textTransform: 'uppercase', textDecoration: 'none', color: scrolled ? 'var(--verde-andes)' : '#fff' }}>
-              Tienda
-            </a>
-          </li>
-          <li>
             <a href="/salidas-pedagogicas" style={{ fontSize: '10px', fontWeight: '600', letterSpacing: '.15em', textTransform: 'uppercase', textDecoration: 'none', color: scrolled ? 'var(--verde-andes)' : '#fff' }}>
               Salidas Pedagógicas
             </a>
@@ -77,7 +72,7 @@ export default function Header({ cartCount = 0, onCartClick = null }) {
           </li>
           <li className="nav-dropdown" style={{ position: 'relative' }}>
             <a href="/negocios" style={{ fontSize: '10px', fontWeight: 'bold', letterSpacing: '.15em', textTransform: 'uppercase', textDecoration: 'none', color: scrolled ? 'var(--verde-medio)' : '#fff' }}>
-              Negocios
+              Marketplace
             </a>
             <div className="dropdown-menu">
               <a href="/negocios">Ver Todo</a>
@@ -115,9 +110,6 @@ export default function Header({ cartCount = 0, onCartClick = null }) {
             </button>
           )}
 
-          <a href="/login" className="login-link-desktop" style={{ fontSize: '10px', fontWeight: 'bold', letterSpacing: '.1em', textTransform: 'uppercase', textDecoration: 'none', color: scrolled ? 'var(--verde-andes)' : '#fff' }}>
-            SaaS LogIn
-          </a>
           <a href="/negocios" className="btn-cta-desktop" style={{ border: '1px solid var(--oro)', padding: '8px 16px', fontSize: '9px', fontWeight: '600', letterSpacing: '.25em', textTransform: 'uppercase', color: scrolled ? 'var(--verde-andes)' : 'var(--oro)', textDecoration: 'none', background: 'transparent' }}>
             Reservar
           </a>
@@ -169,11 +161,10 @@ export default function Header({ cartCount = 0, onCartClick = null }) {
             <a href="/tayos" onClick={() => setMobileMenuOpen(false)} style={{ fontSize: '13px', color: 'var(--texto)' }}>Encañonado de los Tayos</a>
           </div>
 
-          <a href="/#tienda" onClick={() => setMobileMenuOpen(false)} style={{ fontSize: '16px', fontWeight: 'bold', color: 'var(--verde-andes)' }}>Tienda Local</a>
           <a href="/salidas-pedagogicas" onClick={() => setMobileMenuOpen(false)} style={{ fontSize: '16px', fontWeight: 'bold', color: 'var(--verde-andes)' }}>Salidas Pedagógicas</a>
           <a href="/galeria" onClick={() => setMobileMenuOpen(false)} style={{ fontSize: '16px', fontWeight: 'bold', color: 'var(--verde-andes)' }}>Galería de Fotos</a>
           <a href="/blog" onClick={() => setMobileMenuOpen(false)} style={{ fontSize: '16px', fontWeight: 'bold', color: 'var(--verde-andes)' }}>Blog de Aventura</a>
-          <a href="/login" onClick={() => setMobileMenuOpen(false)} style={{ fontSize: '16px', fontWeight: 'bold', color: 'var(--verde-medio)', borderTop: '1px solid #eee', paddingTop: '15px' }}>SaaS LogIn (Emprendedores)</a>
+          
           
           {onCartClick && (
             <button 

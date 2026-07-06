@@ -29,12 +29,6 @@ export default function EmprendedorProductos() {
   const handleAddProduct = async (e) => {
     e.preventDefault();
     if (!biz) return;
-    
-    // Safety check for Plan Free
-    if (biz.subscription_plan === 'free') {
-      alert("Tu plan actual (FREE) no permite la publicación de productos o promociones. Por favor actualiza tu plan en el dashboard.");
-      return;
-    }
 
     if (!name || !price || !desc) {
       alert("Por favor completa todos los campos.");
@@ -80,8 +74,8 @@ export default function EmprendedorProductos() {
       </p>
 
       {isFreePlan && (
-        <div style={{ background: 'rgba(217,83,79,0.1)', border: '1px solid rgba(217,83,79,0.3)', borderRadius: '8px', padding: '15px', color: '#D9534F', fontWeight: 'bold', fontSize: '13px', marginBottom: '30px' }}>
-          ⚠️ Tu cuenta está en el Plan FREE. La publicación de productos y promociones está deshabilitada. Actualiza a Plan BÁSICO o PREMIUM en el panel de Resumen para poder vender.
+        <div style={{ background: 'rgba(27,67,50,0.05)', border: '1px solid rgba(27,67,50,0.15)', borderRadius: '8px', padding: '15px', color: 'var(--verde-andes)', fontWeight: 'bold', fontSize: '13px', marginBottom: '30px' }}>
+          💡 Tu cuenta está en el Plan FREE. La publicación de productos está habilitada. Recuerda que todas las ventas y reservas procesadas a través del Marketplace de la Ruta Escondida tienen una comisión de intermediación del <strong>13%</strong> para el sostenimiento de la plataforma.
         </div>
       )}
 
@@ -96,7 +90,6 @@ export default function EmprendedorProductos() {
               <label style={{ display: 'block', fontSize: '13px', fontWeight: 'bold', color: 'var(--verde-andes)', marginBottom: '6px' }}>Nombre del Artículo / Servicio</label>
               <input 
                 type="text" 
-                disabled={isFreePlan}
                 placeholder="Ej: Domo Glamping, Torta de Cítricos..."
                 value={name}
                 onChange={(e) => setName(e.target.value)}
@@ -119,26 +112,24 @@ export default function EmprendedorProductos() {
                 <input 
                   type="number" 
                   step="0.01"
-                  disabled={isFreePlan}
                   placeholder="25.00"
                   value={price}
                   onChange={(e) => setPrice(e.target.value)}
                   style={{ 
-                    width: '100%', 
-                    padding: '10px', 
-                    background: '#fff', 
-                    border: '1px solid rgba(27,67,50,0.2)', 
-                    borderRadius: '6px', 
-                    color: 'var(--texto)', 
-                    fontFamily: 'Outfit',
-                    outline: 'none'
+                     width: '100%', 
+                     padding: '10px', 
+                     background: '#fff', 
+                     border: '1px solid rgba(27,67,50,0.2)', 
+                     borderRadius: '6px', 
+                     color: 'var(--texto)', 
+                     fontFamily: 'Outfit',
+                     outline: 'none'
                   }}
                 />
               </div>
               <div>
                 <label style={{ display: 'block', fontSize: '13px', fontWeight: 'bold', color: 'var(--verde-andes)', marginBottom: '6px' }}>Tipo de Oferta</label>
                 <select 
-                  disabled={isFreePlan}
                   value={type}
                   onChange={(e) => setType(e.target.value)}
                   style={{ 
@@ -163,7 +154,6 @@ export default function EmprendedorProductos() {
               <label style={{ display: 'block', fontSize: '13px', fontWeight: 'bold', color: 'var(--verde-andes)', marginBottom: '6px' }}>Descripción Corta</label>
               <textarea 
                 rows="3"
-                disabled={isFreePlan}
                 placeholder="Detalla lo que incluye este producto o servicio..."
                 value={desc}
                 onChange={(e) => setDesc(e.target.value)}
@@ -183,16 +173,15 @@ export default function EmprendedorProductos() {
 
             <button 
               type="submit"
-              disabled={isFreePlan}
               style={{
                 width: '100%',
                 padding: '12px',
-                background: isFreePlan ? 'rgba(27,67,50,0.1)' : 'var(--verde-andes)',
-                color: isFreePlan ? 'rgba(27,67,50,0.4)' : '#fff',
+                background: 'var(--verde-andes)',
+                color: '#fff',
                 border: 'none',
                 borderRadius: '6px',
                 fontWeight: 'bold',
-                cursor: isFreePlan ? 'not-allowed' : 'pointer',
+                cursor: 'pointer',
                 transition: 'all 0.3s'
               }}
             >

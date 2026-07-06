@@ -29,8 +29,10 @@ export default function Footer() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '20px', fontSize: '12px', color: 'rgba(255,255,255,0.6)' }}>
         <span>© 2026 Ruta Escondida · Corredor Turístico Norcentral · Todos los derechos reservados</span>
         <div style={{ display: 'flex', gap: '15px' }}>
-          <a href="https://instagram.com" style={{ color: '#fff' }}><i className="fa-brands fa-instagram"></i></a>
-          <a href="https://facebook.com" style={{ color: '#fff' }}><i className="fa-brands fa-facebook"></i></a>
+          <a href="https://www.facebook.com/rutaescondidacom" target="_blank" rel="noopener noreferrer" style={{ color: '#fff' }}><i className="fa-brands fa-facebook"></i></a>
+          <a href="https://www.instagram.com/rutaescondida.adv/" target="_blank" rel="noopener noreferrer" style={{ color: '#fff' }}><i className="fa-brands fa-instagram"></i></a>
+          <a href="https://www.tiktok.com/@rutaescondida?lang=es" target="_blank" rel="noopener noreferrer" style={{ color: '#fff' }}><i className="fa-brands fa-tiktok"></i></a>
+          <a href="https://www.youtube.com/watch?v=gvfop2Qo3sE" target="_blank" rel="noopener noreferrer" style={{ color: '#fff' }}><i className="fa-brands fa-youtube"></i></a>
         </div>
       </div>
     </footer>

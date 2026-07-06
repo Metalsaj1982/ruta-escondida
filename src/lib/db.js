@@ -80,7 +80,14 @@ const DEFAULT_PRODUCTS = [
   { id: "p2", business_id: "glamping", name: "Cena Romántica de Tres Tiempos", price: 40.00, description: "Cena privada bajo la luz de la luna con productos andinos.", type: "producto" },
   { id: "p3", business_id: "restaurante", name: "Fritada Andina Completa", price: 12.00, description: "Servido con mote, maduro, choclo y queso de la zona.", type: "producto" },
   { id: "p4", business_id: "restaurante", name: "Torta de Mandarina de Perucho", price: 3.50, description: "Bizcocho artesanal bañado en almíbar cítrico local.", type: "promocion" },
-  { id: "p5", business_id: "cafe", name: "Café Filtrado + Humita Caliente", price: 4.50, description: "Combo desayuno típico de la serranía.", type: "producto" }
+  { id: "p5", business_id: "cafe", name: "Café Filtrado + Humita Caliente", price: 4.50, description: "Combo desayuno típico de la serranía.", type: "producto" },
+  // Local Store Unified Products (assigned to El Mirador de Alchipichí - "restaurante")
+  { id: "aceite", business_id: "restaurante", name: "Aceite Extra Virgen de Aguacate", price: 7.50, description: "Prensado en frío a 2.100 msnm. Rico en Omega 3, 6 y 9. Sabor a fruto verde con notas herbáceas.", type: "producto", photo: "/assets/img/aceite_hero.png" },
+  { id: "serum", business_id: "restaurante", name: "Sérum Facial de Aguacate", price: 6.50, description: "Vitamina E natural, Omega 9 y extracto de aloe andino. Hidratación profunda sin químicos ni aditivos artificiales.", type: "producto", photo: "/assets/img/serum_facial.png" },
+  { id: "mandarinas", business_id: "restaurante", name: "Mandarinas Frescas de Alchipichí", price: 3.00, description: "Cultivadas a 2.100 msnm, dulces y jugosas. Cosechadas bajo pedido para asegurar su frescura directo del árbol.", type: "producto", photo: "/assets/img/mandarinas_frescas.png" },
+  { id: "te-naranja", business_id: "restaurante", name: "Té de Hojas de Aguacate con Naranja", price: 5.00, description: "Hojas de aguacate seleccionadas y de naranja deshidratadas. Un bálsamo digestivo y relajante natural sin cafeína.", type: "producto", photo: "/assets/img/te_aguacate.png" },
+  { id: "aguacates", business_id: "restaurante", name: "Aguacates Frescos de Alchipichí", price: 2.30, description: "Cosechados a mano en la Finca de Alchipichí. Textura cremosa, sabor andino auténtico y alto valor nutricional.", type: "producto", photo: "/assets/img/aguacates_frescos.png" },
+  { id: "huevos", business_id: "restaurante", name: "Huevos Felices de Pastoreo", price: 6.00, description: "Gallinas criadas en libertad alimentadas con aguacates, pasto fresco y granos seleccionados. Calidad excepcional.", type: "producto", photo: "/assets/img/huevos_felices.png" }
 ];
 
 const DEFAULT_BOOKINGS = [
@@ -98,7 +105,10 @@ const initMockDB = () => {
   if (!localStorage.getItem('re_businesses')) {
     localStorage.setItem('re_businesses', JSON.stringify(DEFAULT_BUSINESSES));
   }
-  if (!localStorage.getItem('re_products')) {
+  
+  // Force reload of mock products if the new unified store products are missing in localStorage
+  const existingProducts = localStorage.getItem('re_products');
+  if (!existingProducts || !existingProducts.includes('aceite')) {
     localStorage.setItem('re_products', JSON.stringify(DEFAULT_PRODUCTS));
   }
   if (!localStorage.getItem('re_bookings')) {
@@ -291,5 +301,13 @@ export const dbManager = {
     list.push(newLead);
     localStorage.setItem('re_leads', JSON.stringify(list));
     return true;
+  },
+
+  async createBooking(booking) {
+    return this.addBooking(booking);
+  },
+
+  async createLead(lead) {
+    return this.addLead(lead);
   }
 };

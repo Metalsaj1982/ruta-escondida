@@ -21,6 +21,8 @@ export default function NegociosMarketplace() {
   const [cart, setCart] = useState([]);
   const [showCart, setShowCart] = useState(false);
   const [showCheckoutModal, setShowCheckoutModal] = useState(false);
+  const [privacyAccepted, setPrivacyAccepted] = useState(false);
+  const [showPrivacyModal, setShowPrivacyModal] = useState(false);
 
   // Business registration modal states
   const [showRegisterModal, setShowRegisterModal] = useState(false);
@@ -29,6 +31,7 @@ export default function NegociosMarketplace() {
   const [regName, setRegName] = useState('');
   const [regEmail, setRegEmail] = useState('');
   const [regPhone, setRegPhone] = useState('');
+  const [regCourtesy, setRegCourtesy] = useState('');
   const [regDescription, setRegDescription] = useState('');
   const [regParish, setRegParish] = useState('Puéllaro');
   const [regCategory, setRegCategory] = useState('hospedaje');
@@ -94,6 +97,7 @@ export default function NegociosMarketplace() {
       category: regCategory,
       categoryLabel: regCategory === 'hospedaje' ? '🏡 Hospedaje' : (regCategory === 'gastronomia' ? '🍴 Gastronomía' : (regCategory === 'experiencias' ? '🗺️ Experiencias' : '🏺 Artesanías')),
       phone: regPhone,
+      courtesy: regCourtesy,
       description: regDescription,
       status: regPlan === 'free' ? 'pending' : 'pending_payment',
       subscription_plan: regPlan,
@@ -110,6 +114,7 @@ export default function NegociosMarketplace() {
       setRegName('');
       setRegEmail('');
       setRegPhone('');
+      setRegCourtesy('');
       setRegDescription('');
       setRegPlan('free');
       setRegPaymentRef('');
@@ -299,13 +304,10 @@ export default function NegociosMarketplace() {
       }
     });
 
-    // Add individual products if basic or premium
+    // Add individual products for all plans (Free, Basic, Premium) to enable sales
     products.forEach(prod => {
       const biz = businesses.find(b => b.id === prod.business_id);
       if (!biz || biz.status !== 'active') return;
-      
-      // Basic / Premium rules permit products
-      if (biz.subscription_plan === 'free') return;
 
       const matchesSearch = prod.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
                             prod.description.toLowerCase().includes(searchQuery.toLowerCase());
@@ -324,7 +326,7 @@ export default function NegociosMarketplace() {
           categoryLabel: 'PRODUCTO LOCAL',
           parish: biz.parish,
           business: biz,
-          tierScore: biz.subscription_plan === 'premium' ? 3 : 2
+          tierScore: biz.subscription_plan === 'premium' ? 3 : (biz.subscription_plan === 'basico' ? 2 : 1)
         });
       }
     });
@@ -338,8 +340,10 @@ export default function NegociosMarketplace() {
   return (
     <div style={{ background: 'var(--fondo)', color: 'var(--texto)', minHeight: '100vh', fontFamily: 'Outfit, sans-serif' }}>
       
+      <Header cartCount={cart.length} onCartClick={() => setShowCart(true)} />
+
       {/* ROLE SWITCHER BAR */}
-      <div className="role-selector-bar" style={{ background: '#e2ece9', borderBottom: '1px solid rgba(27,67,50,0.15)', padding: '10px 0' }}>
+      <div className="role-selector-bar" style={{ background: '#e2ece9', borderBottom: '1px solid rgba(27,67,50,0.15)', padding: '10px 0', marginTop: '80px' }}>
         <div className="role-bar-container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', maxWidth: '1200px', margin: '0 auto', padding: '0 20px' }}>
           <span className="role-label" style={{ fontSize: '12px', color: 'var(--verde-andes)', fontWeight: 'bold' }}>
             <i className="fa-solid fa-server" style={{ marginRight: '8px', color: 'var(--verde-medio)' }}></i> MODO DE VISUALIZACIÓN:
@@ -352,13 +356,27 @@ export default function NegociosMarketplace() {
               💼 Turista / Viajero
             </button>
             <button 
-              onClick={() => { setRole('vendor'); window.location.href = '/emprendedor'; }} 
+              onClick={() => { 
+                const active = localStorage.getItem('active_business_id');
+                if (active && active !== 'admin') {
+                  window.location.href = '/emprendedor'; 
+                } else {
+                  window.location.href = '/login';
+                }
+              }} 
               style={{ padding: '6px 12px', border: '1px solid var(--verde-medio)', borderRadius: '4px', background: 'transparent', color: 'var(--verde-andes)', fontSize: '11px', fontWeight: 'bold', cursor: 'pointer' }}
             >
               🏪 Emprendedor Rural (Panel)
             </button>
             <button 
-              onClick={() => { setRole('admin'); window.location.href = '/admin'; }} 
+              onClick={() => { 
+                const active = localStorage.getItem('active_business_id');
+                if (active === 'admin') {
+                  window.location.href = '/admin'; 
+                } else {
+                  window.location.href = '/login';
+                }
+              }} 
               style={{ padding: '6px 12px', border: '1px solid var(--verde-medio)', borderRadius: '4px', background: 'transparent', color: 'var(--verde-andes)', fontSize: '11px', fontWeight: 'bold', cursor: 'pointer' }}
             >
               🛠️ Admin Plataforma (Panel)
@@ -366,8 +384,6 @@ export default function NegociosMarketplace() {
           </div>
         </div>
       </div>
-
-      <Header cartCount={cart.length} onCartClick={() => setShowCart(true)} />
 
       {/* HERO & SEARCH ENGINE */}
       <header className="hero" style={{ height: '55vh', position: 'relative', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -819,10 +835,10 @@ export default function NegociosMarketplace() {
 
                 {/* Reservation / Lead form */}
                 <div style={{ borderTop: '1px solid rgba(27,67,50,0.1)', paddingTop: '20px' }}>
-                  {selectedBiz.subscription_plan === 'premium' ? (
-                    // PREMIUM RESERVATIONS
+                  {true ? (
+                    // DIRECT RESERVATIONS FOR ALL PLANS (Enables platform commission collection)
                     <div>
-                      <h4 style={{ fontSize: '13px', color: 'var(--verde-andes)', fontWeight: 'bold', marginBottom: '10px' }}>⚡ RESURVA EN LÍNEA DIRECTA</h4>
+                      <h4 style={{ fontSize: '13px', color: 'var(--verde-andes)', fontWeight: 'bold', marginBottom: '10px' }}>⚡ RESERVA EN LÍNEA DIRECTA</h4>
                       {bookingSuccess ? (
                         <div style={{ background: 'rgba(0,255,128,0.1)', color: 'var(--verde-andes)', border: '1px solid var(--verde-medio)', borderRadius: '4px', padding: '10px', fontSize: '12px', textAlign: 'center', fontWeight: 'bold' }}>
                           ¡Reserva realizada con éxito!<br />
@@ -1032,6 +1048,19 @@ export default function NegociosMarketplace() {
                     <option value="payphone">📱 Payphone (Ecuador Tarjeta/App)</option>
                     <option value="whatsapp">💬 WhatsApp (Coordinar transferencia)</option>
                   </select>
+                  <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', marginTop: '5px' }}>
+                    <input 
+                      type="checkbox" 
+                      required 
+                      id="privacy-checkbox-negocios" 
+                      checked={privacyAccepted}
+                      onChange={(e) => setPrivacyAccepted(e.target.checked)}
+                      style={{ marginTop: '3px', cursor: 'pointer' }} 
+                    />
+                    <label htmlFor="privacy-checkbox-negocios" style={{ fontSize: '11px', lineHeight: '1.4', cursor: 'pointer', color: '#666' }}>
+                      Acepto el tratamiento de mi correo y WhatsApp conforme a las <a href="#privacy" onClick={(e) => { e.preventDefault(); setShowPrivacyModal(true); }} style={{ color: 'var(--verde-medio)', fontWeight: 'bold', textDecoration: 'underline' }}>Políticas de Datos (LOPDP Ecuador)</a> para remarketing y entrega.
+                    </label>
+                  </div>
                 </div>
 
                 <button type="submit" style={{ width: '100%', background: 'var(--verde-andes)', color: '#fff', border: 'none', padding: '12px', borderRadius: '6px', fontWeight: 'bold', cursor: 'pointer' }}>
@@ -1110,6 +1139,50 @@ export default function NegociosMarketplace() {
               </div>
             )}
 
+          </div>
+        </div>
+      )}
+
+      {/* 📜 LOPDP PRIVACY MODAL */}
+      {showPrivacyModal && (
+        <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.7)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1060, padding: '20px' }}>
+          <div style={{ background: '#fff', border: '1px solid rgba(27,67,50,0.15)', borderRadius: '16px', maxWidth: '550px', width: '100%', padding: '30px', position: 'relative', color: 'var(--texto)', maxHeight: '80vh', overflowY: 'auto' }}>
+            <button 
+              onClick={() => setShowPrivacyModal(false)}
+              style={{ position: 'absolute', top: '15px', right: '15px', background: 'transparent', border: 'none', color: 'var(--verde-andes)', fontSize: '18px', cursor: 'pointer' }}
+            >
+              ✕
+            </button>
+            <h3 style={{ fontFamily: 'Playfair Display', fontSize: '20px', color: 'var(--verde-andes)', marginBottom: '15px', borderBottom: '1px solid #eee', paddingBottom: '10px' }}>
+              Políticas de Protección de Datos (LOPDP Ecuador)
+            </h3>
+            <div style={{ fontSize: '12.5px', lineHeight: '1.6', color: '#555', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              <p>
+                De conformidad con la <strong>Ley Orgánica de Protección de Datos Personales (LOPDP)</strong> de la República del Ecuador, le informamos sobre el tratamiento de sus datos:
+              </p>
+              <div>
+                <strong>1. Responsable del Tratamiento:</strong>
+                <p style={{ margin: '2px 0 0 0' }}>Ruta Escondida S.A. (Contacto: datos@rutaescondida.com)</p>
+              </div>
+              <div>
+                <strong>2. Finalidad del Tratamiento:</strong>
+                <p style={{ margin: '2px 0 0 0' }}>Procesar y coordinar la entrega de sus compras y reservas locales, así como el uso de su correo y WhatsApp para remarketing, ofertas comerciales y promociones exclusivas relacionadas únicamente con el turismo en la Ruta Escondida.</p>
+              </div>
+              <div>
+                <strong>3. Seguridad y Confidencialidad:</strong>
+                <p style={{ margin: '2px 0 0 0' }}>Garantizamos la seguridad de sus datos personales. Toda la información es transmitida de forma cifrada mediante protocolos de seguridad HTTPS/SSL y se almacena de forma segura en bases de datos protegidas y encriptadas (Supabase/PostgreSQL) con control de acceso restringido.</p>
+              </div>
+              <div>
+                <strong>4. Sus Derechos (ARCO):</strong>
+                <p style={{ margin: '2px 0 0 0' }}>Usted tiene derecho a Acceder, Rectificar, Cancelar u Oponerse al uso de sus datos en cualquier momento. Para ejercer estos derechos, o revocar su consentimiento de remarketing, puede enviar un correo electrónico con su solicitud a <strong>datos@rutaescondida.com</strong>.</p>
+              </div>
+            </div>
+            <button 
+              onClick={() => setShowPrivacyModal(false)}
+              style={{ width: '100%', padding: '10px', background: 'var(--verde-andes)', color: '#fff', border: 'none', borderRadius: '6px', fontWeight: 'bold', cursor: 'pointer', marginTop: '20px' }}
+            >
+              Entendido y Cerrar
+            </button>
           </div>
         </div>
       )}
@@ -1295,8 +1368,15 @@ export default function NegociosMarketplace() {
                     <input type="text" required value={regPhone} onChange={(e) => setRegPhone(e.target.value)} placeholder="Ej: 593984480203" style={{ width: '100%', padding: '10px', border: '1px solid rgba(27,67,50,0.2)', borderRadius: '6px', fontSize: '13.5px', color: 'var(--texto)', outline: 'none' }} />
                   </div>
                   <div>
+                    <label style={{ display: 'block', fontSize: '12px', fontWeight: 'bold', marginBottom: '5px', color: 'var(--verde-andes)' }}>🎁 Cortesía Web Exclusiva para Clientes</label>
+                    <input type="text" required value={regCourtesy} onChange={(e) => setRegCourtesy(e.target.value)} placeholder="Ej: Copa de vino gratis por comer en el local, 10% descuento en tours, etc." style={{ width: '100%', padding: '10px', border: '1px solid rgba(27,67,50,0.2)', borderRadius: '6px', fontSize: '13.5px', color: 'var(--texto)', outline: 'none' }} />
+                  </div>
+                  <div>
                     <label style={{ display: 'block', fontSize: '12px', fontWeight: 'bold', marginBottom: '5px', color: 'var(--verde-andes)' }}>Descripción de tus Servicios</label>
                     <textarea required value={regDescription} onChange={(e) => setRegDescription(e.target.value)} rows="3" style={{ width: '100%', padding: '10px', border: '1px solid rgba(27,67,50,0.2)', borderRadius: '6px', fontSize: '13.5px', color: 'var(--texto)', resize: 'vertical', outline: 'none' }}></textarea>
+                  </div>
+                  <div style={{ background: 'rgba(217, 56, 58, 0.05)', border: '1px solid rgba(217, 56, 58, 0.15)', padding: '12px', borderRadius: '6px', fontSize: '11px', lineHeight: '1.5', color: '#B32D2F', marginTop: '10px' }}>
+                    ⚠️ <strong>Términos de Afiliación:</strong> Al registrarte, te comprometes a otorgar la cortesía indicada a todos los clientes que te contacten o compren por la web. Asimismo, comprendes y aceptas que la plataforma retiene una comisión de intermediación del <strong>13%</strong> sobre el valor total de las reservas confirmadas a través del Marketplace de la Ruta Escondida.
                   </div>
                   <div style={{ display: 'flex', gap: '10px', justifyContent: 'flex-end', marginTop: '15px' }}>
                     <button type="button" onClick={() => { setShowRegisterModal(false); setRegisterStep(1); }} style={{ background: '#f5f5f5', border: 'none', padding: '10px 18px', borderRadius: '6px', cursor: 'pointer', fontSize: '13px', color: '#333' }}>Cancelar</button>

@@ -285,6 +285,8 @@ export default function Home() {
   const [checkoutName, setCheckoutName] = useState('');
   const [checkoutPhone, setCheckoutPhone] = useState('');
   const [checkoutAddress, setCheckoutAddress] = useState('');
+  const [privacyAccepted, setPrivacyAccepted] = useState(false);
+  const [showPrivacyModal, setShowPrivacyModal] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState('stripe'); // 'stripe' | 'payphone' | 'whatsapp'
   const [cardNumber, setCardNumber] = useState('');
   const [cardExpiry, setCardExpiry] = useState('');
@@ -294,6 +296,11 @@ export default function Home() {
   const [searchParish, setSearchParish] = useState('all');
   const [searchCategory, setSearchCategory] = useState('all');
   const [searchDate, setSearchDate] = useState('');
+
+  // Cookie, Event Popup, and Video modal states
+  const [showCookies, setShowCookies] = useState(false);
+  const [showEventPopup, setShowEventPopup] = useState(false);
+  const [showVideoModal, setShowVideoModal] = useState(false);
 
   function handleEnterSite() {
     setHideLoader(true);
@@ -323,9 +330,21 @@ export default function Home() {
     }, 500);
   }
 
-  // Loader Interval Simulation
+  // Loader Interval Simulation & Marketing Timers
   useEffect(() => {
     handleEnterSite();
+
+    // Cookie banner check
+    const consent = localStorage.getItem('cookie_consent_accepted');
+    if (!consent) {
+      setTimeout(() => setShowCookies(true), 1500);
+    }
+
+    // Event popup check
+    const popupClosed = sessionStorage.getItem('event_popup_closed');
+    if (!popupClosed) {
+      setTimeout(() => setShowEventPopup(true), 5000);
+    }
   }, []);
 
   const handleSearchSubmit = () => {
@@ -556,18 +575,16 @@ export default function Home() {
         </video>
         <div className="hero-overlay"></div>
         <div className="hero-content">
-          <span className="hero-label">Experiencias Auténticas · Ecuador Rural</span>
+          <span className="hero-label" style={{ fontFamily: 'Poppins', letterSpacing: '4px', textTransform: 'uppercase' }}>Extraordinary Rural Experiences</span>
           <h1 className="hero-title">
             Descubre pueblitos mágicos<br />en la <em>Ruta Escondida.</em>
           </h1>
           <p className="hero-sub">Reserva experiencias auténticas directamente con Ruta Escondida. Turismo comunitario, educativo, de aventura y gastronomía local sin intermediarios.</p>
-          
+        </div>
 
-
-          <div className="scroll-hint">
-            <span>Explorar Experiencias</span>
-            <div className="scroll-line"></div>
-          </div>
+        <div className="scroll-hint">
+          <span>Explorar Experiencias</span>
+          <div className="scroll-line"></div>
         </div>
       </section>
 
@@ -777,7 +794,12 @@ export default function Home() {
             >
               <div className="producto-img">
                 <img src={prod.photo} alt={prod.name} style={{ width: '100%', height: '200px', objectFit: 'cover' }} />
-                <span className="grid-badge">{prod.badge}</span>
+                <span className={`grid-badge ${
+                  prod.badge === 'Más Vendido' ? 'badge-mas-vendido' :
+                  prod.badge === 'Nuevo' ? 'badge-nuevo' :
+                  prod.badge === 'Cosecha del Día' ? 'badge-cosecha' :
+                  prod.badge === 'Popular' ? 'badge-popular' : 'badge-recomendado'
+                }`}>{prod.badge}</span>
               </div>
               <div className="producto-info" style={{ padding: '20px' }}>
                 <span style={{ fontSize: '11px', color: 'var(--texto)', opacity: 0.8, textTransform: 'uppercase', letterSpacing: '1px', display: 'block' }}>{prod.category}</span>
@@ -804,16 +826,16 @@ export default function Home() {
         <div className="pedagogicas-inner" style={{ display: 'grid', gridTemplateColumns: '1fr 1.2fr' }}>
           <div className="ped-img" style={{ backgroundImage: "url('/assets/img/salidas_pedagogicas.png')", backgroundSize: 'cover', backgroundPosition: 'center', minHeight: '400px' }}></div>
           <div className="ped-content" style={{ padding: '60px 48px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-            <span style={{ color: 'var(--verde-medio)', fontSize: '11px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '2px', display: 'block', marginBottom: '10px' }}>
+            <span style={{ color: 'var(--oro)', fontSize: '11px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '2px', display: 'block', marginBottom: '10px' }}>
               Educación y Sostenibilidad
             </span>
-            <h2 style={{ fontFamily: 'Playfair Display', fontSize: '2.5rem', color: 'var(--verde-andes)', margin: '0 0 15px 0' }}>
+            <h2 style={{ fontFamily: 'Playfair Display', fontSize: '2.5rem', color: '#ffffff', margin: '0 0 15px 0' }}>
               Salidas Pedagógicas
             </h2>
-            <p style={{ fontSize: '15px', lineHeight: '1.8', color: 'var(--texto)', marginBottom: '20px' }}>
+            <p style={{ fontSize: '15px', lineHeight: '1.8', color: 'rgba(255,255,255,0.9)', marginBottom: '20px' }}>
               Un brochure digital de experiencia viva. Traemos colegios y universidades a la finca para una inmersión en agroecología, biodiversidad andina y producción sostenible. Cada visita es una semilla de conciencia.
             </p>
-            <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 25px 0', display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '13.5px' }}>
+            <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 25px 0', display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '13.5px', color: 'rgba(255,255,255,0.85)' }}>
               <li>✓ Proceso completo del aguacate (siembra a producto)</li>
               <li>✓ Taller de prensado en frío y cata de aceites</li>
               <li>✓ Senderismo didáctico e interpretativo de flora local</li>
@@ -903,6 +925,111 @@ export default function Home() {
           "Proteger el ecosistema andino no es un lujo — es la única forma de garantizar agua, alimento y vida para las próximas generaciones."
           <cite style={{ display: 'block', fontSize: '12px', marginTop: '10px', color: 'var(--texto)', fontWeight: 'bold', fontStyle: 'normal' }}>— Ruta Escondida · Alchipichí, Ecuador</cite>
         </blockquote>
+      </section>
+
+      {/* SECCIÓN INSPÍRATE (BLOG + VIDEOS + FOTOS) */}
+      <section className="inspire-section" id="inspirate">
+        <div style={{ textAlign: 'center', marginBottom: '50px' }}>
+          <span style={{ color: 'var(--verde-medio)', fontSize: '11px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '2px', display: 'block', marginBottom: '8px' }}>
+            Inspírate
+          </span>
+          <h2 style={{ fontFamily: 'Playfair Display', fontSize: '2.8rem', color: 'var(--verde-andes)', margin: 0 }}>
+            Relatos, Miradas y Paisajes
+          </h2>
+          <p style={{ maxWidth: '600px', margin: '15px auto 0 auto', color: 'var(--texto)', opacity: 0.85, fontSize: '15px', fontFamily: 'Outfit' }}>
+            Explora las historias de conservación, aventuras andinas y crónicas ecológicas de nuestra comunidad.
+          </p>
+        </div>
+
+        <div className="inspire-grid">
+          {/* Tarjeta Destacada Grande (Blog Principal) */}
+          <div className="inspire-card" style={{ cursor: 'pointer' }} onClick={() => window.location.href = '/blog/sendero-agua'}>
+            <span className="inspire-badge">Crónicas</span>
+            <div className="inspire-img-wrapper">
+              <img src="/assets/img/sendero_agua_3.jpg" alt="Sendero del Agua" />
+            </div>
+            <div style={{ padding: '30px', display: 'flex', flexDirection: 'column', flexGrow: 1, justifyContent: 'space-between' }}>
+              <div>
+                <span style={{ fontSize: '12px', color: 'var(--verde-medio)', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '1px' }}>24 de Junio, 2026 · 5 min lectura</span>
+                <h3 style={{ fontFamily: 'Playfair Display', fontSize: '24px', color: 'var(--verde-andes)', margin: '12px 0 15px 0', fontWeight: 'bold', lineHeight: '1.3' }}>
+                  El Sendero del Agua: un renacimiento ecológico en Alchipichí
+                </h3>
+                <p style={{ fontSize: '14px', color: 'var(--texto)', lineHeight: '1.6', opacity: 0.9, marginBottom: '20px' }}>
+                  Cómo una iniciativa comunitaria transformó antiguos terrenos secos en un bosque andino húmedo que hoy abastece de agua y refugia a cientos de especies endémicas. Una historia de lucha y amor por la tierra.
+                </p>
+              </div>
+              <span style={{ fontSize: '12px', fontWeight: 'bold', color: 'var(--oro)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '5px' }}>
+                Leer crónica completa <i className="fa-solid fa-arrow-right"></i>
+              </span>
+            </div>
+          </div>
+
+          {/* Columna Derecha: Artículo Secundario + Video Multimedia */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
+            {/* Tarjeta Secundaria (Otro post del blog) */}
+            <div className="inspire-card" style={{ cursor: 'pointer' }} onClick={() => window.location.href = '/blog/gigante-dormido'}>
+              <span className="inspire-badge" style={{ background: 'var(--verde-medio)' }}>Aventura</span>
+              <div className="inspire-img-wrapper mini">
+                <img src="/assets/img/gigante_dormido_2.jpg" alt="El Gigante Dormido" />
+              </div>
+              <div style={{ padding: '24px' }}>
+                <span style={{ fontSize: '11px', color: 'var(--verde-medio)', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '1px' }}>15 de Mayo, 2026 · 4 min lectura</span>
+                <h4 style={{ fontFamily: 'Playfair Display', fontSize: '18px', color: 'var(--verde-andes)', margin: '10px 0 12px 0', fontWeight: 'bold', lineHeight: '1.4' }}>
+                  El Gigante Dormido: la guardián de piedra de San José de Minas
+                </h4>
+                <span style={{ fontSize: '11.5px', fontWeight: 'bold', color: 'var(--oro)', textDecoration: 'none' }}>
+                  Explorar relato <i className="fa-solid fa-arrow-right"></i>
+                </span>
+              </div>
+            </div>
+
+            {/* Bloque Multimedia de Video */}
+            <div className="multimedia-preview" onClick={() => setShowVideoModal(true)}>
+              <img src="/assets/img/puellaro_hero_humanized_1777073946552.png" alt="Video Ruta Escondida" />
+              <div className="multimedia-play-btn">
+                <i className="fa-regular fa-circle-play" style={{ filter: 'drop-shadow(0 2px 10px rgba(0,0,0,0.5))' }}></i>
+              </div>
+              <div style={{ position: 'absolute', bottom: '20px', left: '20px', right: '20px', zIndex: 3 }}>
+                <span style={{ fontSize: '9px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '2px', color: 'var(--oro-light)', textShadow: '0 2px 4px rgba(0,0,0,0.8)', display: 'block', marginBottom: '4px' }}>
+                  Video Destacado
+                </span>
+                <h4 style={{ fontFamily: 'Playfair Display', fontSize: '16px', color: '#fff', margin: 0, textShadow: '0 2px 5px rgba(0,0,0,0.8)', fontWeight: 'bold' }}>
+                  Ruta Escondida: Un Viaje a lo Auténtico
+                </h4>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Galería de Fotos Abajo (Horizontal Strip) */}
+        <div style={{ marginTop: '50px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', maxWidth: '1200px', margin: '0 auto 20px auto' }}>
+            <h3 style={{ fontFamily: 'Playfair Display', fontSize: '20px', color: 'var(--verde-andes)', fontWeight: 'bold', margin: 0 }}>
+              Instantes de la Ruta
+            </h3>
+            <a href="/galeria" style={{ fontSize: '12px', fontWeight: 'bold', color: 'var(--verde-medio)', textDecoration: 'none' }}>
+              Ver todas las fotos (24) <i className="fa-solid fa-arrow-right"></i>
+            </a>
+          </div>
+
+          <div className="gallery-strip">
+            {[
+              { img: '/assets/img/puellaro_hero_humanized_1777073946552.png', title: 'Mirador de Puéllaro' },
+              { img: '/assets/img/tayos_cave.png', title: 'Encañonado de los Tayos' },
+              { img: '/assets/img/glamping_alchipichi.png', title: 'Glamping Alchipichí' },
+              { img: '/assets/img/sendero_agua_3.jpg', title: 'Bosque Andino Húmedo' }
+            ].map((pic, idx) => (
+              <div key={idx} className="gallery-strip-item" onClick={() => window.location.href = '/galeria'}>
+                <img src={pic.img} alt={pic.title} />
+                <div className="gallery-overlay">
+                  <span style={{ color: '#fff', fontSize: '12px', fontWeight: 'bold', fontFamily: 'Outfit', textShadow: '0 1px 3px rgba(0,0,0,0.8)' }}>
+                    {pic.title}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </section>
 
       {/* TESTIMONIOS (REVIEWS) FILTER SECTION */}
@@ -1024,6 +1151,44 @@ export default function Home() {
         </div>
       </section>
 
+      {/* SECCIÓN SPONSORS & AUSPICIANTES */}
+      <section className="sponsors-section">
+        <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
+          <span style={{ color: 'var(--verde-medio)', fontSize: '10px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '2px', display: 'block', marginBottom: '8px' }}>
+            Nuestros Colaboradores e Instituciones
+          </span>
+          <h3 style={{ fontFamily: 'Playfair Display', fontSize: '1.8rem', color: 'var(--verde-andes)', margin: '0 0 10px 0', fontWeight: 'bold' }}>
+            Alianzas que Hacen Posible la Ruta
+          </h3>
+          <p style={{ fontSize: '13px', color: 'var(--texto)', opacity: 0.8, maxWidth: '600px', margin: '0 auto 30px auto', fontFamily: 'Outfit' }}>
+            Trabajamos en conjunto con entidades gubernamentales, fundaciones de conservación y la comunidad local para garantizar el desarrollo sostenible del territorio.
+          </p>
+          
+          <div className="sponsors-grid">
+            <div className="sponsor-logo-box">
+              <i className="fa-solid fa-map-location-dot"></i>
+              <span>MINTUR Ecuador</span>
+            </div>
+            <div className="sponsor-logo-box">
+              <i className="fa-solid fa-mountain-sun"></i>
+              <span>Prefectura Pichincha</span>
+            </div>
+            <div className="sponsor-logo-box">
+              <i className="fa-solid fa-landmark"></i>
+              <span>Alcaldía de Quito</span>
+            </div>
+            <div className="sponsor-logo-box">
+              <i className="fa-solid fa-seedling"></i>
+              <span>Fundación EcoAndes</span>
+            </div>
+            <div className="sponsor-logo-box">
+              <i className="fa-solid fa-people-group"></i>
+              <span>Comunidad Norcentral</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* FOOTER */}
       <footer style={{ background: 'var(--verde-andes)', color: '#fff', padding: '80px 48px 40px 48px' }}>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '40px', maxWidth: '1200px', margin: '0 auto', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '40px' }}>
@@ -1052,8 +1217,10 @@ export default function Home() {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '20px', fontSize: '12px', color: 'rgba(255,255,255,0.6)' }}>
           <span>© 2026 Ruta Escondida · Corredor Turístico Norcentral · Todos los derechos reservados</span>
           <div style={{ display: 'flex', gap: '15px' }}>
-            <a href="https://instagram.com" style={{ color: '#fff' }}><i className="fa-brands fa-instagram"></i></a>
-            <a href="https://facebook.com" style={{ color: '#fff' }}><i className="fa-brands fa-facebook"></i></a>
+            <a href="https://www.facebook.com/rutaescondidacom" target="_blank" rel="noopener noreferrer" style={{ color: '#fff' }}><i className="fa-brands fa-facebook"></i></a>
+            <a href="https://www.instagram.com/rutaescondida.adv/" target="_blank" rel="noopener noreferrer" style={{ color: '#fff' }}><i className="fa-brands fa-instagram"></i></a>
+            <a href="https://www.tiktok.com/@rutaescondida?lang=es" target="_blank" rel="noopener noreferrer" style={{ color: '#fff' }}><i className="fa-brands fa-tiktok"></i></a>
+            <a href="https://www.youtube.com/watch?v=gvfop2Qo3sE" target="_blank" rel="noopener noreferrer" style={{ color: '#fff' }}><i className="fa-brands fa-youtube"></i></a>
           </div>
         </div>
       </footer>
@@ -1177,6 +1344,19 @@ export default function Home() {
                     <option value="whatsapp">📲 WhatsApp (Efectivo/Transferencia)</option>
                   </select>
                 </div>
+                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', marginTop: '5px' }}>
+                  <input 
+                    type="checkbox" 
+                    required 
+                    id="privacy-checkbox" 
+                    checked={privacyAccepted}
+                    onChange={(e) => setPrivacyAccepted(e.target.checked)}
+                    style={{ marginTop: '3px', cursor: 'pointer' }} 
+                  />
+                  <label htmlFor="privacy-checkbox" style={{ fontSize: '11px', lineHeight: '1.4', cursor: 'pointer', color: '#666' }}>
+                    Acepto el tratamiento de mi correo y WhatsApp conforme a las <a href="#privacy" onClick={(e) => { e.preventDefault(); setShowPrivacyModal(true); }} style={{ color: 'var(--verde-medio)', fontWeight: 'bold', textDecoration: 'underline' }}>Políticas de Datos (LOPDP Ecuador)</a> para remarketing y entrega.
+                  </label>
+                </div>
                 <button type="submit" style={{ padding: '12px', background: 'var(--verde-andes)', color: '#fff', border: 'none', borderRadius: '6px', fontWeight: 'bold', cursor: 'pointer', marginTop: '10px' }}>
                   Proceder al Pago
                 </button>
@@ -1222,6 +1402,50 @@ export default function Home() {
                 </button>
               </div>
             )}
+          </div>
+        </div>
+      )}
+
+      {/* 📜 LOPDP PRIVACY MODAL */}
+      {showPrivacyModal && (
+        <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.7)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1002, padding: '20px' }}>
+          <div style={{ background: '#fff', border: '1px solid rgba(27,67,50,0.15)', borderRadius: '16px', maxWidth: '550px', width: '100%', padding: '30px', position: 'relative', color: 'var(--texto)', maxHeight: '80vh', overflowY: 'auto' }}>
+            <button 
+              onClick={() => setShowPrivacyModal(false)}
+              style={{ position: 'absolute', top: '15px', right: '15px', background: 'transparent', border: 'none', color: 'var(--verde-andes)', fontSize: '18px', cursor: 'pointer' }}
+            >
+              ✕
+            </button>
+            <h3 style={{ fontFamily: 'Playfair Display', fontSize: '20px', color: 'var(--verde-andes)', marginBottom: '15px', borderBottom: '1px solid #eee', paddingBottom: '10px' }}>
+              Políticas de Protección de Datos (LOPDP Ecuador)
+            </h3>
+            <div style={{ fontSize: '12.5px', lineHeight: '1.6', color: '#555', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              <p>
+                De conformidad con la <strong>Ley Orgánica de Protección de Datos Personales (LOPDP)</strong> de la República del Ecuador, le informamos sobre el tratamiento de sus datos:
+              </p>
+              <div>
+                <strong>1. Responsable del Tratamiento:</strong>
+                <p style={{ margin: '2px 0 0 0' }}>Ruta Escondida S.A. (Contacto: datos@rutaescondida.com)</p>
+              </div>
+              <div>
+                <strong>2. Finalidad del Tratamiento:</strong>
+                <p style={{ margin: '2px 0 0 0' }}>Procesar y coordinar la entrega de sus compras y reservas locales, así como el uso de su correo y WhatsApp para remarketing, ofertas comerciales y promociones exclusivas relacionadas únicamente con el turismo en la Ruta Escondida.</p>
+              </div>
+              <div>
+                <strong>3. Seguridad y Confidencialidad:</strong>
+                <p style={{ margin: '2px 0 0 0' }}>Garantizamos la seguridad de sus datos personales. Toda la información es transmitida de forma cifrada mediante protocolos de seguridad HTTPS/SSL y se almacena de forma segura en bases de datos protegidas y encriptadas (Supabase/PostgreSQL) con control de acceso restringido.</p>
+              </div>
+              <div>
+                <strong>4. Sus Derechos (ARCO):</strong>
+                <p style={{ margin: '2px 0 0 0' }}>Usted tiene derecho a Acceder, Rectificar, Cancelar u Oponerse al uso de sus datos en cualquier momento. Para ejercer estos derechos, o revocar su consentimiento de remarketing, puede enviar un correo electrónico con su solicitud a <strong>datos@rutaescondida.com</strong>.</p>
+              </div>
+            </div>
+            <button 
+              onClick={() => setShowPrivacyModal(false)}
+              style={{ width: '100%', padding: '10px', background: 'var(--verde-andes)', color: '#fff', border: 'none', borderRadius: '6px', fontWeight: 'bold', cursor: 'pointer', marginTop: '20px' }}
+            >
+              Entendido y Cerrar
+            </button>
           </div>
         </div>
       )}
@@ -1415,6 +1639,219 @@ export default function Home() {
       >
         ⭐ Mis Puntos: <span style={{ fontSize: '12px', fontWeight: '800' }}>{points}</span>
       </div>
+
+      {/* 🍪 COOKIE CONSENT BANNER (Ecuador LOPDP compliant) */}
+      {showCookies && (
+        <div className="cookie-consent-banner">
+          <div>
+            <h4 style={{ margin: '0 0 6px 0', color: 'var(--oro)', fontSize: '14px', fontFamily: 'Outfit', fontWeight: 'bold' }}>Consentimiento de Cookies</h4>
+            <p style={{ margin: 0, fontSize: '12px', lineHeight: '1.5', color: '#fff', opacity: 0.9 }}>
+              Utilizamos cookies para personalizar tu experiencia, recordar tu carrito y garantizar la seguridad de tus datos según la <strong>Ley Orgánica de Protección de Datos Personales (LOPDP) de Ecuador</strong>.
+            </p>
+          </div>
+          <div style={{ display: 'flex', gap: '10px', justifyContent: 'flex-end' }}>
+            <button 
+              onClick={() => {
+                if (typeof window !== 'undefined') {
+                  localStorage.setItem('cookie_consent_accepted', 'true');
+                }
+                setShowCookies(false);
+              }}
+              style={{
+                background: 'var(--verde-medio)',
+                color: '#fff',
+                border: 'none',
+                padding: '8px 16px',
+                borderRadius: '6px',
+                fontSize: '11px',
+                fontWeight: 'bold',
+                cursor: 'pointer'
+              }}
+            >
+              Aceptar Todo
+            </button>
+            <button 
+              onClick={() => setShowCookies(false)}
+              style={{
+                background: 'transparent',
+                color: 'rgba(255,255,255,0.7)',
+                border: '1px solid rgba(255,255,255,0.2)',
+                padding: '8px 16px',
+                borderRadius: '6px',
+                fontSize: '11px',
+                fontWeight: 'bold',
+                cursor: 'pointer'
+              }}
+            >
+              Rechazar
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* 📅 UPCOMING EVENT POPUP MODAL */}
+      {showEventPopup && (
+        <div className="event-popup-backdrop" onClick={() => {
+          sessionStorage.setItem('event_popup_closed', 'true');
+          setShowEventPopup(false);
+        }}>
+          <div className="event-popup-card" onClick={(e) => e.stopPropagation()}>
+            <button 
+              onClick={() => {
+                sessionStorage.setItem('event_popup_closed', 'true');
+                setShowEventPopup(false);
+              }}
+              style={{
+                position: 'absolute',
+                top: '15px',
+                right: '15px',
+                background: 'rgba(0,0,0,0.5)',
+                color: '#fff',
+                border: 'none',
+                width: '30px',
+                height: '30px',
+                borderRadius: '50%',
+                cursor: 'pointer',
+                fontSize: '14px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                zIndex: 10
+              }}
+            >
+              <i className="fa-solid fa-times"></i>
+            </button>
+
+            {/* Banner superior */}
+            <div style={{ position: 'relative', height: '240px', overflow: 'hidden' }}>
+              <img src="/assets/img/motoencuentro.jpg" alt="1er Moto Encuentro Ruta Escondida 2026" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, transparent, rgba(14,36,24,1))' }}></div>
+              <div style={{ position: 'absolute', bottom: '15px', left: '20px', zIndex: 2 }}>
+                <span style={{ background: 'var(--oro)', color: 'var(--negro)', fontSize: '9px', fontWeight: 'bold', letterSpacing: '1px', textTransform: 'uppercase', padding: '3px 8px', borderRadius: '3px', display: 'inline-block', marginBottom: '6px' }}>
+                  Próximo Evento Destacado
+                </span>
+                <h3 style={{ fontFamily: 'Poppins', fontSize: '22px', color: '#fff', margin: 0, fontWeight: 'bold' }}>
+                  1er Moto Encuentro Ruta Escondida
+                </h3>
+              </div>
+            </div>
+
+            {/* Contenido */}
+            <div style={{ padding: '24px', color: '#fff' }}>
+              <p style={{ fontSize: '13px', lineHeight: '1.6', opacity: 0.9, margin: '0 0 20px 0' }}>
+                ¡Pasión por el asfalto! Te invitamos a rodar por las carreteras escénicas y curvas andinas del corredor Norcentral. Disfruta de la mejor gastronomía, comunidad motera y paisajes impresionantes.
+              </p>
+              
+              <div style={{ background: 'rgba(255,255,255,0.05)', borderRadius: '8px', padding: '12px 16px', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px', fontSize: '12.5px', marginBottom: '25px', border: '1px solid rgba(255,255,255,0.05)' }}>
+                <div>
+                  <strong style={{ color: 'var(--oro)', display: 'block', marginBottom: '2px' }}>📅 Fecha:</strong>
+                  <span>29 de Agosto, 2026</span>
+                </div>
+                <div>
+                  <strong style={{ color: 'var(--oro)', display: 'block', marginBottom: '2px' }}>📍 Destino:</strong>
+                  <span>Alchipichí, Ecuador</span>
+                </div>
+              </div>
+
+              <div style={{ display: 'flex', gap: '12px' }}>
+                <a 
+                  href="https://wa.me/593984480203?text=Hola%20Ruta%20Escondida,%20quiero%20m%C3%A1s%20informaci%C3%B3n%20e%20inscribirme%20en%20el%201er%20Moto%20Encuentro%202026."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    flexGrow: 1,
+                    background: 'var(--oro)',
+                    color: 'var(--negro)',
+                    textDecoration: 'none',
+                    textAlign: 'center',
+                    padding: '12px',
+                    borderRadius: '6px',
+                    fontWeight: 'bold',
+                    fontSize: '13px',
+                    transition: 'all 0.3s'
+                  }}
+                >
+                  Más información por WhatsApp
+                </a>
+                <button 
+                  onClick={() => {
+                    sessionStorage.setItem('event_popup_closed', 'true');
+                    setShowEventPopup(false);
+                  }}
+                  style={{
+                    background: 'transparent',
+                    color: '#fff',
+                    border: '1px solid rgba(255,255,255,0.2)',
+                    padding: '12px 20px',
+                    borderRadius: '6px',
+                    fontWeight: 'bold',
+                    fontSize: '13px',
+                    cursor: 'pointer'
+                  }}
+                >
+                  Cerrar
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 📹 STUNNING VIDEO PLAYER MODAL */}
+      {showVideoModal && (
+        <div 
+          className="event-popup-backdrop" 
+          onClick={() => setShowVideoModal(false)}
+          style={{ background: 'rgba(0,0,0,0.85)' }}
+        >
+          <div 
+            style={{ 
+              maxWidth: '800px', 
+              width: '100%', 
+              background: '#000', 
+              borderRadius: '12px', 
+              overflow: 'hidden', 
+              position: 'relative',
+              boxShadow: '0 20px 50px rgba(0,0,0,0.8)',
+              aspectRatio: '16/9'
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button 
+              onClick={() => setShowVideoModal(false)}
+              style={{
+                position: 'absolute',
+                top: '15px',
+                right: '15px',
+                background: 'rgba(0,0,0,0.6)',
+                color: '#fff',
+                border: 'none',
+                width: '32px',
+                height: '32px',
+                borderRadius: '50%',
+                cursor: 'pointer',
+                fontSize: '16px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                zIndex: 12
+              }}
+            >
+              <i className="fa-solid fa-times"></i>
+            </button>
+            <iframe 
+              width="100%" 
+              height="100%" 
+              src="https://www.youtube.com/embed/gvfop2Qo3sE?autoplay=1" 
+              title="YouTube video player" 
+              frameBorder="0" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+              allowFullScreen
+              style={{ width: '100%', height: '100%', display: 'block', border: 'none' }}
+            ></iframe>
+          </div>
+        </div>
+      )}
     </>
   );
 }

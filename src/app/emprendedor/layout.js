@@ -1,10 +1,34 @@
+'use client';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import '../style.css';
 
 export default function EmprendedorLayout({ children }) {
+  const router = useRouter();
+  const [authorized, setAuthorized] = useState(false);
+
+  useEffect(() => {
+    const activeBizId = localStorage.getItem('active_business_id');
+    // Emprendedor should have a valid business ID (not empty, not 'admin')
+    if (!activeBizId || activeBizId === 'admin') {
+      router.push('/login');
+    } else {
+      setAuthorized(true);
+    }
+  }, [router]);
+
+  if (!authorized) {
+    return (
+      <div style={{ display: 'flex', minHeight: '100vh', alignItems: 'center', justifyContent: 'center', backgroundColor: 'var(--fondo)', color: 'var(--verde-andes)', fontFamily: 'Outfit, sans-serif' }}>
+        <p style={{ fontWeight: 'bold' }}>Verificando credenciales de Emprendedor...</p>
+      </div>
+    );
+  }
+
   return (
-    <div style={{ display: 'flex', minHeight: '100vh', backgroundColor: 'var(--fondo)', color: 'var(--texto)', fontFamily: 'Outfit, sans-serif' }}>
+    <div className="admin-container" style={{ display: 'flex', minHeight: '100vh', backgroundColor: 'var(--fondo)', color: 'var(--texto)', fontFamily: 'Outfit, sans-serif' }}>
       {/* Sidebar */}
-      <aside style={{ width: '260px', backgroundColor: 'var(--crema)', borderRight: '1px solid rgba(27,67,50,0.08)', padding: '2rem', display: 'flex', flexDirection: 'column' }}>
+      <aside className="admin-sidebar" style={{ width: '260px', backgroundColor: 'var(--crema)', borderRight: '1px solid rgba(27,67,50,0.08)', padding: '2rem', display: 'flex', flexDirection: 'column' }}>
         <a href="/" style={{ marginBottom: '2rem', display: 'block' }}>
           <img src="/assets/img/logo.png" alt="Ruta Escondida" style={{ width: '120px' }} />
         </a>
@@ -27,14 +51,14 @@ export default function EmprendedorLayout({ children }) {
           </a>
         </nav>
         <div style={{ marginTop: 'auto', paddingTop: '20px', borderTop: '1px solid rgba(27,67,50,0.1)' }}>
-          <a href="/login" style={{ color: '#D9383A', textDecoration: 'none', display: 'flex', alignItems: 'center', fontWeight: 'bold' }}>
+          <a href="/login" onClick={() => localStorage.removeItem('active_business_id')} style={{ color: '#D9383A', textDecoration: 'none', display: 'flex', alignItems: 'center', fontWeight: 'bold' }}>
             <i className="fa-solid fa-sign-out-alt" style={{ marginRight: '10px' }}></i> Cerrar Sesión
           </a>
         </div>
       </aside>
 
       {/* Main Content */}
-      <main style={{ flex: 1, padding: '3rem', overflowY: 'auto', backgroundColor: 'var(--fondo)' }}>
+      <main className="admin-main" style={{ flex: 1, padding: '3rem', overflowY: 'auto', backgroundColor: 'var(--fondo)' }}>
         {children}
       </main>
     </div>
