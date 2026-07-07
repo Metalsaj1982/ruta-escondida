@@ -143,14 +143,14 @@ export default function MotoEncuentro2026() {
   };
 
   return (
-    <div style={{ background: '#FAF8F5', color: '#1B1B1F', minHeight: '100vh', fontFamily: 'Inter, sans-serif' }}>
+    <div style={{ background: '#0E0E10', color: '#FAF6F0', minHeight: '100vh', fontFamily: 'Inter, sans-serif' }}>
       <Header />
 
-      {/* 1. HERO SECTION WITH VIDEO */}
+      {/* 1. HERO SECTION WITH VIDEO (Video shows first, banner removed from top) */}
       <section style={{
         padding: '140px 24px 80px 24px',
         textAlign: 'center',
-        background: '#FAF8F5',
+        background: 'linear-gradient(180deg, #121214 0%, #0E0E10 100%)',
         maxWidth: '1200px',
         margin: '0 auto'
       }}>
@@ -159,65 +159,55 @@ export default function MotoEncuentro2026() {
           <img 
             src="/assets/img/motoencuentro_logo.png" 
             alt="Logo Oficial Moto Encuentro" 
-            style={{ width: '90px', height: 'auto', margin: '0 auto 20px auto', display: 'block' }} 
+            style={{ width: '85px', height: 'auto', margin: '0 auto 20px auto', display: 'block', filter: 'brightness(1.1)' }} 
           />
           
-          <span style={{ color: '#365C42', fontSize: '12px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '3px', display: 'block', marginBottom: '15px', fontFamily: 'Poppins' }}>
+          <span style={{ color: '#C5A880', fontSize: '12px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '3px', display: 'block', marginBottom: '15px', fontFamily: 'Poppins' }}>
             Extraordinary Rural Experiences
           </span>
-          <h1 style={{ fontFamily: 'Poppins, sans-serif', fontSize: 'clamp(2.2rem, 6vw, 3.8rem)', color: '#1B1B1F', fontWeight: '800', lineHeight: '1.15', marginBottom: '20px' }}>
+          <h1 style={{ fontFamily: 'Poppins, sans-serif', fontSize: 'clamp(2.2rem, 6vw, 3.8rem)', color: '#FFFFFF', fontWeight: '800', lineHeight: '1.15', marginBottom: '20px' }}>
             Moto Encuentro Ruta Escondida 2026 – Edición Alchipichí
           </h1>
-          <p style={{ fontSize: '18px', color: '#35363A', marginBottom: '30px', lineHeight: '1.6', fontFamily: 'Inter' }}>
+          <p style={{ fontSize: '18px', color: '#A1A1AA', marginBottom: '30px', lineHeight: '1.6', fontFamily: 'Inter' }}>
             Pasión por el asfalto, compromiso con nuestra gente.
           </p>
           <button 
             onClick={scrollToRegister}
             style={{ 
               padding: '15px 35px', 
-              background: '#F59E0B', 
-              color: '#FFFFFF', 
+              background: '#C5A880', 
+              color: '#0E0E10', 
               border: 'none',
               fontWeight: '700', 
               borderRadius: '30px', 
               fontSize: '14px', 
               textTransform: 'uppercase', 
-              letterSpacing: '1px', 
+              letterSpacing: '1.5px', 
               cursor: 'pointer',
-              boxShadow: '0 4px 15px rgba(245, 158, 11, 0.3)',
-              transition: 'background 0.3s'
+              boxShadow: '0 4px 20px rgba(197, 168, 128, 0.25)',
+              transition: 'all 0.3s'
             }}
-            onMouseOver={(e) => e.target.style.background = '#D97706'}
-            onMouseOut={(e) => e.target.style.background = '#F59E0B'}
+            onMouseOver={(e) => {
+              e.target.style.background = '#FFFFFF';
+              e.target.style.boxShadow = '0 4px 25px rgba(255, 255, 255, 0.3)';
+            }}
+            onMouseOut={(e) => {
+              e.target.style.background = '#C5A880';
+              e.target.style.boxShadow = '0 4px 20px rgba(197, 168, 128, 0.25)';
+            }}
           >
             Asegurar mi lugar en la ruta
           </button>
         </div>
 
-        {/* Banner Oficial del Evento */}
-        <div style={{
-          maxWidth: '850px',
-          margin: '0 auto 40px auto',
-          borderRadius: '20px',
-          overflow: 'hidden',
-          boxShadow: '0 20px 40px rgba(27,27,31,0.06)',
-          border: '8px solid #F4F1EA'
-        }}>
-          <img 
-            src="/assets/img/motoencuentro.jpg" 
-            alt="Afiche Oficial Moto Encuentro 2026" 
-            style={{ width: '100%', height: 'auto', display: 'block' }} 
-          />
-        </div>
-
-        {/* Responsive Video Container */}
+        {/* Responsive Video Container - Displayed First */}
         <div style={{ 
           maxWidth: '850px', 
           margin: '0 auto', 
           borderRadius: '20px', 
           overflow: 'hidden', 
-          boxShadow: '0 20px 40px rgba(27,27,31,0.08)',
-          border: '8px solid #F4F1EA',
+          boxShadow: '0 20px 40px rgba(0,0,0,0.5)',
+          border: '6px solid #1C1C21',
           aspectRatio: '16/9'
         }}>
           <iframe
@@ -234,39 +224,41 @@ export default function MotoEncuentro2026() {
       </section>
 
       {/* 2. DETALLES DE LA EXPERIENCIA (INFO BAR / CARDS) */}
-      <section style={{ background: '#F4F1EA', padding: '60px 24px' }}>
+      <section style={{ background: '#161619', padding: '60px 24px', borderTop: '1px solid rgba(197,168,128,0.1)' }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '30px', marginBottom: '40px' }}>
             
-            <div style={{ background: '#FFFFFF', padding: '30px', borderRadius: '16px', boxShadow: '0 4px 20px rgba(0,0,0,0.02)' }}>
+            <div style={{ background: '#1C1C21', padding: '30px', borderRadius: '16px', border: '1px solid rgba(197,168,128,0.08)' }}>
               <span style={{ fontSize: '28px', display: 'block', marginBottom: '15px' }}>📅</span>
-              <h3 style={{ fontFamily: 'Poppins', fontSize: '18px', fontWeight: '700', marginBottom: '8px', color: '#365C42' }}>Fecha del Evento</h3>
-              <p style={{ fontSize: '15px', color: '#1B1B1F', margin: 0, fontWeight: '500' }}>Sábado, 29 de agosto de 2026</p>
+              <h3 style={{ fontFamily: 'Poppins', fontSize: '18px', fontWeight: '700', marginBottom: '8px', color: '#C5A880' }}>Fecha del Evento</h3>
+              <p style={{ fontSize: '15px', color: '#FAF6F0', margin: 0, fontWeight: '500' }}>Sábado, 29 de agosto de 2026</p>
             </div>
 
-            <div style={{ background: '#FFFFFF', padding: '30px', borderRadius: '16px', boxShadow: '0 4px 20px rgba(0,0,0,0.02)' }}>
+            <div style={{ background: '#1C1C21', padding: '30px', borderRadius: '16px', border: '1px solid rgba(197,168,128,0.08)' }}>
               <span style={{ fontSize: '28px', display: 'block', marginBottom: '15px' }}>📍</span>
-              <h3 style={{ fontFamily: 'Poppins', fontSize: '18px', fontWeight: '700', marginBottom: '8px', color: '#365C42' }}>Concentración</h3>
-              <p style={{ fontSize: '15px', color: '#1B1B1F', margin: 0, fontWeight: '500' }}>Parque Bicentenario (Quito) a las 07:45 AM</p>
+              <h3 style={{ fontFamily: 'Poppins', fontSize: '18px', fontWeight: '700', marginBottom: '8px', color: '#C5A880' }}>Concentración</h3>
+              <p style={{ fontSize: '15px', color: '#FAF6F0', margin: 0, fontWeight: '500' }}>Parque Bicentenario (Quito) a las 07:45 AM</p>
             </div>
 
-            <div style={{ background: '#FFFFFF', padding: '30px', borderRadius: '16px', boxShadow: '0 4px 20px rgba(0,0,0,0.02)' }}>
+            <div style={{ background: '#1C1C21', padding: '30px', borderRadius: '16px', border: '1px solid rgba(197,168,128,0.08)' }}>
               <span style={{ fontSize: '28px', display: 'block', marginBottom: '15px' }}>🏁</span>
-              <h3 style={{ fontFamily: 'Poppins', fontSize: '18px', fontWeight: '700', marginBottom: '8px', color: '#365C42' }}>Salida Oficial</h3>
-              <p style={{ fontSize: '15px', color: '#1B1B1F', margin: 0, fontWeight: '500' }}>08:15 AM (Puntual)</p>
+              <h3 style={{ fontFamily: 'Poppins', fontSize: '18px', fontWeight: '700', marginBottom: '8px', color: '#C5A880' }}>Salida Oficial</h3>
+              <p style={{ fontSize: '15px', color: '#FAF6F0', margin: 0, fontWeight: '500' }}>08:15 AM (Puntual)</p>
             </div>
 
           </div>
 
           <div style={{ 
-            background: '#FFFFFF', 
+            background: '#1C1C21', 
             padding: '30px 40px', 
             borderRadius: '16px', 
             textAlign: 'center', 
-            borderLeft: '5px solid #365C42',
-            boxShadow: '0 4px 20px rgba(0,0,0,0.02)' 
+            borderLeft: '5px solid #C5A880',
+            borderRight: '1px solid rgba(197,168,128,0.1)',
+            borderTop: '1px solid rgba(197,168,128,0.1)',
+            borderBottom: '1px solid rgba(197,168,128,0.1)'
           }}>
-            <p style={{ fontSize: '16px', color: '#1B1B1F', lineHeight: '1.7', margin: 0, fontStyle: 'italic', fontWeight: '500' }}>
+            <p style={{ fontSize: '16px', color: '#FAF6F0', lineHeight: '1.7', margin: 0, fontStyle: 'italic', fontWeight: '500' }}>
               "Ruta 100% asfaltada. Un evento diseñado para verdaderos apasionados de las dos ruedas que buscan una experiencia de calidad, segura y con excelente organización."
             </p>
           </div>
@@ -276,20 +268,20 @@ export default function MotoEncuentro2026() {
       {/* 3. MANIFIESTO Y PROPÓSITO SOCIAL */}
       <section style={{ 
         padding: '90px 24px', 
-        background: '#FFFFFF', 
+        background: '#0E0E10', 
         textAlign: 'center'
       }}>
         <div style={{ maxWidth: '800px', margin: '0 auto' }}>
-          <span style={{ color: '#365C42', fontSize: '11px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '2px', display: 'block', marginBottom: '15px', fontFamily: 'Poppins' }}>
+          <span style={{ color: '#C5A880', fontSize: '11px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '2px', display: 'block', marginBottom: '15px', fontFamily: 'Poppins' }}>
             Nuestra Filosofía
           </span>
-          <h2 style={{ fontFamily: 'Poppins, sans-serif', fontSize: '2.2rem', color: '#1B1B1F', fontWeight: '700', marginBottom: '25px', lineHeight: '1.2' }}>
+          <h2 style={{ fontFamily: 'Poppins, sans-serif', fontSize: '2.2rem', color: '#FFFFFF', fontWeight: '700', marginBottom: '25px', lineHeight: '1.2' }}>
             Rodamos con Causa
           </h2>
           <p style={{ 
             fontSize: '20px', 
             lineHeight: '1.8', 
-            color: '#365C42', 
+            color: '#C5A880', 
             fontWeight: '600', 
             fontFamily: 'Poppins',
             maxWidth: '700px',
@@ -300,16 +292,16 @@ export default function MotoEncuentro2026() {
         </div>
       </section>
 
-      {/* NEW SECTION: SPONSORS & RAFFLE ITEMS */}
-      <section style={{ padding: '80px 24px', background: '#F4F1EA', borderTop: '1px solid rgba(27,27,31,0.05)', borderBottom: '1px solid rgba(27,27,31,0.05)' }}>
+      {/* SPONSORS & RAFFLE ITEMS */}
+      <section style={{ padding: '80px 24px', background: '#161619', borderTop: '1px solid rgba(197,168,128,0.1)', borderBottom: '1px solid rgba(197,168,128,0.1)' }}>
         <div style={{ maxWidth: '1000px', margin: '0 auto', textAlign: 'center' }}>
-          <span style={{ color: '#365C42', fontSize: '11px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '2px', display: 'block', marginBottom: '12px', fontFamily: 'Poppins' }}>
+          <span style={{ color: '#C5A880', fontSize: '11px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '2px', display: 'block', marginBottom: '12px', fontFamily: 'Poppins' }}>
             Sponsors Oficiales
           </span>
-          <h2 style={{ fontFamily: 'Poppins', fontSize: '2rem', fontWeight: '700', color: '#1B1B1F', marginBottom: '20px' }}>
+          <h2 style={{ fontFamily: 'Poppins', fontSize: '2rem', fontWeight: '700', color: '#FFFFFF', marginBottom: '20px' }}>
             Gran Sorteo de Auspiciantes
           </h2>
-          <p style={{ fontSize: '15px', color: '#35363A', maxWidth: '700px', margin: '0 auto 40px auto', lineHeight: '1.6' }}>
+          <p style={{ fontSize: '15px', color: '#A1A1AA', maxWidth: '700px', margin: '0 auto 40px auto', lineHeight: '1.6' }}>
             Con tu código único de inscripción digital, participas de manera automática en el sorteo oficial que se realizará en Finca Alchipichí. Estos son algunos de los premios auspiciados por nuestros colaboradores oficiales:
           </p>
 
@@ -321,10 +313,10 @@ export default function MotoEncuentro2026() {
               { company: 'Finca Alchipichí', prize: 'Canastas de Frutas Orgánicas & Café de la zona', icon: '🍊' },
               { company: 'El Mirador de Alchipichí', prize: 'Almuerzos Tradicionales y Cortesías de la Finca', icon: '🍲' }
             ].map((sponsor, index) => (
-              <div key={index} style={{ background: '#FFFFFF', padding: '24px', borderRadius: '16px', boxShadow: '0 4px 15px rgba(0,0,0,0.02)', textAlign: 'left', borderTop: '3px solid #365C42' }}>
+              <div key={index} style={{ background: '#1C1C21', padding: '24px', borderRadius: '16px', borderTop: '3px solid #C5A880', borderLeft: '1px solid rgba(197,168,128,0.05)', borderRight: '1px solid rgba(197,168,128,0.05)', borderBottom: '1px solid rgba(197,168,128,0.05)' }}>
                 <span style={{ fontSize: '24px', display: 'block', marginBottom: '10px' }}>{sponsor.icon}</span>
-                <strong style={{ fontSize: '13px', textTransform: 'uppercase', color: '#365C42', display: 'block', letterSpacing: '1px', marginBottom: '4px' }}>{sponsor.company}</strong>
-                <p style={{ fontSize: '14px', color: '#1B1B1F', fontWeight: 'bold', margin: 0, lineHeight: '1.4' }}>{sponsor.prize}</p>
+                <strong style={{ fontSize: '13px', textTransform: 'uppercase', color: '#C5A880', display: 'block', letterSpacing: '1px', marginBottom: '4px' }}>{sponsor.company}</strong>
+                <p style={{ fontSize: '14px', color: '#FFFFFF', fontWeight: 'bold', margin: 0, lineHeight: '1.4' }}>{sponsor.prize}</p>
               </div>
             ))}
           </div>
@@ -332,7 +324,7 @@ export default function MotoEncuentro2026() {
       </section>
 
       {/* 4. FORMULARIO INTERACTIVO DE REGISTRO */}
-      <section id="registro" style={{ padding: '90px 24px', background: '#FAF8F5' }}>
+      <section id="registro" style={{ padding: '90px 24px', background: '#0E0E10' }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '50px', alignItems: 'start' }}>
           
           {/* Left Column: Poster / Visual Details & Bank Transfer Info */}
@@ -341,44 +333,44 @@ export default function MotoEncuentro2026() {
               <img 
                 src="/assets/img/motoencuentro.jpg" 
                 alt="Afiche Moto Encuentro 2026" 
-                style={{ width: '100%', borderRadius: '24px', boxShadow: '0 20px 40px rgba(0,0,0,0.06)', marginBottom: '30px' }} 
+                style={{ width: '100%', borderRadius: '24px', boxShadow: '0 20px 40px rgba(0,0,0,0.4)', marginBottom: '30px', border: '1px solid rgba(197,168,128,0.1)' }} 
               />
               
               {/* BANK TRANSFER DETAILS BLOCK */}
-              <div style={{ background: '#F4F1EA', padding: '25px', borderRadius: '20px', border: '1px solid rgba(27,27,31,0.04)', marginBottom: '30px' }}>
-                <h4 style={{ fontFamily: 'Poppins', fontSize: '15px', fontWeight: '700', marginBottom: '15px', color: '#365C42', textTransform: 'uppercase', letterSpacing: '1px' }}>
+              <div style={{ background: '#161619', padding: '25px', borderRadius: '20px', border: '1px solid rgba(197,168,128,0.15)', marginBottom: '30px' }}>
+                <h4 style={{ fontFamily: 'Poppins', fontSize: '15px', fontWeight: '700', marginBottom: '15px', color: '#C5A880', textTransform: 'uppercase', letterSpacing: '1px' }}>
                   Detalles de Pago y Cuentas
                 </h4>
-                <p style={{ fontSize: '13px', color: '#35363A', lineHeight: '1.5', marginBottom: '20px' }}>
+                <p style={{ fontSize: '13px', color: '#A1A1AA', lineHeight: '1.5', marginBottom: '20px' }}>
                   Realiza tu transferencia del valor total y envía el comprobante al WhatsApp de registro oficial para confirmar tu cupo. Haz clic en los números de cuenta para copiarlos:
                 </p>
 
                 {/* Account 1 */}
                 <div 
                   onClick={() => handleCopyText('4084147700', 'Número de Cuenta (Diego)')}
-                  style={{ background: '#FFFFFF', padding: '12px 16px', borderRadius: '10px', marginBottom: '12px', cursor: 'pointer', border: '1px solid rgba(0,0,0,0.05)', transition: 'transform 0.2s' }}
+                  style={{ background: '#1C1C21', padding: '14px 16px', borderRadius: '10px', marginBottom: '12px', cursor: 'pointer', border: '1px solid rgba(197,168,128,0.1)', transition: 'all 0.2s' }}
                 >
-                  <strong style={{ fontSize: '12px', color: '#365C42', display: 'block', textTransform: 'uppercase' }}>Opción 1: Cuenta Personal</strong>
-                  <span style={{ fontSize: '14px', fontWeight: 'bold', display: 'block', color: '#1B1B1F', marginTop: '2px' }}>Banco Pichincha</span>
-                  <span style={{ fontSize: '13px', color: '#35363A', display: 'block' }}>Ahorros: <strong>4084147700</strong></span>
-                  <span style={{ fontSize: '12px', color: 'rgba(0,0,0,0.5)', display: 'block' }}>Diego Ruiz (C.I. 171287197)</span>
+                  <strong style={{ fontSize: '12px', color: '#C5A880', display: 'block', textTransform: 'uppercase' }}>Opción 1: Cuenta Personal</strong>
+                  <span style={{ fontSize: '14px', fontWeight: 'bold', display: 'block', color: '#FFFFFF', marginTop: '2px' }}>Banco Pichincha</span>
+                  <span style={{ fontSize: '13px', color: '#FAF6F0', display: 'block' }}>Ahorros: <strong style={{ color: '#C5A880' }}>4084147700</strong></span>
+                  <span style={{ fontSize: '12px', color: '#A1A1AA', display: 'block' }}>Diego Ruiz (C.I. 171287197)</span>
                 </div>
 
                 {/* Account 2 */}
                 <div 
                   onClick={() => handleCopyText('12006898561', 'Número de Cuenta (Ruta Escondida S.A.S.)')}
-                  style={{ background: '#FFFFFF', padding: '12px 16px', borderRadius: '10px', cursor: 'pointer', border: '1px solid rgba(0,0,0,0.05)', transition: 'transform 0.2s' }}
+                  style={{ background: '#1C1C21', padding: '14px 16px', borderRadius: '10px', cursor: 'pointer', border: '1px solid rgba(197,168,128,0.1)', transition: 'all 0.2s' }}
                 >
-                  <strong style={{ fontSize: '12px', color: '#365C42', display: 'block', textTransform: 'uppercase' }}>Opción 2: Cuenta Jurídica</strong>
-                  <span style={{ fontSize: '14px', fontWeight: 'bold', display: 'block', color: '#1B1B1F', marginTop: '2px' }}>Banco Pichincha</span>
-                  <span style={{ fontSize: '13px', color: '#35363A', display: 'block' }}>Corriente: <strong>12006898561</strong></span>
-                  <span style={{ fontSize: '12px', color: 'rgba(0,0,0,0.5)', display: 'block' }}>Ruta Escondida Adventure S.A.S. (RUC 1793233724001)</span>
+                  <strong style={{ fontSize: '12px', color: '#C5A880', display: 'block', textTransform: 'uppercase' }}>Opción 2: Cuenta Jurídica</strong>
+                  <span style={{ fontSize: '14px', fontWeight: 'bold', display: 'block', color: '#FFFFFF', marginTop: '2px' }}>Banco Pichincha</span>
+                  <span style={{ fontSize: '13px', color: '#FAF6F0', display: 'block' }}>Corriente: <strong style={{ color: '#C5A880' }}>12006898561</strong></span>
+                  <span style={{ fontSize: '12px', color: '#A1A1AA', display: 'block' }}>Ruta Escondida Adventure S.A.S. (RUC 1793233724001)</span>
                 </div>
               </div>
 
-              <div style={{ background: '#FFFFFF', padding: '25px', borderRadius: '20px', boxShadow: '0 10px 30px rgba(0,0,0,0.02)' }}>
-                <h4 style={{ fontFamily: 'Poppins', fontSize: '15px', fontWeight: '700', marginBottom: '8px', color: '#1B1B1F' }}>Cupos Limitados</h4>
-                <p style={{ fontSize: '13px', lineHeight: '1.6', color: '#35363A', margin: 0 }}>
+              <div style={{ background: '#161619', padding: '25px', borderRadius: '20px', border: '1px solid rgba(197,168,128,0.08)' }}>
+                <h4 style={{ fontFamily: 'Poppins', fontSize: '15px', fontWeight: '700', marginBottom: '8px', color: '#FFFFFF' }}>Cupos Limitados</h4>
+                <p style={{ fontSize: '13px', lineHeight: '1.6', color: '#A1A1AA', margin: 0 }}>
                   El Moto Encuentro es un evento exclusivo con cupo limitado para garantizar la seguridad de los pilotos en ruta y la capacidad de la finca. Asegura tu ticket hoy.
                 </p>
               </div>
@@ -386,35 +378,35 @@ export default function MotoEncuentro2026() {
           </div>
 
           {/* Right Column: Dynamic Form */}
-          <div style={{ background: '#FFFFFF', padding: '40px', borderRadius: '24px', boxShadow: '0 20px 40px rgba(27,27,31,0.03)', border: '1px solid #E7E8EA' }}>
+          <div style={{ background: '#161619', padding: '40px', borderRadius: '24px', boxShadow: '0 20px 40px rgba(0,0,0,0.3)', border: '1px solid rgba(197,168,128,0.15)' }}>
             
             {submitted ? (
               <div style={{ textAlign: 'center', padding: '30px 10px' }}>
                 <span style={{ fontSize: '50px', display: 'block', marginBottom: '15px' }}>🎟️</span>
-                <h3 style={{ fontFamily: 'Poppins', fontSize: '24px', color: '#365C42', fontWeight: '700', marginBottom: '10px' }}>¡Registro Completo!</h3>
-                <p style={{ color: '#1B1B1F', fontSize: '15px', lineHeight: '1.6', marginBottom: '25px' }}>
+                <h3 style={{ fontFamily: 'Poppins', fontSize: '24px', color: '#C5A880', fontWeight: '700', marginBottom: '10px' }}>¡Registro Completo!</h3>
+                <p style={{ color: '#FAF6F0', fontSize: '15px', lineHeight: '1.6', marginBottom: '25px' }}>
                   Hemos generado tu ticket de sorteo. Lo copiamos a tu portapapeles y te enviamos la confirmación oficial a: <strong>{formData.email}</strong>.
                 </p>
-                <div style={{ margin: '0 auto 25px auto', padding: '20px', background: '#F4F1EA', borderRadius: '12px', display: 'inline-block', border: '1px solid rgba(54,92,66,0.15)' }}>
-                  <span style={{ fontSize: '11px', textTransform: 'uppercase', color: '#365C42', letterSpacing: '1px', display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>Código Oficial</span>
-                  <code style={{ fontSize: '26px', letterSpacing: '2px', fontWeight: 'bold', color: '#1B1B1F', fontFamily: 'monospace' }}>{raffleCode}</code>
+                <div style={{ margin: '0 auto 25px auto', padding: '20px', background: '#1C1C21', borderRadius: '12px', display: 'inline-block', border: '1px solid rgba(197,168,128,0.25)' }}>
+                  <span style={{ fontSize: '11px', textTransform: 'uppercase', color: '#C5A880', letterSpacing: '1px', display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>Código Oficial</span>
+                  <code style={{ fontSize: '26px', letterSpacing: '2px', fontWeight: 'bold', color: '#FFFFFF', fontFamily: 'monospace' }}>{raffleCode}</code>
                 </div>
                 
                 {/* Visual Transfer Instructions for completed states */}
-                <div style={{ background: '#FAF8F5', padding: '15px', borderRadius: '8px', border: '1px solid rgba(0,0,0,0.05)', fontSize: '13px', color: '#35363A', lineHeight: '1.5', marginBottom: '25px', textAlign: 'left' }}>
+                <div style={{ background: '#121214', padding: '15px', borderRadius: '8px', border: '1px solid rgba(197,168,128,0.1)', fontSize: '13px', color: '#A1A1AA', lineHeight: '1.5', marginBottom: '25px', textAlign: 'left' }}>
                   ℹ️ <strong>Siguiente Paso:</strong> Recuerda transferir el total de tu experiencia <strong>(${totalPrice.toFixed(2)})</strong> a cualquiera de las cuentas del Banco Pichincha indicadas en el panel lateral y enviar el comprobante de transferencia al chat de WhatsApp que se acaba de abrir.
                 </div>
 
                 <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
                   <button 
                     onClick={handleCopy} 
-                    style={{ padding: '12px 24px', background: copied ? '#10B981' : '#365C42', color: '#FFFFFF', border: 'none', borderRadius: '30px', cursor: 'pointer', fontWeight: 'bold', fontSize: '13px', transition: 'all 0.3s' }}
+                    style={{ padding: '12px 24px', background: copied ? '#10B981' : '#C5A880', color: '#0E0E10', border: 'none', borderRadius: '30px', cursor: 'pointer', fontWeight: 'bold', fontSize: '13px', transition: 'all 0.3s' }}
                   >
                     {copied ? '¡Copiado!' : 'Copiar Código'}
                   </button>
                   <button 
                     onClick={() => setSubmitted(false)} 
-                    style={{ padding: '12px 24px', background: 'transparent', border: '1px solid #1B1B1F', color: '#1B1B1F', borderRadius: '30px', cursor: 'pointer', fontWeight: 'bold', fontSize: '13px', transition: 'all 0.3s' }}
+                    style={{ padding: '12px 24px', background: 'transparent', border: '1px solid #C5A880', color: '#C5A880', borderRadius: '30px', cursor: 'pointer', fontWeight: 'bold', fontSize: '13px', transition: 'all 0.3s' }}
                   >
                     Inscribir otro piloto
                   </button>
@@ -423,15 +415,15 @@ export default function MotoEncuentro2026() {
             ) : (
               <form onSubmit={handleSubmit} style={{ display: 'grid', gap: '22px' }}>
                 <div>
-                  <h3 style={{ fontFamily: 'Poppins', fontSize: '22px', fontWeight: '700', color: '#1B1B1F', marginBottom: '8px' }}>Pre-Registro Oficial</h3>
-                  <div style={{ background: 'rgba(54,92,66,0.06)', borderLeft: '4px solid #365C42', padding: '15px', borderRadius: '4px 8px 8px 4px', fontSize: '13px', lineHeight: '1.5', color: '#365C42', fontWeight: '500' }}>
+                  <h3 style={{ fontFamily: 'Poppins', fontSize: '22px', fontWeight: '700', color: '#FFFFFF', marginBottom: '8px' }}>Pre-Registro Oficial</h3>
+                  <div style={{ background: 'rgba(197,168,128,0.06)', borderLeft: '4px solid #C5A880', padding: '15px', borderRadius: '4px 8px 8px 4px', fontSize: '13px', lineHeight: '1.5', color: '#C5A880', fontWeight: '500' }}>
                     La inscripción base de <strong>$3.50</strong> es requerida para validar tu cupo e incluye: 1 Helado de Chirimoya, 1 Kit de productos locales, parqueo seguro y acceso a la ruta de trekking.
                   </div>
                 </div>
 
                 {/* Form fields */}
                 <div>
-                  <label style={{ display: 'block', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '6px', fontWeight: 'bold', color: '#1B1B1F' }}>Nombre Completo *</label>
+                  <label style={{ display: 'block', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '6px', fontWeight: 'bold', color: '#C5A880' }}>Nombre Completo *</label>
                   <input 
                     type="text" 
                     name="name" 
@@ -439,13 +431,13 @@ export default function MotoEncuentro2026() {
                     value={formData.name}
                     onChange={handleChange}
                     placeholder="Ej. Juan Pérez"
-                    style={{ width: '100%', padding: '12px 16px', border: '1px solid #E7E8EA', borderRadius: '8px', fontSize: '14px', background: '#FAF8F5', color: '#1B1B1F' }}
+                    style={{ width: '100%', padding: '12px 16px', border: '1px solid rgba(197,168,128,0.15)', borderRadius: '8px', fontSize: '14px', background: '#1C1C21', color: '#FFFFFF', outline: 'none' }}
                   />
                 </div>
 
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '15px' }}>
                   <div>
-                    <label style={{ display: 'block', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '6px', fontWeight: 'bold', color: '#1B1B1F' }}>Correo Electrónico *</label>
+                    <label style={{ display: 'block', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '6px', fontWeight: 'bold', color: '#C5A880' }}>Correo Electrónico *</label>
                     <input 
                       type="email" 
                       name="email" 
@@ -453,11 +445,11 @@ export default function MotoEncuentro2026() {
                       value={formData.email}
                       onChange={handleChange}
                       placeholder="ejemplo@correo.com"
-                      style={{ width: '100%', padding: '12px 16px', border: '1px solid #E7E8EA', borderRadius: '8px', fontSize: '14px', background: '#FAF8F5', color: '#1B1B1F' }}
+                      style={{ width: '100%', padding: '12px 16px', border: '1px solid rgba(197,168,128,0.15)', borderRadius: '8px', fontSize: '14px', background: '#1C1C21', color: '#FFFFFF', outline: 'none' }}
                     />
                   </div>
                   <div>
-                    <label style={{ display: 'block', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '6px', fontWeight: 'bold', color: '#1B1B1F' }}>WhatsApp / Teléfono *</label>
+                    <label style={{ display: 'block', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '6px', fontWeight: 'bold', color: '#C5A880' }}>WhatsApp / Teléfono *</label>
                     <input 
                       type="tel" 
                       name="phone" 
@@ -465,25 +457,25 @@ export default function MotoEncuentro2026() {
                       value={formData.phone}
                       onChange={handleChange}
                       placeholder="Ej. 0998877665"
-                      style={{ width: '100%', padding: '12px 16px', border: '1px solid #E7E8EA', borderRadius: '8px', fontSize: '14px', background: '#FAF8F5', color: '#1B1B1F' }}
+                      style={{ width: '100%', padding: '12px 16px', border: '1px solid rgba(197,168,128,0.15)', borderRadius: '8px', fontSize: '14px', background: '#1C1C21', color: '#FFFFFF', outline: 'none' }}
                     />
                   </div>
                 </div>
 
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '15px' }}>
                   <div>
-                    <label style={{ display: 'block', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '6px', fontWeight: 'bold', color: '#1B1B1F' }}>Motoclub (Opcional)</label>
+                    <label style={{ display: 'block', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '6px', fontWeight: 'bold', color: '#C5A880' }}>Motoclub (Opcional)</label>
                     <input 
                       type="text" 
                       name="motoclub" 
                       value={formData.motoclub}
                       onChange={handleChange}
                       placeholder="Independiente o nombre del club"
-                      style={{ width: '100%', padding: '12px 16px', border: '1px solid #E7E8EA', borderRadius: '8px', fontSize: '14px', background: '#FAF8F5', color: '#1B1B1F' }}
+                      style={{ width: '100%', padding: '12px 16px', border: '1px solid rgba(197,168,128,0.15)', borderRadius: '8px', fontSize: '14px', background: '#1C1C21', color: '#FFFFFF', outline: 'none' }}
                     />
                   </div>
                   <div>
-                    <label style={{ display: 'block', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '6px', fontWeight: 'bold', color: '#1B1B1F' }}>Motocicleta / Cilindrada *</label>
+                    <label style={{ display: 'block', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '6px', fontWeight: 'bold', color: '#C5A880' }}>Motocicleta / Cilindrada *</label>
                     <input 
                       type="text" 
                       name="motorcycle" 
@@ -491,14 +483,14 @@ export default function MotoEncuentro2026() {
                       value={formData.motorcycle}
                       onChange={handleChange}
                       placeholder="Ej. Suzuki V-Strom 650"
-                      style={{ width: '100%', padding: '12px 16px', border: '1px solid #E7E8EA', borderRadius: '8px', fontSize: '14px', background: '#FAF8F5', color: '#1B1B1F' }}
+                      style={{ width: '100%', padding: '12px 16px', border: '1px solid rgba(197,168,128,0.15)', borderRadius: '8px', fontSize: '14px', background: '#1C1C21', color: '#FFFFFF', outline: 'none' }}
                     />
                   </div>
                 </div>
 
                 {/* Food grid selection */}
                 <div>
-                  <label style={{ display: 'block', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '8px', fontWeight: 'bold', color: '#1B1B1F' }}>
+                  <label style={{ display: 'block', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '8px', fontWeight: 'bold', color: '#C5A880' }}>
                     Opciones de Alimentación (Selecciona una)
                   </label>
                   <div style={{ display: 'grid', gap: '10px' }}>
@@ -516,8 +508,8 @@ export default function MotoEncuentro2026() {
                           style={{
                             padding: '16px',
                             borderRadius: '12px',
-                            border: isSelected ? '2px solid #365C42' : '1px solid #E7E8EA',
-                            background: isSelected ? 'rgba(54,92,66,0.03)' : '#FFFFFF',
+                            border: isSelected ? '2px solid #C5A880' : '1px solid rgba(197,168,128,0.15)',
+                            background: isSelected ? 'rgba(197,168,128,0.04)' : '#1C1C21',
                             cursor: 'pointer',
                             display: 'flex',
                             justifyContent: 'space-between',
@@ -526,10 +518,10 @@ export default function MotoEncuentro2026() {
                           }}
                         >
                           <div style={{ paddingRight: '15px' }}>
-                            <span style={{ fontSize: '14px', fontWeight: 'bold', display: 'block', color: '#1B1B1F' }}>
+                            <span style={{ fontSize: '14px', fontWeight: 'bold', display: 'block', color: '#FFFFFF' }}>
                               {food.name} {food.price > 0 && `(+$${food.price.toFixed(2)})`}
                             </span>
-                            <span style={{ fontSize: '12px', color: '#35363A', display: 'block', marginTop: '2px' }}>
+                            <span style={{ fontSize: '12px', color: '#A1A1AA', display: 'block', marginTop: '2px' }}>
                               {food.desc}
                             </span>
                           </div>
@@ -537,8 +529,8 @@ export default function MotoEncuentro2026() {
                             width: '20px',
                             height: '20px',
                             borderRadius: '50%',
-                            border: isSelected ? '6px solid #365C42' : '2px solid #E7E8EA',
-                            background: '#FFFFFF',
+                            border: isSelected ? '6px solid #C5A880' : '2px solid rgba(197,168,128,0.2)',
+                            background: '#1C1C21',
                             boxSizing: 'border-box'
                           }} />
                         </div>
@@ -548,21 +540,21 @@ export default function MotoEncuentro2026() {
                 </div>
 
                 {/* BILLING INVOICE CHECKBOX & FORM */}
-                <div style={{ borderTop: '1px solid #E7E8EA', paddingTop: '15px', marginTop: '5px' }}>
-                  <label style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer', fontSize: '13.5px', color: '#1B1B1F', fontWeight: 'bold' }}>
+                <div style={{ borderTop: '1px solid rgba(197,168,128,0.15)', paddingTop: '15px', marginTop: '5px' }}>
+                  <label style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer', fontSize: '13.5px', color: '#FFFFFF', fontWeight: 'bold' }}>
                     <input 
                       type="checkbox" 
                       checked={requireInvoice}
                       onChange={(e) => setRequireInvoice(e.target.checked)}
-                      style={{ width: '18px', height: '18px', accentColor: '#365C42', cursor: 'pointer' }}
+                      style={{ width: '18px', height: '18px', accentColor: '#C5A880', cursor: 'pointer' }}
                     />
                     <span>¿Requieres Factura Electrónica?</span>
                   </label>
 
                   {requireInvoice && (
-                    <div style={{ display: 'grid', gap: '12px', marginTop: '15px', padding: '15px', background: '#F4F1EA', borderRadius: '12px', border: '1px solid rgba(0,0,0,0.05)' }}>
+                    <div style={{ display: 'grid', gap: '12px', marginTop: '15px', padding: '15px', background: '#121214', borderRadius: '12px', border: '1px solid rgba(197,168,128,0.15)' }}>
                       <div>
-                        <label style={{ display: 'block', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '4px', fontWeight: 'bold', color: '#1B1B1F' }}>Razón Social / Nombre Completo *</label>
+                        <label style={{ display: 'block', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '4px', fontWeight: 'bold', color: '#C5A880' }}>Razón Social / Nombre Completo *</label>
                         <input 
                           type="text" 
                           name="businessName"
@@ -570,12 +562,12 @@ export default function MotoEncuentro2026() {
                           value={invoiceData.businessName}
                           onChange={handleInvoiceChange}
                           placeholder="Nombre para la factura"
-                          style={{ width: '100%', padding: '10px 12px', border: '1px solid #E7E8EA', borderRadius: '6px', fontSize: '13.5px', background: '#FFFFFF', color: '#1B1B1F' }}
+                          style={{ width: '100%', padding: '10px 12px', border: '1px solid rgba(197,168,128,0.15)', borderRadius: '6px', fontSize: '13.5px', background: '#1C1C21', color: '#FFFFFF', outline: 'none' }}
                         />
                       </div>
                       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
                         <div>
-                          <label style={{ display: 'block', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '4px', fontWeight: 'bold', color: '#1B1B1F' }}>RUC / C.I. *</label>
+                          <label style={{ display: 'block', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '4px', fontWeight: 'bold', color: '#C5A880' }}>RUC / C.I. *</label>
                           <input 
                             type="text" 
                             name="taxId"
@@ -583,23 +575,23 @@ export default function MotoEncuentro2026() {
                             value={invoiceData.taxId}
                             onChange={handleInvoiceChange}
                             placeholder="Ej. 1712871970"
-                            style={{ width: '100%', padding: '10px 12px', border: '1px solid #E7E8EA', borderRadius: '6px', fontSize: '13.5px', background: '#FFFFFF', color: '#1B1B1F' }}
+                            style={{ width: '100%', padding: '10px 12px', border: '1px solid rgba(197,168,128,0.15)', borderRadius: '6px', fontSize: '13.5px', background: '#1C1C21', color: '#FFFFFF', outline: 'none' }}
                           />
                         </div>
                         <div>
-                          <label style={{ display: 'block', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '4px', fontWeight: 'bold', color: '#1B1B1F' }}>Email Facturación</label>
+                          <label style={{ display: 'block', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '4px', fontWeight: 'bold', color: '#C5A880' }}>Email Facturación</label>
                           <input 
                             type="email" 
                             name="email"
                             value={invoiceData.email}
                             onChange={handleInvoiceChange}
                             placeholder="Dejar vacío para usar el principal"
-                            style={{ width: '100%', padding: '10px 12px', border: '1px solid #E7E8EA', borderRadius: '6px', fontSize: '13.5px', background: '#FFFFFF', color: '#1B1B1F' }}
+                            style={{ width: '100%', padding: '10px 12px', border: '1px solid rgba(197,168,128,0.15)', borderRadius: '6px', fontSize: '13.5px', background: '#1C1C21', color: '#FFFFFF', outline: 'none' }}
                           />
                         </div>
                       </div>
                       <div>
-                        <label style={{ display: 'block', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '4px', fontWeight: 'bold', color: '#1B1B1F' }}>Dirección Fiscal *</label>
+                        <label style={{ display: 'block', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '4px', fontWeight: 'bold', color: '#C5A880' }}>Dirección Fiscal *</label>
                         <input 
                           type="text" 
                           name="address"
@@ -607,7 +599,7 @@ export default function MotoEncuentro2026() {
                           value={invoiceData.address}
                           onChange={handleInvoiceChange}
                           placeholder="Ej. Av. Amazonas y Colón, Quito"
-                          style={{ width: '100%', padding: '10px 12px', border: '1px solid #E7E8EA', borderRadius: '6px', fontSize: '13.5px', background: '#FFFFFF', color: '#1B1B1F' }}
+                          style={{ width: '100%', padding: '10px 12px', border: '1px solid rgba(197,168,128,0.15)', borderRadius: '6px', fontSize: '13.5px', background: '#1C1C21', color: '#FFFFFF', outline: 'none' }}
                         />
                       </div>
                     </div>
@@ -616,12 +608,12 @@ export default function MotoEncuentro2026() {
 
                 {/* Real-time calculator */}
                 <div style={{
-                  background: '#F4F1EA',
+                  background: '#121214',
                   padding: '20px',
                   borderRadius: '12px',
-                  border: '1px solid rgba(27,27,31,0.04)'
+                  border: '1px solid rgba(197,168,128,0.1)'
                 }}>
-                  <span style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 'bold', color: '#365C42', display: 'block', marginBottom: '8px' }}>
+                  <span style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 'bold', color: '#C5A880', display: 'block', marginBottom: '8px' }}>
                     Resumen del Pago
                   </span>
                   <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '14px', marginBottom: '6px' }}>
@@ -639,13 +631,13 @@ export default function MotoEncuentro2026() {
                     justifyContent: 'space-between', 
                     fontSize: '16px', 
                     fontWeight: 'bold', 
-                    borderTop: '1px solid rgba(27,27,31,0.1)', 
+                    borderTop: '1px solid rgba(197,168,128,0.2)', 
                     paddingTop: '10px',
                     marginTop: '10px',
-                    color: '#1B1B1F'
+                    color: '#FFFFFF'
                   }}>
                     <span>Total a Transferir:</span>
-                    <span style={{ color: '#365C42' }}>${totalPrice.toFixed(2)}</span>
+                    <span style={{ color: '#C5A880' }}>${totalPrice.toFixed(2)}</span>
                   </div>
                 </div>
 
@@ -655,19 +647,19 @@ export default function MotoEncuentro2026() {
                   style={{ 
                     width: '100%', 
                     padding: '16px', 
-                    background: '#F59E0B', 
+                    background: '#C5A880', 
                     border: 'none', 
                     borderRadius: '30px', 
-                    color: '#FFFFFF', 
+                    color: '#0E0E10', 
                     fontWeight: 'bold', 
                     fontSize: '14px', 
                     cursor: loading ? 'not-allowed' : 'pointer', 
                     textTransform: 'uppercase', 
-                    letterSpacing: '1px', 
-                    transition: 'background 0.3s'
+                    letterSpacing: '1.5px', 
+                    transition: 'all 0.3s'
                   }}
-                  onMouseOver={(e) => !loading && (e.target.style.background = '#D97706')}
-                  onMouseOut={(e) => !loading && (e.target.style.background = '#F59E0B')}
+                  onMouseOver={(e) => !loading && (e.target.style.background = '#FFFFFF')}
+                  onMouseOut={(e) => !loading && (e.target.style.background = '#C5A880')}
                 >
                   {loading ? 'Procesando...' : 'Registrarme y Proceder al Pago'}
                 </button>
