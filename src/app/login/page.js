@@ -32,8 +32,25 @@ export default function LoginPage() {
     setLoading(true);
     setError(null);
 
+    // Check if running on localhost to permit simulation fallback
+    const isLocalhost = typeof window !== 'undefined' && 
+      (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
+
     // If using mock DB, simulate login
     if (isMockEnv()) {
+      if (!isLocalhost) {
+        setError("Error de Configuración: La base de datos de producción de Supabase no está vinculada. Por favor, configura las variables de entorno en el panel del hosting.");
+        setLoading(false);
+        return;
+      }
+
+      // Enforce validation password check on local simulation for safety
+      if (password !== 'admin123' && password !== 'Ruta2026!') {
+        setError("Contraseña simulada incorrecta para pruebas locales (usa 'admin123' o 'Ruta2026!')");
+        setLoading(false);
+        return;
+      }
+
       setTimeout(async () => {
         if (email.includes('admin')) {
           localStorage.setItem('active_business_id', 'admin');

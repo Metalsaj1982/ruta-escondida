@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import { dbManager } from '../../lib/db';
 
 export default function MotoEncuentro() {
   const [formData, setFormData] = useState({
@@ -24,12 +25,47 @@ export default function MotoEncuentro() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // Generate a premium random raffle code
     const generatedCode = 'MOTO-2026-' + Math.floor(1000 + Math.random() * 9000);
     setRaffleCode(generatedCode);
     setSubmitted(true);
+
+    // Save registration securely as a lead in the database
+    const leadData = {
+      business_id: 'restaurante', // El Mirador de Alchipichí is the host
+      customer_name: formData.name,
+      customer_phone: formData.phone,
+      customer_email: formData.email,
+      message: `Inscripción Moto Encuentro. Motocicleta: ${formData.motorcycle}. Origen: ${formData.parish}. Acompañantes: ${formData.passengers}. Código Sorteo: ${generatedCode}`
+    };
+
+    try {
+      await dbManager.addLead(leadData);
+    } catch (dbErr) {
+      console.error("Failed to insert lead into database:", dbErr);
+    }
+
+    // Call API route to dispatch ticket email
+    try {
+      await fetch('/api/send-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          code: generatedCode,
+          motorcycle: formData.motorcycle,
+          parish: formData.parish,
+          passengers: formData.passengers
+        })
+      });
+    } catch (mailErr) {
+      console.error("Failed to trigger email send route:", mailErr);
+    }
 
     const text = encodeURIComponent(
       `¡Hola Ruta Escondida! Quiero inscribirme en el 1er Moto Encuentro 2026:\n\n` +
