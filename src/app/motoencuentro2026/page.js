@@ -194,6 +194,22 @@ export default function MotoEncuentro2026() {
           </button>
         </div>
 
+        {/* Banner Oficial del Evento */}
+        <div style={{
+          maxWidth: '850px',
+          margin: '0 auto 40px auto',
+          borderRadius: '20px',
+          overflow: 'hidden',
+          boxShadow: '0 20px 40px rgba(27,27,31,0.06)',
+          border: '8px solid #F4F1EA'
+        }}>
+          <img 
+            src="/assets/img/motoencuentro.jpg" 
+            alt="Afiche Oficial Moto Encuentro 2026" 
+            style={{ width: '100%', height: 'auto', display: 'block' }} 
+          />
+        </div>
+
         {/* Responsive Video Container */}
         <div style={{ 
           maxWidth: '850px', 
