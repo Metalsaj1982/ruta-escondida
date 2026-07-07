@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { supabase, isMockEnv } from '../../lib/supabase';
 import { dbManager } from '../../lib/db';
 import { useRouter } from 'next/navigation';
@@ -9,6 +9,7 @@ import '../style.css';
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   
@@ -25,7 +26,27 @@ export default function LoginPage() {
   const [regPlan, setRegPlan] = useState('free');
   const [regSuccess, setRegSuccess] = useState(false);
 
+  // Recovery states
+  const [isForgotPassword, setIsForgotPassword] = useState(false);
+  const [recoveryEmail, setRecoveryEmail] = useState('');
+  const [resetSent, setResetSent] = useState(false);
+  const [isResettingPassword, setIsResettingPassword] = useState(false);
+  const [newPassword, setNewPassword] = useState('');
+
   const router = useRouter();
+
+  // Detect recovery redirect from Supabase
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const query = new URLSearchParams(window.location.search);
+      const hasResetParam = query.get('reset') === 'true';
+      const hasHashToken = window.location.hash.includes('access_token');
+      
+      if (hasResetParam || hasHashToken) {
+        setIsResettingPassword(true);
+      }
+    }
+  }, []);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -169,50 +190,196 @@ export default function LoginPage() {
     }
   };
 
+  const handleForgotPassword = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
+
+    const { error: resetError } = await supabase.auth.resetPasswordForEmail(recoveryEmail, {
+      redirectTo: `${window.location.origin}/login?reset=true`
+    });
+
+    setLoading(false);
+    if (resetError) {
+      setError(resetError.message);
+    } else {
+      setResetSent(true);
+      setRecoveryEmail('');
+    }
+  };
+
+  const handleUpdatePassword = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
+
+    const { error: updateError } = await supabase.auth.updateUser({
+      password: newPassword
+    });
+
+    setLoading(false);
+    if (updateError) {
+      setError(updateError.message);
+    } else {
+      alert("¡Tu contraseña ha sido restablecida con éxito! Ya puedes iniciar sesión.");
+      setIsResettingPassword(false);
+      setIsForgotPassword(false);
+      setNewPassword('');
+      router.push('/login');
+    }
+  };
+
   return (
     <div className="login-container" style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--fondo)', padding: '20px' }}>
-      <div className="login-box" style={{ background: 'var(--crema)', border: '1px solid rgba(27,67,50,0.15)', borderRadius: '12px', padding: '40px', width: '100%', maxWidth: isRegistering ? '500px' : '400px', textAlign: 'center', boxShadow: '0 4px 20px rgba(27,67,50,0.03)', transition: 'max-width 0.3s ease' }}>
+      <div className="login-box" style={{ background: 'var(--crema)', border: '1px solid rgba(27,67,50,0.15)', borderRadius: '12px', padding: '40px', width: '100%', maxWidth: isRegistering ? '550px' : '400px', textAlign: 'center', boxShadow: '0 4px 20px rgba(27,67,50,0.03)', transition: 'max-width 0.3s ease' }}>
         <a href="/">
           <img src="/assets/img/logo.png" alt="Logo" style={{ width: '120px', marginBottom: '20px' }} />
         </a>
         
-        {!isRegistering ? (
+        {/* Recovery: Set New Password Form */}
+        {isResettingPassword ? (
+          <>
+            <h2 style={{ color: 'var(--verde-andes)', marginBottom: '15px', fontFamily: 'Playfair Display', fontWeight: 'bold' }}>Nueva Contraseña</h2>
+            <p style={{ fontSize: '13px', color: 'var(--texto)', opacity: 0.8, marginBottom: '20px' }}>Escribe tu nueva contraseña de seguridad a continuación.</p>
+            
+            {error && <div style={{ color: '#D93333', background: 'rgba(217,51,51,0.08)', border: '1px solid rgba(217,51,51,0.2)', padding: '10px', borderRadius: '6px', marginBottom: '20px', fontSize: '13px' }}>{error}</div>}
+            
+            <form onSubmit={handleUpdatePassword} style={{ display: 'flex', flexDirection: 'column', gap: '15px', textAlign: 'left' }}>
+              <div>
+                <label style={{ display: 'block', fontSize: '11.5px', fontWeight: 'bold', marginBottom: '4px', color: 'var(--verde-andes)' }}>Contraseña de Seguridad</label>
+                <div style={{ position: 'relative' }}>
+                  <input 
+                    type={showPassword ? "text" : "password"} 
+                    placeholder="Escribe al menos 6 caracteres" 
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                    required
+                    style={{ width: '100%', padding: '12px', paddingRight: '45px', background: '#fff', border: '1px solid rgba(27,67,50,0.2)', borderRadius: '6px', color: 'var(--texto)', fontSize: '14.5px', outline: 'none' }}
+                  />
+                  <button 
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    style={{ position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)', background: 'transparent', border: 'none', color: 'var(--verde-andes)', cursor: 'pointer', fontSize: '13px', fontWeight: 'bold' }}
+                  >
+                    {showPassword ? 'Ocultar' : 'Ver'}
+                  </button>
+                </div>
+              </div>
+              <button 
+                type="submit" 
+                disabled={loading}
+                style={{ marginTop: '10px', padding: '12px', background: 'var(--verde-andes)', color: '#fff', border: 'none', borderRadius: '6px', fontWeight: 'bold', cursor: loading ? 'not-allowed' : 'pointer', fontSize: '14.5px' }}
+              >
+                {loading ? 'Guardando...' : 'Restablecer Contraseña'}
+              </button>
+            </form>
+          </>
+        ) : isForgotPassword ? (
+          /* Recovery: Request Reset Email Form */
+          <>
+            <h2 style={{ color: 'var(--verde-andes)', marginBottom: '15px', fontFamily: 'Playfair Display', fontWeight: 'bold' }}>Recuperar Acceso</h2>
+            
+            {resetSent ? (
+              <div style={{ color: 'var(--verde-andes)', background: 'rgba(27,67,50,0.08)', border: '1px solid rgba(27,67,50,0.2)', padding: '15px', borderRadius: '6px', marginBottom: '20px', fontSize: '13.5px', textAlign: 'left' }}>
+                <strong>¡Correo Enviado!</strong> Si la dirección está registrada, recibirás un enlace de restablecimiento seguro en unos minutos. Revisa también tu carpeta de SPAM.
+              </div>
+            ) : (
+              <p style={{ fontSize: '13px', color: 'var(--texto)', opacity: 0.8, marginBottom: '25px' }}>Ingresa tu correo y te enviaremos un enlace de recuperación seguro.</p>
+            )}
+
+            {error && <div style={{ color: '#D93333', background: 'rgba(217,51,51,0.08)', border: '1px solid rgba(217,51,51,0.2)', padding: '10px', borderRadius: '6px', marginBottom: '20px', fontSize: '13px' }}>{error}</div>}
+            
+            <form onSubmit={handleForgotPassword} style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+              <input 
+                type="email" 
+                placeholder="Ingresa tu correo de cuenta" 
+                value={recoveryEmail}
+                onChange={(e) => setRecoveryEmail(e.target.value)}
+                required
+                disabled={resetSent}
+                style={{ width: '100%', padding: '12px', background: '#fff', border: '1px solid rgba(27,67,50,0.2)', borderRadius: '6px', color: 'var(--texto)', fontSize: '14.5px', outline: 'none' }}
+              />
+              <button 
+                type="submit" 
+                disabled={loading || resetSent}
+                style={{ marginTop: '10px', padding: '12px', background: 'var(--verde-andes)', color: '#fff', border: 'none', borderRadius: '6px', fontWeight: 'bold', cursor: (loading || resetSent) ? 'not-allowed' : 'pointer', fontSize: '14.5px' }}
+              >
+                {loading ? 'Enviando...' : 'Enviar Enlace de Recuperación'}
+              </button>
+            </form>
+
+            <button 
+              onClick={() => { setIsForgotPassword(false); setError(null); setResetSent(false); }}
+              style={{ marginTop: '25px', background: 'transparent', border: 'none', color: 'var(--verde-medio)', fontWeight: 'bold', cursor: 'pointer', fontSize: '13.5px' }}
+            >
+              Volver al inicio de sesión
+            </button>
+          </>
+        ) : !isRegistering ? (
+          /* Normal Login Form */
           <>
             <h2 style={{ color: 'var(--verde-andes)', marginBottom: '30px', fontFamily: 'Playfair Display', fontWeight: 'bold' }}>Iniciar Sesión</h2>
             
             {error && <div style={{ color: '#D93333', background: 'rgba(217,51,51,0.08)', border: '1px solid rgba(217,51,51,0.2)', padding: '10px', borderRadius: '6px', marginBottom: '20px', fontSize: '13.5px', fontWeight: '500' }}>{error}</div>}
             
-            <form onSubmit={handleLogin} style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-              <input 
-                type="email" 
-                placeholder="Correo electrónico" 
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                style={{ width: '100%', padding: '12px', background: '#fff', border: '1px solid rgba(27,67,50,0.2)', borderRadius: '6px', color: 'var(--texto)', fontFamily: 'Outfit', fontSize: '14.5px', outline: 'none' }}
-              />
-              <input 
-                type="password" 
-                placeholder="Contraseña" 
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                style={{ width: '100%', padding: '12px', background: '#fff', border: '1px solid rgba(27,67,50,0.2)', borderRadius: '6px', color: 'var(--texto)', fontFamily: 'Outfit', fontSize: '14.5px', outline: 'none' }}
-              />
+            <form onSubmit={handleLogin} style={{ display: 'flex', flexDirection: 'column', gap: '15px', textAlign: 'left' }}>
+              <div>
+                <label style={{ display: 'block', fontSize: '11.5px', fontWeight: 'bold', marginBottom: '4px', color: 'var(--verde-andes)' }}>Email de Acceso</label>
+                <input 
+                  type="email" 
+                  placeholder="Correo electrónico" 
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  style={{ width: '100%', padding: '12px', background: '#fff', border: '1px solid rgba(27,67,50,0.2)', borderRadius: '6px', color: 'var(--texto)', fontSize: '14.5px', outline: 'none' }}
+                />
+              </div>
+
+              <div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
+                  <label style={{ fontSize: '11.5px', fontWeight: 'bold', color: 'var(--verde-andes)' }}>Contraseña</label>
+                  <button 
+                    type="button"
+                    onClick={() => { setIsForgotPassword(true); setError(null); }}
+                    style={{ background: 'transparent', border: 'none', color: 'var(--verde-medio)', cursor: 'pointer', fontSize: '11.5px', padding: 0 }}
+                  >
+                    ¿Olvidaste tu contraseña?
+                  </button>
+                </div>
+                <div style={{ position: 'relative' }}>
+                  <input 
+                    type={showPassword ? "text" : "password"} 
+                    placeholder="Contraseña" 
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                    style={{ width: '100%', padding: '12px', paddingRight: '45px', background: '#fff', border: '1px solid rgba(27,67,50,0.2)', borderRadius: '6px', color: 'var(--texto)', fontSize: '14.5px', outline: 'none' }}
+                  />
+                  <button 
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    style={{ position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)', background: 'transparent', border: 'none', color: 'var(--verde-andes)', cursor: 'pointer', fontSize: '13px', fontWeight: 'bold' }}
+                  >
+                    {showPassword ? 'Ocultar' : 'Ver'}
+                  </button>
+                </div>
+              </div>
+
               <button 
                 type="submit" 
                 disabled={loading}
-                style={{ marginTop: '10px', padding: '12px', background: 'var(--verde-andes)', color: '#fff', border: 'none', borderRadius: '6px', fontWeight: 'bold', cursor: loading ? 'not-allowed' : 'pointer', fontFamily: 'Outfit', fontSize: '14.5px' }}
+                style={{ marginTop: '15px', padding: '12px', background: 'var(--verde-andes)', color: '#fff', border: 'none', borderRadius: '6px', fontWeight: 'bold', cursor: loading ? 'not-allowed' : 'pointer', fontSize: '14.5px' }}
               >
                 {loading ? 'Ingresando...' : 'Entrar al Panel'}
               </button>
             </form>
 
             <div style={{ marginTop: '25px', fontSize: '13.5px', color: 'var(--texto)', opacity: 0.8 }}>
-              <p>¿Eres emprendedor y no tienes cuenta? <button onClick={() => { setIsRegistering(true); setError(null); setRegSuccess(false); }} style={{ background: 'transparent', border: 'none', color: 'var(--verde-medio)', fontWeight: 'bold', cursor: 'pointer', fontFamily: 'Outfit', fontSize: '13.5px', padding: 0 }}>Regístrate aquí</button></p>
+              <p>¿Eres emprendedor y no tienes cuenta? <button onClick={() => { setIsRegistering(true); setError(null); setRegSuccess(false); }} style={{ background: 'transparent', border: 'none', color: 'var(--verde-medio)', fontWeight: 'bold', cursor: 'pointer', fontSize: '13.5px', padding: 0 }}>Regístrate aquí</button></p>
             </div>
           </>
         ) : (
+          /* Entrepreneur Registration Form */
           <>
             <h2 style={{ color: 'var(--verde-andes)', marginBottom: '20px', fontFamily: 'Playfair Display', fontWeight: 'bold' }}>Crear Cuenta de Emprendedor</h2>
             
@@ -226,17 +393,32 @@ export default function LoginPage() {
             
             <form onSubmit={handleRegister} style={{ display: 'flex', flexDirection: 'column', gap: '12px', textAlign: 'left' }}>
               <div>
-                <label style={{ display: 'block', fontSize: '11.5px', fontWeight: 'bold', marginBottom: '4px', color: 'var(--verde-andes)' }}>Nombre del Negocio</label>
+                <label style={{ display: 'block', fontSize: '11.5px', fontWeight: 'bold', marginBottom: '4px', color: 'var(--verde-andes)' }}>Nombre del Negocio *</label>
                 <input type="text" required value={regName} onChange={(e) => setRegName(e.target.value)} style={{ width: '100%', padding: '10px', background: '#fff', border: '1px solid rgba(27,67,50,0.2)', borderRadius: '6px', color: 'var(--texto)', fontSize: '13.5px', outline: 'none' }} />
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
                 <div>
-                  <label style={{ display: 'block', fontSize: '11.5px', fontWeight: 'bold', marginBottom: '4px', color: 'var(--verde-andes)' }}>Email de Acceso</label>
+                  <label style={{ display: 'block', fontSize: '11.5px', fontWeight: 'bold', marginBottom: '4px', color: 'var(--verde-andes)' }}>Email de Acceso *</label>
                   <input type="email" required value={regEmail} onChange={(e) => setRegEmail(e.target.value)} style={{ width: '100%', padding: '10px', background: '#fff', border: '1px solid rgba(27,67,50,0.2)', borderRadius: '6px', color: 'var(--texto)', fontSize: '13.5px', outline: 'none' }} />
                 </div>
                 <div>
-                  <label style={{ display: 'block', fontSize: '11.5px', fontWeight: 'bold', marginBottom: '4px', color: 'var(--verde-andes)' }}>Contraseña</label>
-                  <input type="password" required value={regPassword} onChange={(e) => setRegPassword(e.target.value)} style={{ width: '100%', padding: '10px', background: '#fff', border: '1px solid rgba(27,67,50,0.2)', borderRadius: '6px', color: 'var(--texto)', fontSize: '13.5px', outline: 'none' }} />
+                  <label style={{ display: 'block', fontSize: '11.5px', fontWeight: 'bold', marginBottom: '4px', color: 'var(--verde-andes)' }}>Contraseña *</label>
+                  <div style={{ position: 'relative' }}>
+                    <input 
+                      type={showPassword ? "text" : "password"} 
+                      required 
+                      value={regPassword} 
+                      onChange={(e) => setRegPassword(e.target.value)} 
+                      style={{ width: '100%', padding: '10px', paddingRight: '45px', background: '#fff', border: '1px solid rgba(27,67,50,0.2)', borderRadius: '6px', color: 'var(--texto)', fontSize: '13.5px', outline: 'none' }} 
+                    />
+                    <button 
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)', background: 'transparent', border: 'none', color: 'var(--verde-andes)', cursor: 'pointer', fontSize: '12px', fontWeight: 'bold' }}
+                    >
+                      {showPassword ? 'Ocultar' : 'Ver'}
+                    </button>
+                  </div>
                 </div>
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
@@ -262,7 +444,7 @@ export default function LoginPage() {
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '10px' }}>
                 <div>
-                  <label style={{ display: 'block', fontSize: '11.5px', fontWeight: 'bold', marginBottom: '4px', color: 'var(--verde-andes)' }}>Teléfono / WhatsApp</label>
+                  <label style={{ display: 'block', fontSize: '11.5px', fontWeight: 'bold', marginBottom: '4px', color: 'var(--verde-andes)' }}>Teléfono / WhatsApp *</label>
                   <input type="text" required value={regPhone} onChange={(e) => setRegPhone(e.target.value)} placeholder="Ej: 593984480203" style={{ width: '100%', padding: '10px', background: '#fff', border: '1px solid rgba(27,67,50,0.2)', borderRadius: '6px', color: 'var(--texto)', fontSize: '13.5px', outline: 'none' }} />
                 </div>
                 <div>
@@ -275,11 +457,11 @@ export default function LoginPage() {
                 </div>
               </div>
               <div>
-                <label style={{ display: 'block', fontSize: '11.5px', fontWeight: 'bold', marginBottom: '4px', color: 'var(--verde-andes)' }}>🎁 Cortesía Web Exclusiva para Clientes</label>
+                <label style={{ display: 'block', fontSize: '11.5px', fontWeight: 'bold', marginBottom: '4px', color: 'var(--verde-andes)' }}>🎁 Cortesía Web Exclusiva para Clientes *</label>
                 <input type="text" required value={regCourtesy} onChange={(e) => setRegCourtesy(e.target.value)} placeholder="Ej: Cafe gratis por comer en el local, 10% descuento, etc." style={{ width: '100%', padding: '10px', background: '#fff', border: '1px solid rgba(27,67,50,0.2)', borderRadius: '6px', color: 'var(--texto)', fontSize: '13.5px', outline: 'none' }} />
               </div>
               <div>
-                <label style={{ display: 'block', fontSize: '11.5px', fontWeight: 'bold', marginBottom: '4px', color: 'var(--verde-andes)' }}>Descripción Corta</label>
+                <label style={{ display: 'block', fontSize: '11.5px', fontWeight: 'bold', marginBottom: '4px', color: 'var(--verde-andes)' }}>Descripción Corta *</label>
                 <textarea required value={regDescription} onChange={(e) => setRegDescription(e.target.value)} rows="2" style={{ width: '100%', padding: '10px', background: '#fff', border: '1px solid rgba(27,67,50,0.2)', borderRadius: '6px', color: 'var(--texto)', fontSize: '13.5px', resize: 'vertical', outline: 'none' }}></textarea>
               </div>
               <div style={{ background: 'rgba(217, 56, 58, 0.05)', border: '1px solid rgba(217, 56, 58, 0.15)', padding: '12px', borderRadius: '6px', fontSize: '11px', lineHeight: '1.5', color: '#B32D2F', marginTop: '5px', textAlign: 'left' }}>
@@ -288,14 +470,14 @@ export default function LoginPage() {
               <button 
                 type="submit" 
                 disabled={loading}
-                style={{ marginTop: '10px', padding: '12px', background: 'var(--verde-andes)', color: '#fff', border: 'none', borderRadius: '6px', fontWeight: 'bold', cursor: loading ? 'not-allowed' : 'pointer', fontFamily: 'Outfit', fontSize: '14.5px', textAlign: 'center', width: '100%' }}
+                style={{ marginTop: '10px', padding: '12px', background: 'var(--verde-andes)', color: '#fff', border: 'none', borderRadius: '6px', fontWeight: 'bold', cursor: loading ? 'not-allowed' : 'pointer', fontSize: '14.5px', textAlign: 'center', width: '100%' }}
               >
                 {loading ? 'Registrando...' : 'Registrar Negocio'}
               </button>
             </form>
 
             <div style={{ marginTop: '20px', fontSize: '13.5px', color: 'var(--texto)', opacity: 0.8 }}>
-              <p>¿Ya tienes una cuenta? <button onClick={() => { setIsRegistering(false); setError(null); }} style={{ background: 'transparent', border: 'none', color: 'var(--verde-medio)', fontWeight: 'bold', cursor: 'pointer', fontFamily: 'Outfit', fontSize: '13.5px', padding: 0 }}>Inicia Sesión aquí</button></p>
+              <p>¿Ya tienes una cuenta? <button onClick={() => { setIsRegistering(false); setError(null); }} style={{ background: 'transparent', border: 'none', color: 'var(--verde-medio)', fontWeight: 'bold', cursor: 'pointer', fontSize: '13.5px', padding: 0 }}>Inicia Sesión aquí</button></p>
             </div>
           </>
         )}

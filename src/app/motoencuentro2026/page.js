@@ -15,6 +15,14 @@ export default function MotoEncuentro2026() {
     parish: 'Puéllaro'
   });
   const [selectedFood, setSelectedFood] = useState('none'); // 'none', 'burger', 'hornado', 'alitas'
+  const [requireInvoice, setRequireInvoice] = useState(false);
+  const [invoiceData, setInvoiceData] = useState({
+    businessName: '',
+    taxId: '',
+    address: '',
+    email: ''
+  });
+
   const [raffleCode, setRaffleCode] = useState('');
   const [submitted, setSubmitted] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -45,6 +53,18 @@ export default function MotoEncuentro2026() {
     });
   };
 
+  const handleInvoiceChange = (e) => {
+    setInvoiceData({
+      ...invoiceData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleCopyText = (text, label) => {
+    navigator.clipboard.writeText(text);
+    alert(`¡Copiado ${label}!: ${text}`);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -52,13 +72,18 @@ export default function MotoEncuentro2026() {
     const generatedCode = 'MOTO-2026-' + Math.floor(1000 + Math.random() * 9000);
     setRaffleCode(generatedCode);
 
+    let invoiceString = "No requiere factura";
+    if (requireInvoice) {
+      invoiceString = `Requiere Factura. Razón Social: ${invoiceData.businessName}, RUC/CI: ${invoiceData.taxId}, Dirección: ${invoiceData.address}, Email Facturación: ${invoiceData.email || formData.email}`;
+    }
+
     // Build lead details
     const leadData = {
       business_id: 'restaurante', // El Mirador de Alchipichí is the host
       customer_name: formData.name,
       customer_phone: formData.phone,
       customer_email: formData.email,
-      message: `Inscripción Moto Encuentro 2026. Motocicleta: ${formData.motorcycle}. Club: ${formData.motoclub || 'Independiente'}. Alimentación: ${foodLabels[selectedFood]} (+$${foodPrice.toFixed(2)}). Total: $${totalPrice.toFixed(2)}. Código Sorteo: ${generatedCode}`
+      message: `Inscripción Moto Encuentro 2026. Motocicleta: ${formData.motorcycle}. Club: ${formData.motoclub || 'Independiente'}. Alimentación: ${foodLabels[selectedFood]} (+$${foodPrice.toFixed(2)}). Total: $${totalPrice.toFixed(2)}. Factura: ${invoiceString}. Código Sorteo: ${generatedCode}`
     };
 
     try {
@@ -99,7 +124,9 @@ export default function MotoEncuentro2026() {
       `🏍️ Moto: ${formData.motorcycle}\n` +
       `🛡️ Club: ${formData.motoclub || 'Independiente'}\n` +
       `🍽️ Alimentación: ${foodLabels[selectedFood]}\n` +
-      `💵 Total: $${totalPrice.toFixed(2)}\n` +
+      `💵 Total a Transferir: $${totalPrice.toFixed(2)}\n` +
+      `📄 Factura: ${requireInvoice ? 'Sí (Detalles adjuntos)' : 'No'}\n` +
+      (requireInvoice ? `   • Razón Social: ${invoiceData.businessName}\n   • RUC/CI: ${invoiceData.taxId}\n   • Dirección: ${invoiceData.address}\n` : '') +
       `🎟️ Código de Sorteo: ${generatedCode}`
     );
     window.open(`https://wa.me/593984480203?text=${text}`, '_blank');
@@ -128,6 +155,13 @@ export default function MotoEncuentro2026() {
         margin: '0 auto'
       }}>
         <div style={{ maxWidth: '850px', margin: '0 auto', marginBottom: '40px' }}>
+          {/* Small elegant official event logo */}
+          <img 
+            src="/assets/img/motoencuentro_logo.png" 
+            alt="Logo Oficial Moto Encuentro" 
+            style={{ width: '90px', height: 'auto', margin: '0 auto 20px auto', display: 'block' }} 
+          />
+          
           <span style={{ color: '#365C42', fontSize: '12px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '3px', display: 'block', marginBottom: '15px', fontFamily: 'Poppins' }}>
             Extraordinary Rural Experiences
           </span>
@@ -245,35 +279,101 @@ export default function MotoEncuentro2026() {
             maxWidth: '700px',
             margin: '0 auto'
           }}>
-            "Rodamos para descubrir, rodamos para apoyar. Con tu inscripción base, garantizas una logística impecable para tu rodada y fondeas directamente los proyectos de turismo comunitario autogestionados por las familias de la parroquia."
+            "Rodamos para descubrir, rodamos para apoyar. Con tu inscripción base, garantizas una logística impecable para tu rodada y fondeas directamente los proyectos de turismo comunitarios autogestionados por las familias de la parroquia."
           </p>
         </div>
       </section>
 
+      {/* NEW SECTION: SPONSORS & RAFFLE ITEMS */}
+      <section style={{ padding: '80px 24px', background: '#F4F1EA', borderTop: '1px solid rgba(27,27,31,0.05)', borderBottom: '1px solid rgba(27,27,31,0.05)' }}>
+        <div style={{ maxWidth: '1000px', margin: '0 auto', textAlign: 'center' }}>
+          <span style={{ color: '#365C42', fontSize: '11px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '2px', display: 'block', marginBottom: '12px', fontFamily: 'Poppins' }}>
+            Sponsors Oficiales
+          </span>
+          <h2 style={{ fontFamily: 'Poppins', fontSize: '2rem', fontWeight: '700', color: '#1B1B1F', marginBottom: '20px' }}>
+            Gran Sorteo de Auspiciantes
+          </h2>
+          <p style={{ fontSize: '15px', color: '#35363A', maxWidth: '700px', margin: '0 auto 40px auto', lineHeight: '1.6' }}>
+            Con tu código único de inscripción digital, participas de manera automática en el sorteo oficial que se realizará en Finca Alchipichí. Estos son algunos de los premios auspiciados por nuestros colaboradores oficiales:
+          </p>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '20px' }}>
+            {[
+              { company: 'Motul Ecuador', prize: 'Kits de Lubricación y Cuidado de Cadena', icon: '🧴' },
+              { company: 'Enduristan Ecuador', prize: 'Bolsos de Viaje Drybags 100% Impermeables', icon: '🎒' },
+              { company: 'Klim Ecuador', prize: 'Guantes Técnicos y Accesorios de Aventura', icon: '🧤' },
+              { company: 'Finca Alchipichí', prize: 'Canastas de Frutas Orgánicas & Café de la zona', icon: '🍊' },
+              { company: 'El Mirador de Alchipichí', prize: 'Almuerzos Tradicionales y Cortesías de la Finca', icon: '🍲' }
+            ].map((sponsor, index) => (
+              <div key={index} style={{ background: '#FFFFFF', padding: '24px', borderRadius: '16px', boxShadow: '0 4px 15px rgba(0,0,0,0.02)', textAlign: 'left', borderTop: '3px solid #365C42' }}>
+                <span style={{ fontSize: '24px', display: 'block', marginBottom: '10px' }}>{sponsor.icon}</span>
+                <strong style={{ fontSize: '13px', textTransform: 'uppercase', color: '#365C42', display: 'block', letterSpacing: '1px', marginBottom: '4px' }}>{sponsor.company}</strong>
+                <p style={{ fontSize: '14px', color: '#1B1B1F', fontWeight: 'bold', margin: 0, lineHeight: '1.4' }}>{sponsor.prize}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* 4. FORMULARIO INTERACTIVO DE REGISTRO */}
-      <section id="registro" style={{ padding: '90px 24px', background: '#F4F1EA' }}>
+      <section id="registro" style={{ padding: '90px 24px', background: '#FAF8F5' }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '50px', alignItems: 'start' }}>
           
-          {/* Left Column: Poster / Visual Details */}
-          <div style={{ position: 'sticky', top: '100px' }}>
-            <img 
-              src="/assets/img/motoencuentro.jpg" 
-              alt="Afiche Moto Encuentro 2026" 
-              style={{ width: '100%', borderRadius: '24px', boxShadow: '0 20px 40px rgba(0,0,0,0.1)', marginBottom: '30px' }} 
-            />
-            <div style={{ background: '#FFFFFF', padding: '30px', borderRadius: '20px', boxShadow: '0 10px 30px rgba(0,0,0,0.02)' }}>
-              <h4 style={{ fontFamily: 'Poppins', fontSize: '18px', fontWeight: '700', marginBottom: '10px', color: '#1B1B1F' }}>Cupos Limitados</h4>
-              <p style={{ fontSize: '14px', lineHeight: '1.6', color: '#35363A', margin: 0 }}>
-                El Moto Encuentro es un evento exclusivo con cupo limitado para garantizar la seguridad de los pilotos en ruta y la capacidad logística en Finca Alchipichí. Asegura tu ticket hoy.
-              </p>
+          {/* Left Column: Poster / Visual Details & Bank Transfer Info */}
+          <div>
+            <div style={{ position: 'sticky', top: '100px' }}>
+              <img 
+                src="/assets/img/motoencuentro.jpg" 
+                alt="Afiche Moto Encuentro 2026" 
+                style={{ width: '100%', borderRadius: '24px', boxShadow: '0 20px 40px rgba(0,0,0,0.06)', marginBottom: '30px' }} 
+              />
+              
+              {/* BANK TRANSFER DETAILS BLOCK */}
+              <div style={{ background: '#F4F1EA', padding: '25px', borderRadius: '20px', border: '1px solid rgba(27,27,31,0.04)', marginBottom: '30px' }}>
+                <h4 style={{ fontFamily: 'Poppins', fontSize: '15px', fontWeight: '700', marginBottom: '15px', color: '#365C42', textTransform: 'uppercase', letterSpacing: '1px' }}>
+                  Detalles de Pago y Cuentas
+                </h4>
+                <p style={{ fontSize: '13px', color: '#35363A', lineHeight: '1.5', marginBottom: '20px' }}>
+                  Realiza tu transferencia del valor total y envía el comprobante al WhatsApp de registro oficial para confirmar tu cupo. Haz clic en los números de cuenta para copiarlos:
+                </p>
+
+                {/* Account 1 */}
+                <div 
+                  onClick={() => handleCopyText('4084147700', 'Número de Cuenta (Diego)')}
+                  style={{ background: '#FFFFFF', padding: '12px 16px', borderRadius: '10px', marginBottom: '12px', cursor: 'pointer', border: '1px solid rgba(0,0,0,0.05)', transition: 'transform 0.2s' }}
+                >
+                  <strong style={{ fontSize: '12px', color: '#365C42', display: 'block', textTransform: 'uppercase' }}>Opción 1: Cuenta Personal</strong>
+                  <span style={{ fontSize: '14px', fontWeight: 'bold', display: 'block', color: '#1B1B1F', marginTop: '2px' }}>Banco Pichincha</span>
+                  <span style={{ fontSize: '13px', color: '#35363A', display: 'block' }}>Ahorros: <strong>4084147700</strong></span>
+                  <span style={{ fontSize: '12px', color: 'rgba(0,0,0,0.5)', display: 'block' }}>Diego Ruiz (C.I. 171287197)</span>
+                </div>
+
+                {/* Account 2 */}
+                <div 
+                  onClick={() => handleCopyText('12006898561', 'Número de Cuenta (Ruta Escondida S.A.S.)')}
+                  style={{ background: '#FFFFFF', padding: '12px 16px', borderRadius: '10px', cursor: 'pointer', border: '1px solid rgba(0,0,0,0.05)', transition: 'transform 0.2s' }}
+                >
+                  <strong style={{ fontSize: '12px', color: '#365C42', display: 'block', textTransform: 'uppercase' }}>Opción 2: Cuenta Jurídica</strong>
+                  <span style={{ fontSize: '14px', fontWeight: 'bold', display: 'block', color: '#1B1B1F', marginTop: '2px' }}>Banco Pichincha</span>
+                  <span style={{ fontSize: '13px', color: '#35363A', display: 'block' }}>Corriente: <strong>12006898561</strong></span>
+                  <span style={{ fontSize: '12px', color: 'rgba(0,0,0,0.5)', display: 'block' }}>Ruta Escondida Adventure S.A.S. (RUC 1793233724001)</span>
+                </div>
+              </div>
+
+              <div style={{ background: '#FFFFFF', padding: '25px', borderRadius: '20px', boxShadow: '0 10px 30px rgba(0,0,0,0.02)' }}>
+                <h4 style={{ fontFamily: 'Poppins', fontSize: '15px', fontWeight: '700', marginBottom: '8px', color: '#1B1B1F' }}>Cupos Limitados</h4>
+                <p style={{ fontSize: '13px', lineHeight: '1.6', color: '#35363A', margin: 0 }}>
+                  El Moto Encuentro es un evento exclusivo con cupo limitado para garantizar la seguridad de los pilotos en ruta y la capacidad de la finca. Asegura tu ticket hoy.
+                </p>
+              </div>
             </div>
           </div>
 
           {/* Right Column: Dynamic Form */}
-          <div style={{ background: '#FFFFFF', padding: '40px', borderRadius: '24px', boxShadow: '0 20px 40px rgba(27,27,31,0.03)' }}>
+          <div style={{ background: '#FFFFFF', padding: '40px', borderRadius: '24px', boxShadow: '0 20px 40px rgba(27,27,31,0.03)', border: '1px solid #E7E8EA' }}>
             
             {submitted ? (
-              <div style={{ textOutAlign: 'center', padding: '30px 10px', textAlign: 'center' }}>
+              <div style={{ textAlign: 'center', padding: '30px 10px' }}>
                 <span style={{ fontSize: '50px', display: 'block', marginBottom: '15px' }}>🎟️</span>
                 <h3 style={{ fontFamily: 'Poppins', fontSize: '24px', color: '#365C42', fontWeight: '700', marginBottom: '10px' }}>¡Registro Completo!</h3>
                 <p style={{ color: '#1B1B1F', fontSize: '15px', lineHeight: '1.6', marginBottom: '25px' }}>
@@ -283,6 +383,12 @@ export default function MotoEncuentro2026() {
                   <span style={{ fontSize: '11px', textTransform: 'uppercase', color: '#365C42', letterSpacing: '1px', display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>Código Oficial</span>
                   <code style={{ fontSize: '26px', letterSpacing: '2px', fontWeight: 'bold', color: '#1B1B1F', fontFamily: 'monospace' }}>{raffleCode}</code>
                 </div>
+                
+                {/* Visual Transfer Instructions for completed states */}
+                <div style={{ background: '#FAF8F5', padding: '15px', borderRadius: '8px', border: '1px solid rgba(0,0,0,0.05)', fontSize: '13px', color: '#35363A', lineHeight: '1.5', marginBottom: '25px', textAlign: 'left' }}>
+                  ℹ️ <strong>Siguiente Paso:</strong> Recuerda transferir el total de tu experiencia <strong>(${totalPrice.toFixed(2)})</strong> a cualquiera de las cuentas del Banco Pichincha indicadas en el panel lateral y enviar el comprobante de transferencia al chat de WhatsApp que se acaba de abrir.
+                </div>
+
                 <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
                   <button 
                     onClick={handleCopy} 
@@ -423,6 +529,73 @@ export default function MotoEncuentro2026() {
                       );
                     })}
                   </div>
+                </div>
+
+                {/* BILLING INVOICE CHECKBOX & FORM */}
+                <div style={{ borderTop: '1px solid #E7E8EA', paddingTop: '15px', marginTop: '5px' }}>
+                  <label style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer', fontSize: '13.5px', color: '#1B1B1F', fontWeight: 'bold' }}>
+                    <input 
+                      type="checkbox" 
+                      checked={requireInvoice}
+                      onChange={(e) => setRequireInvoice(e.target.checked)}
+                      style={{ width: '18px', height: '18px', accentColor: '#365C42', cursor: 'pointer' }}
+                    />
+                    <span>¿Requieres Factura Electrónica?</span>
+                  </label>
+
+                  {requireInvoice && (
+                    <div style={{ display: 'grid', gap: '12px', marginTop: '15px', padding: '15px', background: '#F4F1EA', borderRadius: '12px', border: '1px solid rgba(0,0,0,0.05)' }}>
+                      <div>
+                        <label style={{ display: 'block', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '4px', fontWeight: 'bold', color: '#1B1B1F' }}>Razón Social / Nombre Completo *</label>
+                        <input 
+                          type="text" 
+                          name="businessName"
+                          required={requireInvoice}
+                          value={invoiceData.businessName}
+                          onChange={handleInvoiceChange}
+                          placeholder="Nombre para la factura"
+                          style={{ width: '100%', padding: '10px 12px', border: '1px solid #E7E8EA', borderRadius: '6px', fontSize: '13.5px', background: '#FFFFFF', color: '#1B1B1F' }}
+                        />
+                      </div>
+                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+                        <div>
+                          <label style={{ display: 'block', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '4px', fontWeight: 'bold', color: '#1B1B1F' }}>RUC / C.I. *</label>
+                          <input 
+                            type="text" 
+                            name="taxId"
+                            required={requireInvoice}
+                            value={invoiceData.taxId}
+                            onChange={handleInvoiceChange}
+                            placeholder="Ej. 1712871970"
+                            style={{ width: '100%', padding: '10px 12px', border: '1px solid #E7E8EA', borderRadius: '6px', fontSize: '13.5px', background: '#FFFFFF', color: '#1B1B1F' }}
+                          />
+                        </div>
+                        <div>
+                          <label style={{ display: 'block', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '4px', fontWeight: 'bold', color: '#1B1B1F' }}>Email Facturación</label>
+                          <input 
+                            type="email" 
+                            name="email"
+                            value={invoiceData.email}
+                            onChange={handleInvoiceChange}
+                            placeholder="Dejar vacío para usar el principal"
+                            style={{ width: '100%', padding: '10px 12px', border: '1px solid #E7E8EA', borderRadius: '6px', fontSize: '13.5px', background: '#FFFFFF', color: '#1B1B1F' }}
+                          />
+                        </div>
+                      </div>
+                      <div>
+                        <label style={{ display: 'block', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '4px', fontWeight: 'bold', color: '#1B1B1F' }}>Dirección Fiscal *</label>
+                        <input 
+                          type="text" 
+                          name="address"
+                          required={requireInvoice}
+                          value={invoiceData.address}
+                          onChange={handleInvoiceChange}
+                          placeholder="Ej. Av. Amazonas y Colón, Quito"
+                          style={{ width: '100%', padding: '10px 12px', border: '1px solid #E7E8EA', borderRadius: '6px', fontSize: '13.5px', background: '#FFFFFF', color: '#1B1B1F' }}
+                        />
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 {/* Real-time calculator */}
